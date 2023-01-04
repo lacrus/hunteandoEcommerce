@@ -132,3 +132,8 @@ package-lock.json
 
 #ARCHIVO PARA CLAVES PRIVADAS
 privado.js
+
+.DS_Store
+
+.vscode
+settings.json
