@@ -136,6 +136,8 @@
 }
 
 .contenedorTotales {
+  position: sticky;
+  top: calc(var(--altura-header) + 2vh);
   width: 40%;
   height: fit-content;
   box-shadow: 0 0 10px #dadada;
@@ -208,6 +210,7 @@
     min-width: 300px;
   }
   .contenedorTotales {
+    position: static;
     min-width: 300px;
     line-height: 60px;
   }
