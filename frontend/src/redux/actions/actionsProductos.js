@@ -17,7 +17,7 @@ export const obtenerTodosLosProductos = (queHacer) => {
       } else {
         let res = await axios({
           method: "GET",
-          withCredentials: true,
+          // withCredentials: true,
           url: "/dashboard/admin/products",
         });
         return dispatch({
