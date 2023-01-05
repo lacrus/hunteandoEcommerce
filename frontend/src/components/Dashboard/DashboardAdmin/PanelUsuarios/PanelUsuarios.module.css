@@ -7,6 +7,12 @@
   overflow-y: auto;
 }
 
+.loadingTrue {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .tablaPanelUsuarios {
   width: 100%;
   text-align: center;
@@ -32,4 +38,8 @@
 
 .cursor {
   cursor: pointer;
+}
+
+.renglonVacio {
+  padding-top: 2vh;
 }

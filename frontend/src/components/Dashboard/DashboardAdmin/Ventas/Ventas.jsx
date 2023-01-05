@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import s from "./Ventas.module.css";
 import { CgDetailsMore } from "react-icons/cg";
 import ModalDetalleVenta from "./ModalDetalleVenta/ModalDetalleVenta";
 import functionOrdernarVentas from "../../../../utils/functionOdenarVentas";
+import { useEffect } from "react";
+import Swal from "sweetalert2";
 
 function Ventas() {
+  const dispatch = useDispatch();
   const ventas = useSelector((e) => e.ventas);
   const [mostrarDetalleVenta, setMostrarDetalleVenta] = useState(false);
   const [idVenta, setIdVenta] = useState(null);
@@ -15,6 +18,7 @@ function Ventas() {
     setIdVenta(idVenta);
   }
 
+  const [loading, setLoading] = useState(false);
   const [ventasOrdenadas, setVentasOrdenadas] = useState([...ventas]);
   const [ordenarVentas, setOrdenarVentas] = useState({
     id: "asc",
@@ -34,6 +38,23 @@ function Ventas() {
       ventasOrdenadas
     );
   }
+
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      try {
+        // await dispatch(obtenerVentas());
+      } catch (e) {
+        console.log(e);
+        Swal.fire({
+          icon: "error",
+          title: "Error!",
+          text: e.message,
+        });
+      }
+      setLoading(false);
+    })();
+  }, []);
 
   return (
     <div className={s.contenedorVentas}>

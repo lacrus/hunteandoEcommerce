@@ -7,10 +7,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { ordenarProductos } from "../../../../redux/actions/actionsDashboard";
 import { obtenerTodosLosProductos } from "../../../../redux/actions/actionsProductos";
 import ModalModificarVenta from "./ModalModificarVenta/ModalModificarVenta";
+import Loading from "../../../Loading/Loading";
 
 function ProductosCreados() {
   const dispatch = useDispatch();
   const productos = useSelector((e) => e.productos);
+  const [loading, setLoading] = useState(false);
 
   const [editarProducto, setEditarProducto] = useState(false);
   const [producto, setProducto] = useState({});
@@ -29,62 +31,83 @@ function ProductosCreados() {
   function handleEliminarProducto(e, producto) {}
 
   useEffect(() => {
-    dispatch(obtenerTodosLosProductos("todos"));
-
+    (async () => {
+      setLoading(true);
+      await dispatch(obtenerTodosLosProductos("todos"));
+      setLoading(false);
+    })();
     return () => {
       dispatch(obtenerTodosLosProductos("reset"));
     };
   }, []);
 
   return (
-    <div className={s.contenedorProductosCreados}>
-      <table className={s.tablaProductosCreados}>
-        <thead>
-          <tr className={s.encabezadoProductosCreados}>
-            <th onClick={() => handleOrdernar("id")} className={s.cursor}>
-              Id
-            </th>
-            <th onClick={() => handleOrdernar("name")} className={s.cursor}>
-              Nombre
-            </th>
-            <th onClick={() => handleOrdernar("price")} className={s.cursor}>
-              Precio
-            </th>
-            <th>Descripción</th>
-            <th>Editar</th>
-            <th>Eliminar</th>
-          </tr>
-        </thead>
-        <tbody className={s.bodyProductosCreados}>
-          {productos.length &&
-            productos?.map((a) => {
-              return (
-                <tr key={"listaProductos" + a.id}>
-                  <td>{a.id}</td>
-                  <td>{a.name}</td>
-                  <td>{a.price}</td>
-                  <td>{a.description.substring(0, 20)}</td>
-                  <td>
-                    <div
-                      className={s.botonEditarProducto}
-                      onClick={(e) => handleEditarProducto(e, a)}
-                    >
-                      <AiFillEdit />
-                    </div>
-                  </td>
-                  <td>
-                    <div
-                      className={s.botonEliminarProducto}
-                      onClick={(e) => handleEliminarProducto(e, a.id)}
-                    >
-                      <AiFillDelete />
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
-        </tbody>
-      </table>
+    <div
+      className={`${s.contenedorProductosCreados} ${
+        loading ? s.loadingTrue : null
+      }`}
+    >
+      {loading ? (
+        <Loading />
+      ) : (
+        <table className={s.tablaProductosCreados}>
+          <thead>
+            <tr className={s.encabezadoProductosCreados}>
+              <th onClick={() => handleOrdernar("id")} className={s.cursor}>
+                Id
+              </th>
+              <th onClick={() => handleOrdernar("name")} className={s.cursor}>
+                Nombre
+              </th>
+              <th onClick={() => handleOrdernar("price")} className={s.cursor}>
+                Precio
+              </th>
+              <th>Descripción</th>
+              <th>Editar</th>
+              <th>Eliminar</th>
+            </tr>
+          </thead>
+          <tbody className={s.bodyProductosCreados}>
+            {productos.length > 0 ? (
+              productos?.map((a) => {
+                return (
+                  <tr key={"listaProductos" + a.id}>
+                    <td>{a.id}</td>
+                    <td>{a.name}</td>
+                    <td>{a.price}</td>
+                    <td>{a.description.substring(0, 20)}</td>
+                    <td>
+                      <div
+                        className={s.botonEditarProducto}
+                        onClick={(e) => handleEditarProducto(e, a)}
+                      >
+                        <AiFillEdit />
+                      </div>
+                    </td>
+                    <td>
+                      <div
+                        className={s.botonEliminarProducto}
+                        onClick={(e) => handleEliminarProducto(e, a.id)}
+                      >
+                        <AiFillDelete />
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })
+            ) : (
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td className={s.renglonVacio}>Sin datos</td>
+                <td></td>
+                <td></td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      )}
       {editarProducto && (
         <ModalModificarVenta
           producto={producto}
