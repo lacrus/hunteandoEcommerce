@@ -4,12 +4,14 @@ import s from "./DashboardAdmin.module.css";
 import PanelLateralAdmin from "./PanelLateralAdmin/PanelLateralAdmin";
 import PanelUsuarios from "./PanelUsuarios/PanelUsuarios";
 import ProductosCreados from "./ProductosCreados/ProductosCreados";
+import ProductosEliminados from "./ProductosEliminados/ProductosEliminados";
 import Ventas from "./Ventas/Ventas";
 
 function DashboardAdmin() {
   const [mostrarMenuAdmin, setMostrarMenuAdmin] = useState({
     crearProducto: false,
     productosCreados: false,
+    productosEliminados: false,
     ventas: false,
     usuarios: false,
   });
@@ -19,6 +21,7 @@ function DashboardAdmin() {
       let res = {
         crearProducto: false,
         productosCreados: false,
+        productosEliminados: false,
         ventas: false,
         usuarios: false,
       };
@@ -39,6 +42,9 @@ function DashboardAdmin() {
       )}
       {mostrarMenuAdmin.productosCreados && (
         <ProductosCreados handleMostrarMenuAdmin={handleMostrarMenuAdmin} />
+      )}
+       {mostrarMenuAdmin.productosEliminados && (
+        <ProductosEliminados handleMostrarMenuAdmin={handleMostrarMenuAdmin} />
       )}
       {mostrarMenuAdmin.ventas && (
         <Ventas handleMostrarMenuAdmin={handleMostrarMenuAdmin} />

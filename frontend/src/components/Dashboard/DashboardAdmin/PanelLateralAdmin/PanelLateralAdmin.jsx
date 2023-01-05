@@ -27,6 +27,17 @@ function PanelLateralAdmin({ handleMostrarMenuAdmin, mostrarMenuAdmin }) {
       </div>
       <div
         onClick={() => {
+          handleMostrarMenuAdmin("productosEliminados");
+        }}
+        className={`${s.itemPanelLateralAdmin} ${
+          mostrarMenuAdmin.productosEliminados &&
+          s.itemPanelLateralAdminSeleccionado
+        }`}
+      >
+        Productos eliminados
+      </div>
+      <div
+        onClick={() => {
           handleMostrarMenuAdmin("ventas");
         }}
         className={`${s.itemPanelLateralAdmin} ${

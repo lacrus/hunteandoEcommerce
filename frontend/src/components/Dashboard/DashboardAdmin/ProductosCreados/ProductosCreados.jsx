@@ -5,9 +5,13 @@ import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 
 import { ordenarProductos } from "../../../../redux/actions/actionsDashboard";
-import { obtenerTodosLosProductos } from "../../../../redux/actions/actionsProductos";
+import {
+  eliminarProducto,
+  obtenerTodosLosProductos,
+} from "../../../../redux/actions/actionsProductos";
 import ModalModificarVenta from "./ModalModificarVenta/ModalModificarVenta";
 import Loading from "../../../Loading/Loading";
+import Swal from "sweetalert2";
 
 function ProductosCreados() {
   const dispatch = useDispatch();
@@ -28,7 +32,18 @@ function ProductosCreados() {
     setProducto(prod);
   }
 
-  function handleEliminarProducto(e, producto) {}
+  function handleEliminarProducto(e, idProducto) {
+    Swal.fire({
+      icon: "question",
+      title: "Seguro que deseas eliminar el producto?",
+      text: "Esto desabilitara en la pagina",
+      showCancelButton: true,
+    }).then(async ({ isConfirmed }) => {
+      if (isConfirmed) {
+        await dispatch(eliminarProducto(idProducto));
+      }
+    });
+  }
 
   useEffect(() => {
     (async () => {

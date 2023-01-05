@@ -5,6 +5,7 @@ import {
   MODIFY_PRODUCT_CART,
   DELETE_CART,
   GET_PRODUCTS,
+  GET_DELETED_PRODUCTS,
 } from "./../actions/actionsProductos";
 
 import { ORDER_USERS, ORDER_PRODUCTS } from "../actions/actionsDashboard";
@@ -17,21 +18,9 @@ const initialState = {
   usuarios: [],
   ordenUsuarios: { id: "asc", username: null, email: null, role: null },
   productos: [],
+  productosEliminados: [],
   ordenProductos: { id: "asc", name: null, price: null },
-  detalleProducto: {
-    nombre: "Nombre del productoo",
-    imagen: [
-      "https://artelista.s3.amazonaws.com/obras/big/0/4/1/7382666047536905.jpg",
-      "https://i.pinimg.com/736x/69/51/d3/6951d3a58296c1e2886972c9f187478c.jpg",
-      "https://artelista.s3.amazonaws.com/obras/big/0/4/1/7382666047536905.jpg",
-      "https://i.pinimg.com/736x/69/51/d3/6951d3a58296c1e2886972c9f187478c.jpg",
-      "https://artelista.s3.amazonaws.com/obras/big/0/4/1/7382666047536905.jpg",
-    ],
-    precio: "15000",
-    descripcion:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugiat quaerat eaque impedit, dicta voluptatibus quidem incidunt necessitatibus, molestias praesentium a molestiae vel sapiente nostrum, doloremque inventore consequuntur provident placeat illo.",
-    cantidad: 4,
-  },
+  detalleProducto: {},
   carro: [
     {
       id: 1,
@@ -259,6 +248,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         productos: action.payload,
+      };
+
+    case GET_DELETED_PRODUCTS:
+      return {
+        ...state,
+        productosEliminados: action.payload,
       };
 
     case ADD_PRODUCT_CART:

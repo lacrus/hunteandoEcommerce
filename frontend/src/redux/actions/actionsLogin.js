@@ -15,7 +15,7 @@ export const registroUsuario = (datosUsuario) => {
       let res = await axios({
         method: "POST",
         data: dataUser,
-        withCredentials: true,
+        // withCredentials: true,
         url: "/auth/register",
       });
       if (res.data.success === true) {
@@ -47,7 +47,7 @@ export const iniciarSesion = (datosUsuario) => {
       let res = await axios({
         method: "POST",
         data: dataUser,
-        withCredentials: true,
+        // withCredentials: true,
         url: "/auth/login",
       });
       if (res.data.success === true) {

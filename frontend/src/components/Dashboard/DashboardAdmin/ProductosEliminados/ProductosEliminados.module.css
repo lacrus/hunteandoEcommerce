@@ -1,0 +1,44 @@
+.contenedorProductosEliminados {
+  position: relative;
+  width: 100%;
+  min-height: calc(100vh - var(--altura-header));
+  height: fit-content;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+.loadingTrue {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tablaProductosEliminados {
+  width: 100%;
+  text-align: center;
+}
+
+.encabezadoProductosEliminados {
+  padding-bottom: 15%;
+  border-bottom: 1px solid black;
+}
+
+.bodyProductosEliminados tr {
+  line-height: 25px;
+}
+
+.bodyProductosEliminados tr:nth-child(even) {
+  background: #d8d8d8;
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+.botonRecuperarProducto:hover {
+  cursor: pointer;
+  color: green;
+}
+.renglonVacio {
+  padding-top: 2vh;
+}

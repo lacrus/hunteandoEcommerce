@@ -5,6 +5,7 @@ export const DELETE_PRODUCT_CART = "DELETE_PRODUCT_CART";
 export const MODIFY_PRODUCT_CART = "MODIFY_PRODUCT_CART";
 export const DELETE_CART = "DELETE_CART";
 export const GET_PRODUCTS = "GET_PRODUCTS";
+export const GET_DELETED_PRODUCTS = "GET_DELETED_PRODUCTS";
 
 export const obtenerTodosLosProductos = (queHacer) => {
   try {
@@ -31,14 +32,30 @@ export const obtenerTodosLosProductos = (queHacer) => {
   }
 };
 
+export function obtenerProductosEliminados() {
+  return async (dispatch) => {
+    try {
+      const res = await axios({
+        method: "GET",
+        url: "dashboard/admin/producto/eliminados",
+      });
+      return dispatch({
+        type: GET_DELETED_PRODUCTS,
+        payload: res.data.products,
+      });
+    } catch (e) {
+      throw new Error(e.message);
+    }
+  };
+}
+
 export function crearProducto(producto) {
   console.log(producto);
   return async function (dispatch) {
     try {
       const res = await axios({
-        method: "post",
-        // withCredentials: true,
-        url: "/dashboard/admin/producto/nuevo",
+        method: "POST",
+        url: "/dashboard/admin/producto",
         data: producto,
         headers: {
           "Content-Type": "multipart/form-data",
@@ -58,13 +75,47 @@ export function modificarProducto(id, producto) {
   return async function (dispatch) {
     try {
       const res = await axios({
-        method: "put",
-        // withCredentials: true,
-        url: "/dashboard/admin/producto/modificar/" + id,
+        method: "PUT",
+        url: "/dashboard/admin/producto" + id,
         data: producto,
         headers: {
           "Content-Type": "multipart/form-data",
         },
+      });
+      return dispatch({
+        type: GET_PRODUCTS,
+        payload: res.data.products,
+      });
+    } catch (e) {
+      throw new Error(e.message);
+    }
+  };
+}
+
+export function eliminarProducto(idProducto) {
+  return async function (dispatch) {
+    try {
+      const res = await axios({
+        method: "DELETE",
+        // withCredentials: true,
+        url: "/dashboard/admin/producto/" + idProducto,
+      });
+      return dispatch({
+        type: GET_PRODUCTS,
+        payload: res.data.products,
+      });
+    } catch (e) {
+      throw new Error(e.message);
+    }
+  };
+}
+
+export function recuperarProductoEliminado(idProducto) {
+  return async function (dispatch) {
+    try {
+      const res = await axios({
+        method: "PATCH",
+        url: "/dashboard/admin/producto/" + idProducto,
       });
       return dispatch({
         type: GET_PRODUCTS,
