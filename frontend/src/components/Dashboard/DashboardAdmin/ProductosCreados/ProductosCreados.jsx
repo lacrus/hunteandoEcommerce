@@ -48,7 +48,15 @@ function ProductosCreados() {
   useEffect(() => {
     (async () => {
       setLoading(true);
-      await dispatch(obtenerTodosLosProductos("todos"));
+      try {
+        await dispatch(obtenerTodosLosProductos("todos"));
+      } catch (e) {
+        Swal.fire(
+          "Hubo un problema",
+          "Error al obtener los productos",
+          "error"
+        );
+      }
       setLoading(false);
     })();
     return () => {
