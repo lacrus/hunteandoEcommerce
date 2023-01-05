@@ -19,7 +19,7 @@ export const obtenerTodosLosProductos = (queHacer) => {
         let res = await axios({
           method: "GET",
           // withCredentials: true,
-          url: "/dashboard/admin/producto",
+          url: "/dashboard/admin/products",
         });
         return dispatch({
           type: GET_PRODUCTS,
