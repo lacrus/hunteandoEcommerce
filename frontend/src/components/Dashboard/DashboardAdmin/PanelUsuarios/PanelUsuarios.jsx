@@ -7,6 +7,7 @@ import ComprasUsuario from "./ComprasUsuario/ComprasUsuario";
 import Loading from "../../../Loading/Loading";
 import { CgDetailsMore } from "react-icons/cg";
 import { ordenarUsuarios } from "../../../../redux/actions/actionsDashboard";
+import Swal from "sweetalert2";
 
 function PanelUsuarios() {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ function PanelUsuarios() {
       try {
         await dispatch(obtenerUsuarios()); // OBTENER USUARIOS
       } catch (e) {
-        alert("Error! no se pudo obtener los usuarios...");
+        Swal.fire("Error", "No se pudieron obtener los usuario", "error");
       }
       setLoading(false);
     })();
