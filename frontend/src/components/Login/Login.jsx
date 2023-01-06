@@ -9,6 +9,8 @@ import YupPassword from "yup-password";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { iniciarSesion } from "../../redux/actions/actionsLogin";
+import Swal from "sweetalert2";
+import { ClipLoader } from "react-spinners";
 
 YupPassword(Yup);
 
@@ -18,21 +20,33 @@ export default function Login() {
   const navigate = useNavigate();
   const params = useParams();
 
+  const [loading, setLoading] = useState(false);
+
   async function onSubmit(e) {
-    const registro = await dispatch(iniciarSesion(e));
-    if (params.id !== undefined) {
-      if (registro.success === true) {
-        navigate(`/productos/detalle/${params.id}`);
+    setLoading(true);
+    try {
+      const registro = await dispatch(iniciarSesion(e));
+      if (params.id !== undefined) {
+        if (registro.success === true) {
+          navigate(`/productos/detalle/${params.id}`);
+        } else {
+          Swal.fire(registro.mensaje, "", "error");
+        }
       } else {
-        alert(registro.mensaje);
+        if (registro.success === true) {
+          navigate("/");
+        } else {
+          Swal.fire(registro.mensaje, "", "error");
+        }
       }
-    } else {
-      if (registro.success === true) {
-        navigate("/");
-      } else {
-        alert(registro.mensaje);
-      }
+    } catch (error) {
+      Swal.fire(
+        "Error al iniciar sesión",
+        "Intenta nuevamente mas tarde",
+        "error"
+      );
     }
+    setLoading(false);
   }
 
   const initialValues = {
@@ -152,9 +166,15 @@ export default function Login() {
               )}
             </div>
 
-            <button className={s.botonIniciarSesion} type="submit">
-              Iniciar Sesión
-            </button>
+            {!loading ? (
+              <button className={s.botonIniciarSesion} type="submit">
+                Iniciar Sesión
+              </button>
+            ) : (
+              <div className={s.contenedorLoadingBoton}>
+                <ClipLoader />
+              </div>
+            )}
           </form>
 
           <div className={s.renglonLinkIniciarSesion}>

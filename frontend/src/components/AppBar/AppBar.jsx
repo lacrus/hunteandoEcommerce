@@ -120,12 +120,6 @@ export default function AppBar({ usuario }) {
           </div>
         </div>
 
-        {/* <MenuUser
-          setMostrarMiCuenta={setMostrarMiCuenta}
-          usuario={usuario}
-          handleCerrarSesion={handleCerrarSesion}
-        /> */}
-
         {mostrarMiCuenta && (
           <MenuUser
             setMostrarMiCuenta={setMostrarMiCuenta}

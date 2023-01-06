@@ -17,18 +17,21 @@ function MenuUser({ setMostrarMiCuenta, usuario, handleCerrarSesion }) {
         <div className={s.tituloMenuUser}>
           {usuario?.username ? usuario.username : "El Fantasma"}
         </div>
-        {usuario.isAdmin === true ? null : (
+
+        <Link
+          to="/dashboard/client"
+          onClick={() => setMostrarMiCuenta(false)}
+          className={s.itemMenuUser}
+        >
+          Mi Perfil
+        </Link>
+
+        {usuario.role === "admin" ? (
           <Link
-            to="/dashboard/client"
+            to="/dashboard/admin"
             onClick={() => setMostrarMiCuenta(false)}
             className={s.itemMenuUser}
           >
-            Mi Perfil
-          </Link>
-        )}
-
-        {usuario.isAdmin === true ? (
-          <Link to="/dashboard/admin" className={s.itemMenuUser}>
             Panel administrador
           </Link>
         ) : null}

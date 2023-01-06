@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 // import { Copyright } from "../../utils/utils";
 import logoGoogle from "../../assets/images/logoGoogle.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import s from "./Register.module.css";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -9,29 +9,50 @@ import YupPassword from "yup-password";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { registroUsuario } from "../../redux/actions/actionsLogin";
+import Swal from "sweetalert2";
+import { ClipLoader } from "react-spinners";
 
 YupPassword(Yup);
 
 export default function Register() {
   const [mostrarContrasena, setMostrarContrasena] = useState(false);
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   async function onSubmit(e) {
-    const registro = await dispatch(registroUsuario(e));
-    if (registro.success === true) {
-      alert("Usuario creado correctamente");
-    } else {
-      alert(
-        registro.mensaje === "email must be unique"
-          ? "Mail ya registrado"
-          : registro.mensaje
+    setLoading(true);
+    try {
+      const registro = await dispatch(registroUsuario(e));
+      if (registro.success === true) {
+        Swal.fire(
+          "Bienvenido!",
+          "Usuario creado correctamente",
+          "success"
+        ).then(() => {
+          navigate("/");
+        });
+      } else {
+        Swal.fire(
+          "Error!",
+          registro.mensaje === "email must be unique" ||
+            registro.mensaje === "username must be unique"
+            ? "Mail ya registrado"
+            : registro.mensaje,
+          "error"
+        );
+      }
+    } catch (e) {
+      Swal.fire(
+        "Error al registrar cuenta",
+        "Intenta nuevamente mas tarde",
+        "error"
       );
     }
+    setLoading(false);
   }
 
   const initialValues = {
-    // nombre: "",
-    // apellido: "",
     email: "",
     contrasena: "",
   };
@@ -47,12 +68,6 @@ export default function Register() {
       .minLowercase(1, "La contraseña debe tener al menos 1 minúscula")
       .minNumbers(1, "La contraseña debe tener al menos 1 número")
       .required("*Campo obligatorio"),
-    // nombre: Yup.string()
-    //   .max(20, "El nombre debe tener máximo 20 carácteres")
-    //   .required("*Campo obligatorio"),
-    // apellido: Yup.string()
-    //   .max(20, "El apellido debe tener máximo 20 carácteres")
-    //   .required("*Campo obligatorio"),
   });
 
   const formik = useFormik({ initialValues, validationSchema, onSubmit });
@@ -80,62 +95,6 @@ export default function Register() {
             ---------- o Inicie con su Email ----------
           </p>
           <form className={s.contenedorFormRegistro} onSubmit={handleSubmit}>
-            {/* <div className={s.renglonNombreApellido}>
-              <div className={s.divInputLabel}>
-                <label
-                  className={`${s.labelRegistro} ${
-                    touched.nombre && errors.nombre ? s.errorColor : undefined
-                  }`}
-                  htmlFor="nombre"
-                >
-                  Nombre
-                </label>
-                <input
-                  id="nombre"
-                  name="nombre"
-                  className={`${s.inputRegistro} ${
-                    touched.nombre && errors.nombre ? s.error : undefined
-                  }`}
-                  type="text"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.nombre}
-                />
-                {touched.nombre && errors.nombre && (
-                  <div className={`${s.errorColor} ${s.msjError}`}>
-                    {errors.nombre}
-                  </div>
-                )}
-              </div>
-              <div className={s.divInputLabel}>
-                <label
-                  className={`${s.labelRegistro} ${
-                    touched.apellido && errors.apellido
-                      ? s.errorColor
-                      : undefined
-                  }`}
-                  htmlFor="apellido"
-                >
-                  Apellido
-                </label>
-                <input
-                  id="apellido"
-                  name="apellido"
-                  className={`${s.inputRegistro} ${
-                    touched.apellido && errors.apellido ? s.error : undefined
-                  }`}
-                  type="text"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.apellido}
-                />
-                {touched.apellido && errors.apellido && (
-                  <div className={`${s.errorColor} ${s.msjError}`}>
-                    {errors.apellido}
-                  </div>
-                )}
-              </div>
-            </div> */}
             <div className={s.divInputLabel}>
               <label
                 className={`${s.labelRegistro} ${
@@ -209,9 +168,15 @@ export default function Register() {
               )}
             </div>
 
-            <button className={s.botonRegistrarse} type="submit">
-              Crear cuenta
-            </button>
+            {!loading ? (
+              <button className={s.botonRegistrarse} type="submit">
+                Crear cuenta
+              </button>
+            ) : (
+              <div className={s.contenedorLoadingBoton}>
+                <ClipLoader />
+              </div>
+            )}
           </form>
 
           <div className={s.renglonLinkIniciarSesion}>
