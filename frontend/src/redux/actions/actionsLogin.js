@@ -110,3 +110,20 @@ export function obtenerUsuarios() {
     return { success: false, mensaje: error.message };
   }
 }
+export default function logearToken(token) {
+  try {
+    return async function (dispatch) {
+      const res = await axios({
+        method: "GET",
+        url: "/auth/login/" + token,
+      });
+      if (res.data.token) localStorage.setItem("token", res.data.token);
+      return dispatch({
+        type: GET_USER,
+        payload: res.data.user,
+      });
+    };
+  } catch (e) {
+    throw new Error(e.message);
+  }
+}

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
 
 // COMPONENTES
@@ -16,14 +16,24 @@ import Footer from "./components/Footer/Footer";
 import BotonWapp from "./components/BotonWapp/BotonWapp";
 import DashboardUsuario from "./components/Dashboard/DashboardUsuario/DashboardUsuario";
 import DashboardAdmin from "./components/Dashboard/DashboardAdmin/DashboardAdmin";
+import logearToken from "./redux/actions/actionsLogin";
 
 function App() {
   const usuario = useSelector((e) => e.usuario);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!usuario.username) {
-      localStorage.removeItem("token");
-    }
+    (async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (token && !usuario.username) {
+          await dispatch(logearToken(token));
+        }
+      } catch (e) {
+        console.log("app.js entro en error");
+        localStorage.removeItem("token");
+      }
+    })();
   }, []);
 
   return (
