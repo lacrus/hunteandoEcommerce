@@ -8,20 +8,39 @@ import * as Yup from "yup";
 import YupPassword from "yup-password";
 
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
+import Swal from "sweetalert2";
+import { PulseLoader } from "react-spinners";
+import modificarUsuario from "../../../../redux/actions/actionsDashboardClient";
 
 YupPassword(Yup);
 
-function PanelPerfilUsuario({ usuario }) {
+function PanelPerfilUsuario({ token, usuario }) {
   const [mostrarContrasena, setMostrarContrasena] = useState(false);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
   async function onSubmit(e) {
-    // const registro = await dispatch(registroUsuario(e)); // MODIFICAR USUARIO
+    Swal.fire({
+      title: "Cambiando datos usuario",
+      text: "Confirma modificar los datos?",
+      icon: "question",
+      showDenyButton: true,
+    }).then(async ({ isConfirmed }) => {
+      setLoading(true);
+      try {
+        if (isConfirmed) {
+          await dispatch(modificarUsuario(usuario.id, e, token));
+        }
+      } catch (e) {
+        Swal.fire("Hubo un problema", "Vuelve a intentar mas tarde", "error");
+      }
+      setLoading(false);
+    });
   }
 
   const initialValues = {
-    nombre: usuario?.nombre || "",
-    apellido: usuario?.apellido || "",
+    nombre: usuario?.firstname || "",
+    apellido: usuario?.lastname || "",
     email: usuario?.email || "",
     contrasena: "",
   };
@@ -187,10 +206,15 @@ function PanelPerfilUsuario({ usuario }) {
             </div>
           )}
         </div>
-
-        <button className={s.botonRegistrarse} type="submit">
-          Modificar datos
-        </button>
+        {loading ? (
+          <div className={s.contenedorSpinnerBoton}>
+            <PulseLoader color="orange" />
+          </div>
+        ) : (
+          <button className={s.botonRegistrarse} type="submit">
+            Modificar datos
+          </button>
+        )}
       </form>
     </div>
   );

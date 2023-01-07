@@ -60,11 +60,11 @@ function App() {
         <Route
           path="/dashboard/client"
           element={
-            // usuario.username ? (
-            <DashboardUsuario usuario={usuario} />
-            // ) : (
-            //   <Navigate to="/" replace={true} />
-            // )
+            usuario.username ? (
+              <DashboardUsuario usuario={usuario} />
+            ) : (
+              <Navigate to="/" replace={true} />
+            )
           }
         />
         <Route path="*" element={<Navigate to="/" replace={true} />} />

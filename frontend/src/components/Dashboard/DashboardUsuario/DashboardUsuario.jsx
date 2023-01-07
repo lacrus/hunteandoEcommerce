@@ -9,6 +9,7 @@ export default function DashboardUsuario({ usuario }) {
     perfil: true,
     compras: false,
   });
+  const token = localStorage.getItem("token");
   return (
     <div className={s.contenedorDashboardUsuario}>
       <PanelLateralUsusario
@@ -16,8 +17,8 @@ export default function DashboardUsuario({ usuario }) {
         setMostrarMenu={setMostrarMenu}
       />
 
-      {mostrarMenu.perfil && <PanelPerfilUsuario usuario={usuario} />}
-      {mostrarMenu.compras && <PanelComprasUsuario />}
+      {mostrarMenu.perfil && <PanelPerfilUsuario token={token} usuario={usuario} />}
+      {mostrarMenu.compras && <PanelComprasUsuario token={token} usuario={usuario} />}
     </div>
   );
 }
