@@ -8,7 +8,7 @@ import {
   ordenarProductos,
   eliminarProducto,
   obtenerTodosLosProductos,
-} from "../../../../redux/actions/actionsDashboard";
+} from "../../../../redux/actions/actionsDashboardAdmin";
 import ModalModificarVenta from "./ModalModificarVenta/ModalModificarVenta";
 import Loading from "../../../Loading/Loading";
 import Swal from "sweetalert2";

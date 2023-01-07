@@ -9,7 +9,7 @@ import {
   ordenarProductos,
   obtenerProductosEliminados,
   recuperarProductoEliminado,
-} from "../../../../redux/actions/actionsDashboard";
+} from "../../../../redux/actions/actionsDashboardAdmin";
 import { RiDeviceRecoverFill } from "react-icons/ri";
 
 function ProductosEliminados({ handleMostrarMenuAdmin }) {

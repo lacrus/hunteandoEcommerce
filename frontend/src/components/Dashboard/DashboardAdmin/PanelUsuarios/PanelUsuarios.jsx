@@ -2,22 +2,21 @@ import React, { useEffect, useState } from "react";
 import s from "./PanelUsuarios.module.css";
 
 import { useSelector, useDispatch } from "react-redux";
-import ComprasUsuario from "./ComprasUsuario/ComprasUsuario";
+import DetallesUsuario from "./DetallesUsuario/DetallesUsuario";
 import Loading from "../../../Loading/Loading";
 import { CgDetailsMore } from "react-icons/cg";
 import {
   ordenarUsuarios,
   obtenerUsuarios,
   modificarRolUsuario,
-  obtenerDetallesUsuario,
-} from "../../../../redux/actions/actionsDashboard";
+} from "../../../../redux/actions/actionsDashboardAdmin";
 import Swal from "sweetalert2";
 import { PulseLoader } from "react-spinners";
 
-function PanelUsuarios() {
+function PanelUsuarios({ usuario }) {
   const dispatch = useDispatch();
   const usuarios = useSelector((e) => e.usuarios);
-  const [mostrarComprasUsuario, setMostrarComprasUsuario] = useState(false);
+  const [mostrarDetallesUsuario, setMostrarDetallesUsuario] = useState(false);
   const [idUsuario, setIdUsuario] = useState(null);
   const [loading, setLoading] = useState(false);
   const [actualizando, setActualizando] = useState(false);
@@ -43,10 +42,8 @@ function PanelUsuarios() {
   }
 
   async function handleComprasUsuario(e, id) {
-    setMostrarComprasUsuario(!mostrarComprasUsuario);
+    setMostrarDetallesUsuario(!mostrarDetallesUsuario);
     setIdUsuario(id);
-    const token = localStorage.getItem("token");
-    await dispatch(obtenerDetallesUsuario(id, token));
   }
 
   function handleCambiarRolUsuario(e, id) {
@@ -113,7 +110,7 @@ function PanelUsuarios() {
               >
                 Rol
               </th>
-              <th>Ver compras</th>
+              <th>Ver detalles</th>
             </tr>
           </thead>
           {usuarios.length ? (
@@ -129,13 +126,17 @@ function PanelUsuarios() {
                         <div className={s.contenedorSpinnerSelect}>
                           <PulseLoader color="orange" size="12px" />
                         </div>
-                      ) : a.role !== "superAdmin" ? (
+                      ) : usuario.role === "superAdmin" &&
+                        a.role !== "superAdmin" ? (
                         <select name="rol" id={a.id} defaultValue={a.role}>
                           <option value="admin">admin</option>
                           <option value="user">user</option>
                         </select>
-                      ) : (
+                      ) : usuario.role === "superAdmin" &&
+                        a.role === "superAdmin" ? (
                         "superAdmin"
+                      ) : (
+                        a.role
                       )}
                     </td>
                     <td>
@@ -163,10 +164,10 @@ function PanelUsuarios() {
         </table>
       )}
 
-      {mostrarComprasUsuario && (
-        <ComprasUsuario
-          mostrarComprasUsuario={mostrarComprasUsuario}
-          setMostrarComprasUsuario={setMostrarComprasUsuario}
+      {mostrarDetallesUsuario && (
+        <DetallesUsuario
+          mostrarDetallesUsuario={mostrarDetallesUsuario}
+          setMostrarDetallesUsuario={setMostrarDetallesUsuario}
           idUsuario={idUsuario}
           setIdUsuario={setIdUsuario}
         />

@@ -7,7 +7,7 @@ import ProductosCreados from "./ProductosCreados/ProductosCreados";
 import ProductosEliminados from "./ProductosEliminados/ProductosEliminados";
 import Ventas from "./Ventas/Ventas";
 
-function DashboardAdmin() {
+function DashboardAdmin({ usuario }) {
   const [mostrarMenuAdmin, setMostrarMenuAdmin] = useState({
     crearProducto: false,
     productosCreados: false,
@@ -43,14 +43,17 @@ function DashboardAdmin() {
       {mostrarMenuAdmin.productosCreados && (
         <ProductosCreados handleMostrarMenuAdmin={handleMostrarMenuAdmin} />
       )}
-       {mostrarMenuAdmin.productosEliminados && (
+      {mostrarMenuAdmin.productosEliminados && (
         <ProductosEliminados handleMostrarMenuAdmin={handleMostrarMenuAdmin} />
       )}
       {mostrarMenuAdmin.ventas && (
         <Ventas handleMostrarMenuAdmin={handleMostrarMenuAdmin} />
       )}
       {mostrarMenuAdmin.usuarios && (
-        <PanelUsuarios handleMostrarMenuAdmin={handleMostrarMenuAdmin} />
+        <PanelUsuarios
+          handleMostrarMenuAdmin={handleMostrarMenuAdmin}
+          usuario={usuario}
+        />
       )}
     </div>
   );

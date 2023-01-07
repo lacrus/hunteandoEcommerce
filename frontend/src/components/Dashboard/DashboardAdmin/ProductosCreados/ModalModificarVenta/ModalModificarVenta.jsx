@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import ClipLoader from "react-spinners/ClipLoader";
 import Swal from "sweetalert2";
 import ImagenesModificar from "./Imagenes/ImagenesModificar";
-import { modificarProducto } from "../../../../../redux/actions/actionsDashboard";
+import { modificarProducto } from "../../../../../redux/actions/actionsDashboardAdmin";
 
 let verificarDosNumerosDespuesDeLaComa = /^\d+(\.\d{0,2})?$/;
 

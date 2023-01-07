@@ -61,7 +61,6 @@ export function obtenerProductosEliminados(token) {
 }
 
 export function crearProducto(producto, token) {
-  console.log(producto);
   return async function (dispatch) {
     try {
       const res = await axios({
@@ -165,7 +164,6 @@ export function obtenerUsuarios(token) {
       }
     };
   } catch (error) {
-    console.log("algun error");
     throw new Error(error);
   }
 }
@@ -197,7 +195,6 @@ export function obtenerDetallesUsuario(id, token) {
           authorization: `${token}`,
         },
       });
-      console.log(res);
       return dispatch({ type: GET_USER_DETAILS, payload: res.data.user });
     } catch (e) {
       throw new Error(e);

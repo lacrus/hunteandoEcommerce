@@ -10,7 +10,7 @@ import {
   GET_PRODUCTS,
   GET_DELETED_PRODUCTS,
   GET_USER_DETAILS,
-} from "../actions/actionsDashboard";
+} from "../actions/actionsDashboardAdmin";
 
 import functionOrdernarUsuarios from "../../utils/functionOdenarUsuarios";
 import functionOrdernarProductos from "../../utils/functionOdenarProductos";

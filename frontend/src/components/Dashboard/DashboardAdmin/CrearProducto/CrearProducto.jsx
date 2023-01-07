@@ -11,7 +11,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import InputFormulario from "../../../../ui/InputFormulario/InputFormulario";
 import ImagenesVender from "./ImagenesVender/ImagenesVender";
 
-import { crearProducto } from "../../../../redux/actions/actionsDashboard";
+import { crearProducto } from "../../../../redux/actions/actionsDashboardAdmin";
 import Swal from "sweetalert2";
 
 let verificarDosNumerosDespuesDeLaComa = /^\d+(\.\d{0,2})?$/;
