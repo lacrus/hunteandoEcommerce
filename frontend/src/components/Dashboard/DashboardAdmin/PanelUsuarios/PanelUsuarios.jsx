@@ -8,6 +8,7 @@ import { CgDetailsMore } from "react-icons/cg";
 import {
   ordenarUsuarios,
   obtenerUsuarios,
+  modificarRolUsuario,
 } from "../../../../redux/actions/actionsDashboard";
 import Swal from "sweetalert2";
 
@@ -40,6 +41,31 @@ function PanelUsuarios() {
   function handleComprasUsuario(e, id) {
     setMostrarComprasUsuario(!mostrarComprasUsuario);
     setIdUsuario(id);
+  }
+
+  function handleCambiarRolUsuario(e, id) {
+    console.log(e.target.value);
+    try {
+      Swal.fire({
+        title: "Cambiando rol usuario",
+        text: "Confirma cambiar el rol del usuario?",
+        icon: "question",
+        showDenyButton: true,
+      }).then(async ({ isConfirmed }) => {
+        if (isConfirmed) {
+          const token = localStorage.getItem("token");
+          await dispatch(modificarRolUsuario(id, e.target.value, token));
+        } else {
+          e.target.value = e.target.value === "admin" ? "user" : "admin";
+        }
+      });
+    } catch (e) {
+      Swal.fire(
+        "Error al cambiar el rol de usuario",
+        "Intentalo nuevamente mas tarde",
+        "error"
+      );
+    }
   }
 
   return (
@@ -89,7 +115,16 @@ function PanelUsuarios() {
                     <td>{a.id}</td>
                     <td>{a.username}</td>
                     <td>{a.email}</td>
-                    <td>{a.role}</td>
+                    <td onChange={(e) => handleCambiarRolUsuario(e, a.id)}>
+                      {a.role !== "superAdmin" ? (
+                        <select name="rol" id="rol" defaultValue={a.role}>
+                          <option value="admin">admin</option>
+                          <option value="user">user</option>
+                        </select>
+                      ) : (
+                        "superAdmin"
+                      )}
+                    </td>
                     <td>
                       <div
                         className={s.botonComprasUsuario}
@@ -103,12 +138,14 @@ function PanelUsuarios() {
               })}
             </tbody>
           ) : (
-            <tr>
-              <td></td>
-              <td></td>
-              <td className={s.renglonVacio}>Sin datos</td>
-              <td></td>
-            </tr>
+            <tbody>
+              <tr>
+                <td></td>
+                <td></td>
+                <td className={s.renglonVacio}>Sin datos</td>
+                <td></td>
+              </tr>
+            </tbody>
           )}
         </table>
       )}

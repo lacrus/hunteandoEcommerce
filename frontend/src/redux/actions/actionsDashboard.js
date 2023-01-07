@@ -164,16 +164,17 @@ export function obtenerUsuarios(token) {
       }
     };
   } catch (error) {
-    return { success: false, mensaje: error.message };
+    console.log("algun error");
+    throw new Error(error);
   }
 }
 
-export function modificarRolUsuario(id, token) {
+export function modificarRolUsuario(id, rol, token) {
   return async function (dispatch) {
     try {
       const res = await axios({
         method: "GET",
-        url: "users/updaterole/" + id,
+        url: `/dashboard/admin/users/updaterole/${id}?role=${rol}`,
         headers: {
           authorization: `${token}`,
         },
