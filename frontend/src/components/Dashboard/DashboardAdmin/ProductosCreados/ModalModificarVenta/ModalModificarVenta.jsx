@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import ClipLoader from "react-spinners/ClipLoader";
 import Swal from "sweetalert2";
 import ImagenesModificar from "./Imagenes/ImagenesModificar";
-import { modificarProducto } from "../../../../../redux/actions/actionsProductos";
+import { modificarProducto } from "../../../../../redux/actions/actionsDashboard";
 
 let verificarDosNumerosDespuesDeLaComa = /^\d+(\.\d{0,2})?$/;
 
@@ -91,8 +91,8 @@ export default function ModalModificarVenta({ producto, setEditarProducto }) {
     try {
       console.log(imagenesABorrar);
       console.log(imagenes);
-
-      await dispatch(modificarProducto(producto.id, formData));
+      const token = localStorage.getItem("token");
+      await dispatch(modificarProducto(producto.id, formData, token));
       Swal.fire({
         icon: "success",
         title: "Producto modificado correctamente!",

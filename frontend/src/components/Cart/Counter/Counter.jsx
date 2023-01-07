@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { modificarCantidadProductoCarrito } from "../../../redux/actions/actionsProductos";
+import { modificarCantidadProductoCarrito } from "../../../redux/actions/actionsDashboard";
 import s from "./Counter.module.css";
 import { MdDelete } from "react-icons/md";
 import Swal from "sweetalert2";

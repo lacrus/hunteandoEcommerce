@@ -13,7 +13,7 @@ import Swal from "sweetalert2";
 import {
   eliminarProductoCarrito,
   vaciarCarrito,
-} from "../../redux/actions/actionsProductos";
+} from "../../redux/actions/actionsDashboard";
 
 export default function Cart() {
   const dispatch = useDispatch();

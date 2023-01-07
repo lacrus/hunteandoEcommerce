@@ -4,11 +4,11 @@ import s from "./ProductosCreados.module.css";
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 
-import { ordenarProductos } from "../../../../redux/actions/actionsDashboard";
 import {
+  ordenarProductos,
   eliminarProducto,
   obtenerTodosLosProductos,
-} from "../../../../redux/actions/actionsProductos";
+} from "../../../../redux/actions/actionsDashboard";
 import ModalModificarVenta from "./ModalModificarVenta/ModalModificarVenta";
 import Loading from "../../../Loading/Loading";
 import Swal from "sweetalert2";
@@ -40,7 +40,8 @@ function ProductosCreados() {
       showCancelButton: true,
     }).then(async ({ isConfirmed }) => {
       if (isConfirmed) {
-        await dispatch(eliminarProducto(idProducto));
+        const token = localStorage.getItem("token");
+        await dispatch(eliminarProducto(idProducto, token));
       }
     });
   }
@@ -49,7 +50,8 @@ function ProductosCreados() {
     (async () => {
       setLoading(true);
       try {
-        await dispatch(obtenerTodosLosProductos("todos"));
+        const token = localStorage.getItem("token");
+        await dispatch(obtenerTodosLosProductos("todos", token));
       } catch (e) {
         Swal.fire(
           "Hubo un problema",

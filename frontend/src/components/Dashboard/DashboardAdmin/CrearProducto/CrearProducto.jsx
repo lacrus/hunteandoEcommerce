@@ -11,7 +11,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import InputFormulario from "../../../../ui/InputFormulario/InputFormulario";
 import ImagenesVender from "./ImagenesVender/ImagenesVender";
 
-import { crearProducto } from "../../../../redux/actions/actionsProductos";
+import { crearProducto } from "../../../../redux/actions/actionsDashboard";
 import Swal from "sweetalert2";
 
 let verificarDosNumerosDespuesDeLaComa = /^\d+(\.\d{0,2})?$/;
@@ -150,7 +150,8 @@ function CrearProducto({ handleMostrarMenuAdmin }) {
     formData.append("stock", e.cantidad);
 
     try {
-      await dispatch(crearProducto(formData));
+      const token = localStorage.getItem("token");
+      await dispatch(crearProducto(formData, token));
       Swal.fire({
         icon: "success",
         title: "Producto creado correctamente!",

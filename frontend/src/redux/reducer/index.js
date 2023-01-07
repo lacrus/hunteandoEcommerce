@@ -1,14 +1,15 @@
 import { GET_USER, GET_USERS } from "./../actions/actionsLogin";
+
 import {
+  ORDER_USERS,
+  ORDER_PRODUCTS,
   ADD_PRODUCT_CART,
   DELETE_PRODUCT_CART,
   MODIFY_PRODUCT_CART,
   DELETE_CART,
   GET_PRODUCTS,
   GET_DELETED_PRODUCTS,
-} from "./../actions/actionsProductos";
-
-import { ORDER_USERS, ORDER_PRODUCTS } from "../actions/actionsDashboard";
+} from "../actions/actionsDashboard";
 
 import functionOrdernarUsuarios from "../../utils/functionOdenarUsuarios";
 import functionOrdernarProductos from "../../utils/functionOdenarProductos";

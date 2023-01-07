@@ -29,9 +29,7 @@ export default function AppBar({ usuario }) {
         showDenyButton: true,
         denyButtonText: "Cancelar",
       }).then(({ isConfirmed }) => {
-        console.log(isConfirmed);
         if (isConfirmed) {
-          console.log("cerrando");
           dispatch(cerrarSesion()).then(
             Swal.fire({
               icon: "success",

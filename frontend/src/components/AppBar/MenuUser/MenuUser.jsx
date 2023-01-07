@@ -26,7 +26,7 @@ function MenuUser({ setMostrarMiCuenta, usuario, handleCerrarSesion }) {
           Mi Perfil
         </Link>
 
-        {usuario.role === "admin" ? (
+        {usuario.role === "admin" || usuario.role === "superAdmin" ? (
           <Link
             to="/dashboard/admin"
             onClick={() => setMostrarMiCuenta(false)}

@@ -50,11 +50,11 @@ function App() {
         <Route
           path="/dashboard/admin"
           element={
-            // usuario.idAdmins === true ? (
-            <DashboardAdmin usuario={usuario} />
-            // ) : (
-            //   <Navigate to="/" replace={true} />
-            // )
+            usuario.role === "admin" || usuario.role === "superAdmin" ? (
+              <DashboardAdmin usuario={usuario} />
+            ) : (
+              <Navigate to="/" replace={true} />
+            )
           }
         />
         <Route

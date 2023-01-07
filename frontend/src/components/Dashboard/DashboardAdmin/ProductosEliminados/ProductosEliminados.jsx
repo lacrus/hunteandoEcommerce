@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import s from "./ProductosEliminados.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import {
-  obtenerProductosEliminados,
-  recuperarProductoEliminado,
-} from "../../../../redux/actions/actionsProductos";
+
 import Swal from "sweetalert2";
 import Loading from "../../../Loading/Loading";
-import { ordenarProductos } from "../../../../redux/actions/actionsDashboard";
+import {
+  ordenarProductos,
+  obtenerProductosEliminados,
+  recuperarProductoEliminado,
+} from "../../../../redux/actions/actionsDashboard";
 import { RiDeviceRecoverFill } from "react-icons/ri";
 
 function ProductosEliminados({ handleMostrarMenuAdmin }) {
@@ -32,7 +33,8 @@ function ProductosEliminados({ handleMostrarMenuAdmin }) {
         showCancelButton: true,
       }).then(async ({ isConfirmed }) => {
         if (isConfirmed) {
-          await dispatch(recuperarProductoEliminado(idProducto));
+          const token = localStorage.getItem("token");
+          await dispatch(recuperarProductoEliminado(idProducto, token));
           handleMostrarMenuAdmin("productosCreados");
         }
       });
@@ -45,7 +47,8 @@ function ProductosEliminados({ handleMostrarMenuAdmin }) {
     (async () => {
       setLoading(true);
       try {
-        await dispatch(obtenerProductosEliminados());
+        const token = localStorage.getItem("token");
+        await dispatch(obtenerProductosEliminados(token));
       } catch (e) {
         Swal.fire(
           "Error",

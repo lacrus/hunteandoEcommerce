@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import s from "./PanelUsuarios.module.css";
 
 import { useSelector, useDispatch } from "react-redux";
-import { obtenerUsuarios } from "../../../../redux/actions/actionsLogin";
 import ComprasUsuario from "./ComprasUsuario/ComprasUsuario";
 import Loading from "../../../Loading/Loading";
 import { CgDetailsMore } from "react-icons/cg";
-import { ordenarUsuarios } from "../../../../redux/actions/actionsDashboard";
+import {
+  ordenarUsuarios,
+  obtenerUsuarios,
+} from "../../../../redux/actions/actionsDashboard";
 import Swal from "sweetalert2";
 
 function PanelUsuarios() {
@@ -20,7 +22,8 @@ function PanelUsuarios() {
     (async () => {
       setLoading(true);
       try {
-        await dispatch(obtenerUsuarios()); // OBTENER USUARIOS
+        const token = localStorage.getItem("token");
+        await dispatch(obtenerUsuarios(token));
       } catch (e) {
         Swal.fire("Error", "No se pudieron obtener los usuario", "error");
       }

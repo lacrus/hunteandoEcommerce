@@ -89,27 +89,6 @@ export const cerrarSesion = () => {
   }
 };
 
-export function obtenerUsuarios() {
-  try {
-    return async function (dispatch) {
-      let res = await axios({
-        method: "GET",
-        url: "/auth/users",
-      });
-      if (res.data.message === "succesfully") {
-        return dispatch({
-          type: GET_USERS,
-          payload: res.data.users,
-          success: true,
-        });
-      } else {
-        return { success: false, mensaje: "Error" };
-      }
-    };
-  } catch (error) {
-    return { success: false, mensaje: error.message };
-  }
-}
 export default function logearToken(token) {
   try {
     return async function (dispatch) {
