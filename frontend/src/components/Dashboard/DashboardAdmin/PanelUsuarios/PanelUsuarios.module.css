@@ -31,6 +31,13 @@
   background: #d8d8d8;
 }
 
+.contenedorSpinnerSelect {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
 .botonComprasUsuario:hover {
   cursor: pointer;
   color: #f99716;

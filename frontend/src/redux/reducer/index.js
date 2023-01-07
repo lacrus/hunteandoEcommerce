@@ -9,6 +9,7 @@ import {
   DELETE_CART,
   GET_PRODUCTS,
   GET_DELETED_PRODUCTS,
+  GET_USER_DETAILS,
 } from "../actions/actionsDashboard";
 
 import functionOrdernarUsuarios from "../../utils/functionOdenarUsuarios";
@@ -17,6 +18,7 @@ import functionOrdernarProductos from "../../utils/functionOdenarProductos";
 const initialState = {
   usuario: {},
   usuarios: [],
+  detallesUsuario: {},
   ordenUsuarios: { id: "asc", username: null, email: null, role: null },
   productos: [],
   productosEliminados: [],
@@ -243,6 +245,19 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         usuarios: action.payload,
+      };
+
+    case GET_USER_DETAILS:
+      return {
+        ...state,
+        detallesUsuario: {
+          id: action.payload.id,
+          email: action.payload.email,
+          role: action.payload.role,
+          username: action.payload.username,
+          firstname: action.payload.UserDetail?.firstname,
+          lastname: action.payload.UserDetail?.lastname,
+        },
       };
 
     case GET_PRODUCTS:

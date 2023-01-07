@@ -9,8 +9,10 @@ import {
   ordenarUsuarios,
   obtenerUsuarios,
   modificarRolUsuario,
+  obtenerDetallesUsuario,
 } from "../../../../redux/actions/actionsDashboard";
 import Swal from "sweetalert2";
+import { PulseLoader } from "react-spinners";
 
 function PanelUsuarios() {
   const dispatch = useDispatch();
@@ -18,6 +20,8 @@ function PanelUsuarios() {
   const [mostrarComprasUsuario, setMostrarComprasUsuario] = useState(false);
   const [idUsuario, setIdUsuario] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [actualizando, setActualizando] = useState(false);
+  const [idSelect, setIdSelect] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -38,34 +42,39 @@ function PanelUsuarios() {
     setCambioOrden(!cambioOrden);
   }
 
-  function handleComprasUsuario(e, id) {
+  async function handleComprasUsuario(e, id) {
     setMostrarComprasUsuario(!mostrarComprasUsuario);
     setIdUsuario(id);
+    const token = localStorage.getItem("token");
+    await dispatch(obtenerDetallesUsuario(id, token));
   }
 
   function handleCambiarRolUsuario(e, id) {
-    console.log(e.target.value);
-    try {
-      Swal.fire({
-        title: "Cambiando rol usuario",
-        text: "Confirma cambiar el rol del usuario?",
-        icon: "question",
-        showDenyButton: true,
-      }).then(async ({ isConfirmed }) => {
+    setIdSelect(e.target.id);
+    setActualizando(true);
+    Swal.fire({
+      title: "Cambiando rol usuario",
+      text: "Confirma cambiar el rol del usuario?",
+      icon: "question",
+      showDenyButton: true,
+    }).then(async ({ isConfirmed }) => {
+      try {
         if (isConfirmed) {
           const token = localStorage.getItem("token");
           await dispatch(modificarRolUsuario(id, e.target.value, token));
         } else {
           e.target.value = e.target.value === "admin" ? "user" : "admin";
         }
-      });
-    } catch (e) {
-      Swal.fire(
-        "Error al cambiar el rol de usuario",
-        "Intentalo nuevamente mas tarde",
-        "error"
-      );
-    }
+      } catch (error) {
+        Swal.fire(
+          "Error al cambiar el rol de usuario",
+          "Intentalo nuevamente mas tarde",
+          "error"
+        );
+      }
+      setIdSelect(false);
+      setActualizando(false);
+    });
   }
 
   return (
@@ -116,8 +125,12 @@ function PanelUsuarios() {
                     <td>{a.username}</td>
                     <td>{a.email}</td>
                     <td onChange={(e) => handleCambiarRolUsuario(e, a.id)}>
-                      {a.role !== "superAdmin" ? (
-                        <select name="rol" id="rol" defaultValue={a.role}>
+                      {actualizando && `${a.id}` === `${idSelect}` ? (
+                        <div className={s.contenedorSpinnerSelect}>
+                          <PulseLoader color="orange" size="12px" />
+                        </div>
+                      ) : a.role !== "superAdmin" ? (
+                        <select name="rol" id={a.id} defaultValue={a.role}>
                           <option value="admin">admin</option>
                           <option value="user">user</option>
                         </select>

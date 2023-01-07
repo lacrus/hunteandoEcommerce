@@ -8,6 +8,7 @@ export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_DELETED_PRODUCTS = "GET_DELETED_PRODUCTS";
 export const ORDER_USERS = "ORDER_USERS";
 export const ORDER_PRODUCTS = "ORDER_PRODUCTS";
+export const GET_USER_DETAILS = "GET_USER_DETAILS";
 
 // ------------------ ACTIONS PRODUCTOS ------------------
 
@@ -170,8 +171,8 @@ export function obtenerUsuarios(token) {
 }
 
 export function modificarRolUsuario(id, rol, token) {
-  return async function (dispatch) {
-    try {
+  try {
+    return async function (dispatch) {
       const res = await axios({
         method: "GET",
         url: `/dashboard/admin/users/updaterole/${id}?role=${rol}`,
@@ -179,9 +180,28 @@ export function modificarRolUsuario(id, rol, token) {
           authorization: `${token}`,
         },
       });
+      return dispatch({ type: "GET_USERS", payload: res.data.users });
+    };
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
+export function obtenerDetallesUsuario(id, token) {
+  return async function (dispatch) {
+    try {
+      const res = await axios({
+        method: "GET",
+        url: "/dashboard/admin/users/userdetail/" + id,
+        headers: {
+          authorization: `${token}`,
+        },
+      });
       console.log(res);
-      return dispatch({ action: "GET_USERS", payload: res.data.users });
-    } catch (e) {}
+      return dispatch({ type: GET_USER_DETAILS, payload: res.data.user });
+    } catch (e) {
+      throw new Error(e);
+    }
   };
 }
 
