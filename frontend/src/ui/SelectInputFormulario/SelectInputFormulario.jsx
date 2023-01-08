@@ -33,9 +33,8 @@ export default function SelectInputFormulario({
         className={`${s.input} ${estiloError && s.error}`}
         name={name}
         id={id}
-        defaultValue="desabilitado"
       >
-        <option value="desabilitado" disabled={touched.province ? true : false}>
+        <option value="desabilitado" disabled={value.length ? true : false}>
           Selecciona una opción
         </option>
         {options.map((i) => {

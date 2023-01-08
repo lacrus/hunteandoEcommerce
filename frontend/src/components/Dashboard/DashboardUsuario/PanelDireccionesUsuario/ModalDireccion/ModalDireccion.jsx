@@ -10,13 +10,14 @@ import { PulseLoader } from "react-spinners";
 import SelectInputFormulario from "../../../../../ui/SelectInputFormulario/SelectInputFormulario";
 import {
   crearDireccionUsuario,
+  modificarrDireccionUsuario,
   eliminarDireccionUsuario,
 } from "../../../../../redux/actions/actionsDashboardClient";
 
 function ModalDireccion({
   usuario,
   token,
-  handleCrearDireccion,
+  // handleCrearDireccion,
   direccion,
   setMostrarModalDireccion,
   mostrarModalDireccion,
@@ -51,7 +52,7 @@ function ModalDireccion({
 
   const dispatch = useDispatch();
 
-  const [loadingDireccion, setLoadingDireccion] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [eliminandoDireccion, setEliminandoDireccion] = useState(false);
 
   const initialValues = {
@@ -84,7 +85,36 @@ function ModalDireccion({
 
   async function onSubmit(e) {
     e.id = direccion?.id;
-    handleCrearDireccion(e);
+    Swal.fire({
+      icon: "question",
+      title: `${
+        mostrarModalDireccion === "nuevaDireccion" ? "Creando " : "Modificando "
+      } dirección`,
+      text: "Seguro desea continuar?",
+      showDenyButton: true,
+    }).then(async ({ isConfirmed }) => {
+      if (isConfirmed) {
+        setLoading(true);
+        try {
+          if (mostrarModalDireccion === "nuevaDireccion") {
+            await dispatch(crearDireccionUsuario(usuario.id, e, token));
+          } else {
+            await dispatch(modificarrDireccionUsuario(usuario.id, e, token));
+          }
+          setMostrarModalDireccion(false);
+          setDireccion({});
+        } catch (e) {
+          Swal.fire(
+            `Error al ${
+              mostrarModalDireccion === "nuevaDireccion" ? "crear" : "modificar"
+            } dirección`,
+            "Intenta nuevamente mas tarde",
+            "error"
+          );
+        }
+      }
+      setLoading(false);
+    });
   }
 
   const formik = useFormik({ initialValues, validationSchema, onSubmit });
@@ -100,22 +130,28 @@ function ModalDireccion({
   } = formik;
 
   function handleCerrarModalDireccion(e) {
-    if (e.target.id === "fondoModal" || e.target.id === "botonCerrar")
-      Swal.fire({
-        title: `Cancelar ${
-          mostrarModalDireccion === "nuevaDireccion"
-            ? "creación"
-            : "modificación"
-        } de la dirección?`,
-        text: "Los cambios realizados seran perdidos",
-        icon: "question",
-        showDenyButton: true,
-      }).then(({ isConfirmed }) => {
-        if (isConfirmed) {
-          setMostrarModalDireccion(!mostrarModalDireccion);
-          setDireccion({});
-        }
-      });
+    if (e.target.id === "fondoModal" || e.target.id === "botonCerrar") {
+      if (Object.keys(touched).length) {
+        Swal.fire({
+          title: `Cancelar ${
+            mostrarModalDireccion === "nuevaDireccion"
+              ? "creación"
+              : "modificación"
+          } de la dirección?`,
+          text: "Los cambios realizados seran perdidos",
+          icon: "question",
+          showDenyButton: true,
+        }).then(({ isConfirmed }) => {
+          if (isConfirmed) {
+            setMostrarModalDireccion(!mostrarModalDireccion);
+            setDireccion({});
+          }
+        });
+      } else {
+        setMostrarModalDireccion(!mostrarModalDireccion);
+        setDireccion({});
+      }
+    }
   }
 
   function handleEliminarDireccion() {
@@ -125,7 +161,7 @@ function ModalDireccion({
       icon: "warning",
       showDenyButton: true,
     }).then(async ({ isConfirmed }) => {
-      setEliminandoDireccion(true);
+      setLoading(true);
       try {
         if (isConfirmed) {
           await dispatch(
@@ -141,7 +177,7 @@ function ModalDireccion({
           "error"
         );
       }
-      setEliminandoDireccion(false);
+      setLoading(false);
     });
   }
 
@@ -256,19 +292,24 @@ function ModalDireccion({
             label={"Número contacto"}
           />
 
-          {!loadingDireccion ? (
-            <button className={s.botonModificar} type="submit">
+          {!loading ? (
+            <button
+              className={s.botonModificar}
+              type="submit"
+              disabled={Object.keys(touched).length < 1 ? true : false}
+            >
               {mostrarModalDireccion === "nuevaDireccion"
                 ? "Crear"
                 : "Modificar"}{" "}
               dirección
             </button>
           ) : (
-            <PulseLoader />
+            <div className={s.contenedorLoader}>
+              <PulseLoader color="#f99716" />
+            </div>
           )}
         </form>
-        {mostrarModalDireccion ===
-        "nuevaDireccion" ? null : !eliminandoDireccion ? (
+        {mostrarModalDireccion === "nuevaDireccion" ? null : !loading ? (
           <button
             className={`${s.botonModificar} ${s.botonBorrarDireccion}`}
             type="button"
@@ -277,7 +318,9 @@ function ModalDireccion({
             Eliminar dirección
           </button>
         ) : (
-          <PulseLoader />
+          <div className={s.contenedorLoader}>
+            <PulseLoader color="#f99716" />
+          </div>
         )}
       </div>
 
