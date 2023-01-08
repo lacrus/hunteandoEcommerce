@@ -10,7 +10,7 @@ import YupPassword from "yup-password";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import Swal from "sweetalert2";
 import { PulseLoader } from "react-spinners";
-import modificarUsuario from "../../../../redux/actions/actionsDashboardClient";
+import { modificarUsuario } from "../../../../redux/actions/actionsDashboardClient";
 
 YupPassword(Yup);
 

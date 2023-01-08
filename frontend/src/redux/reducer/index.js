@@ -12,6 +12,8 @@ import {
   GET_USER_DETAILS,
 } from "../actions/actionsDashboardAdmin";
 
+import { GET_ADDRESSES } from "../actions/actionsDashboardClient";
+
 import functionOrdernarUsuarios from "../../utils/functionOdenarUsuarios";
 import functionOrdernarProductos from "../../utils/functionOdenarProductos";
 
@@ -260,6 +262,12 @@ const rootReducer = (state = initialState, action) => {
         },
       };
 
+    case GET_ADDRESSES:
+      return {
+        ...state,
+        direccionesUsuario: action.payload,
+      };
+
     case GET_PRODUCTS:
       return {
         ...state,
@@ -272,6 +280,7 @@ const rootReducer = (state = initialState, action) => {
         productosEliminados: action.payload,
       };
 
+    // ACTIONS CARRITO
     case ADD_PRODUCT_CART:
       return {
         ...state,
@@ -302,7 +311,7 @@ const rootReducer = (state = initialState, action) => {
         carro: [],
       };
 
-    // ACTIONS DASHBOARD
+    // ACTIONS ORDENAR DASHBOARD
     case ORDER_PRODUCTS:
       const respuestaFunctionOrdenarProductos = functionOrdernarProductos(
         action.payload, // columna a ordenar

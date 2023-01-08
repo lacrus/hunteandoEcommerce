@@ -1,5 +1,7 @@
 import axios from "axios";
 
+import { GET_USERS } from "./actionsLogin";
+
 export const ADD_PRODUCT_CART = "ADD_PRODUCT_CART";
 export const DELETE_PRODUCT_CART = "DELETE_PRODUCT_CART";
 export const MODIFY_PRODUCT_CART = "MODIFY_PRODUCT_CART";
@@ -155,7 +157,7 @@ export function obtenerUsuarios(token) {
       });
       if (res.data.message === "succesfully") {
         return dispatch({
-          type: "GET_USERS",
+          type: GET_USERS,
           payload: res.data.users,
           success: true,
         });
@@ -178,7 +180,7 @@ export function modificarRolUsuario(id, rol, token) {
           authorization: `${token}`,
         },
       });
-      return dispatch({ type: "GET_USERS", payload: res.data.users });
+      return dispatch({ type: GET_USERS, payload: res.data.users });
     };
   } catch (error) {
     throw new Error(error);

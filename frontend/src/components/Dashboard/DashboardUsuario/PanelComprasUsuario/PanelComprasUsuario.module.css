@@ -2,10 +2,51 @@
   width: 100%;
   min-height: calc(100% - var(--alto-menu-usuario));
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
-.tituloComprasUsuarios {
+.tituloPanelComprasUsuario {
   font-size: 1.2rem;
   font-weight: bold;
+  margin-bottom: 2vh;
+}
+
+.tablaPanelComprasUsuario {
+  width: 100%;
+  text-align: center;
+  padding: 5vh 0;
+}
+
+.encabezadoPanelComprasUsuario {
+  padding-bottom: 15%;
+  border-bottom: 1px solid black;
+}
+
+.bodyPanelComprasUsuario tr {
+  line-height: 25px;
+}
+
+.bodyPanelComprasUsuario tr:nth-child(even) {
+  background: #d8d8d8;
+}
+
+.contenedorSpinnerSelect {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.botonPanelComprasUsuario:hover {
+  cursor: pointer;
+  color: #f99716;
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+.renglonVacio {
+  padding-top: 2vh;
 }
