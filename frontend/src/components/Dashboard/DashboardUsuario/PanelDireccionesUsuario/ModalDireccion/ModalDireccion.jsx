@@ -77,7 +77,7 @@ function ModalDireccion({
       .required("*Campo requerido"),
     city: Yup.string()
       .max(40, "*La ciudad debe tener máximo 40 carácteres")
-      .required(),
+      .required("*Campo requerido"),
     province: Yup.string().required("*Campo requerido").nullable(),
     detail: Yup.string().max(40, "*La ciudad debe tener máximo 40 carácteres"),
     contact: Yup.number().max(8888888888888, "*Número incorrecto"),
