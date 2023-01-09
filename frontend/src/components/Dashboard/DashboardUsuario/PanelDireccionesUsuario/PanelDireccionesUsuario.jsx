@@ -13,7 +13,7 @@ function PanelDireccionesUsuario({ token, usuario }) {
   const dispatch = useDispatch();
   const [mostrarModalDireccion, setMostrarModalDireccion] = useState(false);
   const [direccion, setDireccion] = useState({});
-  const direcciones = useSelector((e) => e.direccionesUsuario);
+  const direcciones = useSelector((e) => e.general.direccionesUsuario);
 
   const anchoPantalla = resizeHook().width;
 

@@ -14,7 +14,7 @@ import { RiDeviceRecoverFill } from "react-icons/ri";
 
 function ProductosEliminados({ handleMostrarMenuAdmin }) {
   const dispatch = useDispatch();
-  const productosEliminados = useSelector((e) => e.productosEliminados);
+  const productosEliminados = useSelector((e) => e.general.productosEliminados);
 
   const [loading, setLoading] = useState(false);
 

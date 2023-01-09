@@ -15,7 +15,7 @@ import Swal from "sweetalert2";
 
 function ProductosCreados() {
   const dispatch = useDispatch();
-  const productos = useSelector((e) => e.productos);
+  const productos = useSelector((e) => e.general.productos);
   const [loading, setLoading] = useState(false);
 
   const [editarProducto, setEditarProducto] = useState(false);

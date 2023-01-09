@@ -8,8 +8,8 @@ export default function ProductDetail() {
   const params = useParams();
   const dispatch = useDispatch();
 
-  const producto = useSelector((e) => e.detalleProducto);
-  const usuario = useSelector((e) => e.usuario);
+  const producto = useSelector((e) => e.general.detalleProducto);
+  const usuario = useSelector((e) => e.general.usuario);
   const [pedido, setPedido] = useState({ cantidad: 1 });
   const [imagenSeleccionada, setImagenSeleccionada] = useState(
     producto.imagen[0]

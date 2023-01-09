@@ -15,7 +15,7 @@ import { PulseLoader } from "react-spinners";
 
 function PanelUsuarios({ usuario }) {
   const dispatch = useDispatch();
-  const usuarios = useSelector((e) => e.usuarios);
+  const usuarios = useSelector((e) => e.general.usuarios);
   const [mostrarDetallesUsuario, setMostrarDetallesUsuario] = useState(false);
   const [idUsuario, setIdUsuario] = useState(null);
   const [loading, setLoading] = useState(false);

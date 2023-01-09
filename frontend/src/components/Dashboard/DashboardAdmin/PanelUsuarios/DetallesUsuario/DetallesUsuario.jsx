@@ -13,7 +13,7 @@ function DetallesUsuario({
   setIdUsuario,
 }) {
   const dispatch = useDispatch();
-  const detallesUsuario = useSelector((e) => e.detallesUsuario);
+  const detallesUsuario = useSelector((e) => e.general.detallesUsuario);
 
   const [loading, setLoading] = useState(false);
 

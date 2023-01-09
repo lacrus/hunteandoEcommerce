@@ -18,8 +18,8 @@ import {
 export default function Cart() {
   const dispatch = useDispatch();
 
-  const usuario = useSelector((e) => e.usuario);
-  const productos = useSelector((e) => e.carro);
+  const usuario = useSelector((e) => e.general.usuario);
+  const productos = useSelector((e) => e.carro.carro);
 
   // const [cart, setCart] = useState(productos);
   const [total, setTotal] = useState(0);

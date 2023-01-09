@@ -16,10 +16,11 @@ import Footer from "./components/Footer/Footer";
 import BotonWapp from "./components/BotonWapp/BotonWapp";
 import DashboardUsuario from "./components/Dashboard/DashboardUsuario/DashboardUsuario";
 import DashboardAdmin from "./components/Dashboard/DashboardAdmin/DashboardAdmin";
-import logearToken from "./redux/actions/actionsLogin";
+import logearToken, { cerrarSesion } from "./redux/actions/actionsLogin";
+import { obtenerCarrito } from "./redux/actions/actionsCart";
 
 function App() {
-  const usuario = useSelector((e) => e.usuario);
+  const usuario = useSelector((e) => e.general.usuario);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -27,11 +28,13 @@ function App() {
       try {
         const token = localStorage.getItem("token");
         if (token && !usuario.username) {
-          await dispatch(logearToken(token));
+          const dataUser = await dispatch(logearToken(token));
+          await dispatch(obtenerCarrito(dataUser.payload.id, token));
         }
       } catch (e) {
-        console.log("app.js entro en error");
+        console.log("app.js entro en error", e);
         localStorage.removeItem("token");
+        await dispatch(cerrarSesion());
       }
     })();
   }, []);

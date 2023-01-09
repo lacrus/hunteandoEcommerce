@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 
 function Ventas() {
   const dispatch = useDispatch();
-  const ventas = useSelector((e) => e.ventas);
+  const ventas = useSelector((e) => e.general.ventas);
   const [mostrarDetalleVenta, setMostrarDetalleVenta] = useState(false);
   const [idVenta, setIdVenta] = useState(null);
 

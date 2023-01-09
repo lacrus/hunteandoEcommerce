@@ -11,7 +11,7 @@ import resizeHook from "../../../hooks/resizeHook";
 SwiperCore.use([Navigation]);
 
 export default function ComponenteSwiper() {
-  const productos = useSelector((e) => e.carro);
+  const productos = useSelector((e) => e.carro.carro);
 
   const tamanoPantalla = resizeHook();
   let cantidadTarjetas =
@@ -41,7 +41,7 @@ export default function ComponenteSwiper() {
         // onSwiper={(swiper) => console.log(swiper)}
         // className={cantidadTarjetas < 3 ? s.swiper : null}
       >
-        {productos.map((i) => {
+        {productos?.map((i) => {
           return (
             <SwiperSlide key={i.id} className={s.contenedorTarjetaSwiper}>
               <img

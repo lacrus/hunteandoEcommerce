@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { AiOutlineCloseCircle, AiOutlineLogout } from "react-icons/ai";
 
 function ModalDetalleVenta({ idVenta, setMostrarDetalleVenta, setIdVenta }) {
-  const detalleVenta = useSelector((e) => e.detalleVenta);
+  const detalleVenta = useSelector((e) => e.general.detalleVenta);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -100,7 +100,7 @@ function ModalDetalleVenta({ idVenta, setMostrarDetalleVenta, setIdVenta }) {
                   <td>$ {i.cantidad * i.precio}</td>
                   <td>
                     <Link
-                    className={s.linkDetalleVenta}
+                      className={s.linkDetalleVenta}
                       to={`/productos/detalle/${i.id}`}
                       target="_blank"
                       rel="noopener no referrer"

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import s from "./AppBar.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { cerrarSesion } from "../../redux/actions/actionsLogin";
 import { BiSearchAlt } from "react-icons/bi";
 import {

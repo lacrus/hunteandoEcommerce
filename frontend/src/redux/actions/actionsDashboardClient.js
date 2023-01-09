@@ -42,7 +42,6 @@ export function obtenerDireccionesUsuario(idUsuario, token) {
 }
 
 export function crearDireccionUsuario(idUsuario, datosDireccion, token) {
-  console.log(idUsuario, datosDireccion, token);
   return async (dispatch) => {
     try {
       const res = await axios({
@@ -53,7 +52,6 @@ export function crearDireccionUsuario(idUsuario, datosDireccion, token) {
           authorization: `${token}`,
         },
       });
-      console.log(res);
       return dispatch({ type: GET_ADDRESSES, payload: res.data.addresses });
     } catch (e) {
       throw new Error(e);
