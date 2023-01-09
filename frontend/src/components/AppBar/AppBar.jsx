@@ -58,7 +58,28 @@ export default function AppBar({ usuario }) {
   }
 
   function handlerCarrito() {
-    navigate("/carrito");
+    if (usuario.username) {
+      navigate("/carrito");
+    } else {
+      Swal.fire({
+        title: "Inicia sesión",
+        text: "O crea una cuenta para poder comprar",
+        icon: "warning",
+        confirmButtonText: "Iniciar sesión",
+        showCancelButton: true,
+        cancelButtonText: "Volver",
+        cancelButtonColor: "red",
+        showDenyButton: true,
+        denyButtonText: "Registrarse",
+        denyButtonColor: "grey",
+      }).then(({ isConfirmed, isDenied }) => {
+        if (isConfirmed) {
+          navigate("/login");
+        } else if (isDenied) {
+          navigate("/registrarse");
+        }
+      });
+    }
   }
 
   useEffect(() => {
@@ -110,17 +131,16 @@ export default function AppBar({ usuario }) {
             <option>English (U.S)</option>
             <option>Portugues (Europa)</option>
           </select>
-          {usuario.username ? (
-            <div className={s.contenedorCarritoHeader}>
-              <AiOutlineShoppingCart
-                onClick={handlerCarrito}
-                className={s.carritoHeader}
-              />
-              <div className={s.cantidadCarritoHeader}>
-                {cantidadProductosCarrito}
-              </div>
+
+          <div className={s.contenedorCarritoHeader}>
+            <AiOutlineShoppingCart
+              onClick={handlerCarrito}
+              className={s.carritoHeader}
+            />
+            <div className={s.cantidadCarritoHeader}>
+              {cantidadProductosCarrito}
             </div>
-          ) : null}
+          </div>
 
           <div
             onClick={
