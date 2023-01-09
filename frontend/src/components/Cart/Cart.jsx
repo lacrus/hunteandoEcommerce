@@ -10,18 +10,21 @@ import imgCarroVacio from "../../assets/images/vacio.jpg";
 
 import Swal from "sweetalert2";
 
+import imgNotFound from "../../assets/images/imgNotFound.jpeg";
+
 import {
   eliminarProductoCarrito,
   vaciarCarrito,
-} from "../../redux/actions/actionsDashboardAdmin";
+} from "../../redux/actions/actionsCart";
 
-export default function Cart() {
+export default function Cart({ usuario }) {
   const dispatch = useDispatch();
 
-  const usuario = useSelector((e) => e.general.usuario);
-  const productos = useSelector((e) => e.carro.carro);
+  const productos = useSelector((e) => e.carro.carro.CartItems);
+  const carrito = useSelector((e) => e.carro.carro);
 
-  // const [cart, setCart] = useState(productos);
+  const token = localStorage.getItem("token");
+
   const [total, setTotal] = useState(0);
 
   async function handleVaciarCarrito() {
@@ -31,7 +34,8 @@ export default function Cart() {
       showDenyButton: true,
       denyButtonText: "Volver",
     }).then(({ isConfirmed }) => {
-      if (isConfirmed) dispatch(vaciarCarrito(usuario.id));
+      if (isConfirmed)
+        dispatch(vaciarCarrito(usuario.id, { id: carrito.id }, token));
     });
   }
 
@@ -41,21 +45,24 @@ export default function Cart() {
       title: "Seguro desea eliminar el producto?",
       showDenyButton: true,
       denyButtonText: "Volver",
-    }).then(({ isConfirmed }) => {
-      if (isConfirmed) dispatch(eliminarProductoCarrito(e));
+    }).then(async ({ isConfirmed }) => {
+      if (isConfirmed) {
+        console.log("ñakjdbvasojbvajbv");
+        await dispatch(eliminarProductoCarrito(usuario.id, { id: e }, token));
+      }
     });
   }
 
   useEffect(() => {
     let result = 0;
-    for (const carro of productos) {
-      let final = carro.cantidad * carro.precio;
-      result += final;
+    if (productos) {
+      for (const carro of productos) {
+        let final = carro.quantity * carro.Product.price;
+        result += final;
+      }
+      setTotal(result);
     }
-    setTotal(result);
   }, [productos]);
-
-  console.log(productos);
 
   return productos?.length === 0 ? (
     <div className={s.contenedorCarroVacio}>
@@ -77,21 +84,27 @@ export default function Cart() {
               <div key={item.id} className={s.tarjetaProductos}>
                 <div className={s.contenedorImagenTarjeta}>
                   <img
-                    src={item.imagen}
-                    alt="img"
+                    src={
+                      item.Product.image?.length
+                        ? item.Product.image[0]
+                        : imgNotFound
+                    }
+                    alt="Imagen producto"
                     className={s.imagenTarjeta}
                   />
                 </div>
-
                 <div className={s.contenedorInformacionTarjeta}>
-                  <h3>Precio: ${item.precio}</h3>
+                  <h3>Precio: ${item.Product.price}</h3>
                   <p sx={{ fontFamily: "comspotExI", marginBottom: "2rem" }}>
                     {item.info}
                   </p>
                   <Counter
-                    cantidadInicial={item.cantidad}
-                    cantidadDisponible={item.disponible}
-                    idProducto={item.id}
+                    token={token}
+                    userId={usuario.id}
+                    cantidadInicial={item.quantity}
+                    cantidadDisponible={item.Product.stock}
+                    idProducto={item.Product.id}
+                    itemCartId={item.id}
                     handleEliminarProducto={() =>
                       handleEliminarProducto(item.id)
                     }

@@ -6,13 +6,12 @@ import SecondComponent from "./segundo/SegundoComponente";
 import MiTienda from "./Swiper/Swiper";
 import SobreMi from "./SobreMi/SobreMi";
 
-
-export default function HomePage() {
+export default function HomePage({ usuario }) {
   return (
     <div className={s.contenedorHome}>
       <Slider />
       <SecondComponent />
-      <MiTienda />
+      <MiTienda usuario={usuario} />
       <SobreMi />
     </div>
   );

@@ -43,11 +43,11 @@ function App() {
     <BrowserRouter>
       <AppBar usuario={usuario} />
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<HomePage usuario={usuario} />} />
         <Route path="/login" element={<Login />} />
         <Route path="/login/:id" element={<Login />} />
         <Route path="/registrarse" element={<Register />} />
-        <Route path="/carrito" element={<Cart />} />
+        <Route path="/carrito" element={<Cart usuario={usuario} />} />
         {/* <Route path="/productos" element={<Products />} />
         <Route path="/productos/detalle/:id" element={<ProductDetail />} /> */}
         <Route

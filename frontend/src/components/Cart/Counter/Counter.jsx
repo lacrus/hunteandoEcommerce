@@ -4,23 +4,26 @@ import { modificarCantidadProductoCarrito } from "../../../redux/actions/actions
 import s from "./Counter.module.css";
 import { MdDelete } from "react-icons/md";
 import Swal from "sweetalert2";
+import { modificarProductoCarrito } from "../../../redux/actions/actionsCart";
 
 export default function Counter({
+  userId,
+  token,
   cantidadInicial,
   cantidadDisponible,
   idProducto,
   handleEliminarProducto,
+  itemCartId,
 }) {
   const dispatch = useDispatch();
 
   async function handlerSumar() {
     if (cantidadInicial < cantidadDisponible) {
-      await dispatch(
-        modificarCantidadProductoCarrito({
-          idProducto,
-          cantidad: cantidadInicial + 1,
-        })
-      );
+      const dataCartItem = {
+        id: itemCartId,
+        quantity: cantidadInicial + 1,
+      };
+      await dispatch(modificarProductoCarrito(userId, dataCartItem, token));
     } else {
       Swal.fire({
         icon: "warning",
@@ -32,12 +35,11 @@ export default function Counter({
 
   async function handlerRestar() {
     if (cantidadInicial > 1) {
-      await dispatch(
-        modificarCantidadProductoCarrito({
-          idProducto,
-          cantidad: cantidadInicial - 1,
-        })
-      );
+      const dataCartItem = {
+        id: itemCartId,
+        quantity: cantidadInicial - 1,
+      };
+      await dispatch(modificarProductoCarrito(userId, dataCartItem, token));
     } else {
       handleEliminarProducto();
     }

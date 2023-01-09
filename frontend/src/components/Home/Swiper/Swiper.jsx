@@ -1,17 +1,24 @@
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { GrPrevious, GrNext, GrCart } from "react-icons/gr";
-
 import SwiperCore, { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import s from "./Swiper.module.css";
 import resizeHook from "../../../hooks/resizeHook";
+import { obtenerProductosRandomTienda } from "../../../redux/actions/actionsShop";
+import imgNotFound from "../../../assets/images/imgNotFound.jpeg";
+import Swal from "sweetalert2";
+import { PulseLoader } from "react-spinners";
+import { agregarProductoCarrito } from "../../../redux/actions/actionsCart";
 SwiperCore.use([Navigation]);
 
-export default function ComponenteSwiper() {
-  const productos = useSelector((e) => e.carro.carro);
+export default function ComponenteSwiper({ usuario }) {
+  const productos = useSelector((e) => e.tienda.productosRandom);
+  const dispatch = useDispatch();
+
+  const [agregandoProducto, setAgregandoProducto] = useState(false);
 
   const tamanoPantalla = resizeHook();
   let cantidadTarjetas =
@@ -19,6 +26,29 @@ export default function ComponenteSwiper() {
 
   const navigationPrevRef = React.useRef(null);
   const navigationNextRef = React.useRef(null);
+
+  async function handleAgregarAlCarro(id) {
+    const producto = {
+      id,
+      quantity: 1,
+    };
+    try {
+      const token = localStorage.getItem("token");
+      await dispatch(agregarProductoCarrito(usuario.id, producto, token));
+    } catch (e) {
+      Swal.fire(
+        "Error al cargar el producto!",
+        "Intentalo nuevamente mas tarde",
+        "error"
+      );
+    }
+  }
+
+  useEffect(() => {
+    (async () => {
+      await dispatch(obtenerProductosRandomTienda());
+    })();
+  }, []);
 
   return (
     <div className={s.contenedorSwiper}>
@@ -44,18 +74,32 @@ export default function ComponenteSwiper() {
         {productos?.map((i) => {
           return (
             <SwiperSlide key={i.id} className={s.contenedorTarjetaSwiper}>
-              <img
-                src={i.imagen}
-                alt="img producto"
-                className={s.imagenTarjetaSwiper}
-              />
+              <div className={s.contenedorImg}>
+                <img
+                  src={i.image || imgNotFound}
+                  alt="img producto"
+                  className={s.imagenTarjetaSwiper}
+                />
+                <div className={s.agregarAlCarroContenedor}>
+                  {agregandoProducto ? (
+                    <PulseLoader color="orange" />
+                  ) : (
+                    <div
+                      className={s.agregarAlCarro}
+                      onClick={() => handleAgregarAlCarro(i.id)}
+                    >
+                      Agregar al carro
+                    </div>
+                  )}
+                </div>
+              </div>
               <div className={s.nombreSwiper}>
-                {i.nombre[0].toUpperCase() + i.nombre.substring(1)}
+                {i.name[0].toUpperCase() + i.name.substring(1)}
               </div>
 
               <div className={s.iconoPrecioSwiper}>
                 <GrCart className={s.iconoSwiper} />
-                <div className={s.precioSwiper}>${i.precio}</div>
+                <div className={s.precioSwiper}>${i.price}</div>
               </div>
             </SwiperSlide>
           );
