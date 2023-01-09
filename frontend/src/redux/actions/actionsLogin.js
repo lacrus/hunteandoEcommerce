@@ -55,6 +55,7 @@ export const iniciarSesion = (datosUsuario) => {
         return dispatch({
           type: GET_USER,
           payload: res.data.user,
+          token: res.data.token,
           success: true,
         });
       } else {

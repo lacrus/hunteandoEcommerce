@@ -17,7 +17,7 @@ import { useEffect } from "react";
 export default function AppBar({ usuario }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const carrito = useSelector((e) => e.carro.carro.CartItems);
+  const carrito = useSelector((e) => e.carro?.carro?.CartItems);
   const [cantidadProductosCarrito, setCantidadProductosCarrito] = useState(0);
 
   const [mostrarMenuHeader, setMostrarMenuHeader] = useState(false);
@@ -110,15 +110,17 @@ export default function AppBar({ usuario }) {
             <option>English (U.S)</option>
             <option>Portugues (Europa)</option>
           </select>
-          <div className={s.contenedorCarritoHeader}>
-            <AiOutlineShoppingCart
-              onClick={handlerCarrito}
-              className={s.carritoHeader}
-            />
-            <div className={s.cantidadCarritoHeader}>
-              {cantidadProductosCarrito}
+          {usuario.username ? (
+            <div className={s.contenedorCarritoHeader}>
+              <AiOutlineShoppingCart
+                onClick={handlerCarrito}
+                className={s.carritoHeader}
+              />
+              <div className={s.cantidadCarritoHeader}>
+                {cantidadProductosCarrito}
+              </div>
             </div>
-          </div>
+          ) : null}
 
           <div
             onClick={

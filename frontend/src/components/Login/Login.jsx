@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { iniciarSesion } from "../../redux/actions/actionsLogin";
 import Swal from "sweetalert2";
 import { ClipLoader } from "react-spinners";
+import { obtenerCarrito } from "../../redux/actions/actionsCart";
 
 YupPassword(Yup);
 
@@ -26,6 +27,7 @@ export default function Login() {
     setLoading(true);
     try {
       const registro = await dispatch(iniciarSesion(e));
+      await dispatch(obtenerCarrito(registro.payload.id, registro.token));
       if (params.id !== undefined) {
         if (registro.success === true) {
           navigate(`/productos/detalle/${params.id}`);

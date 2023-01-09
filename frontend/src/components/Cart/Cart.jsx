@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
+import s from "./Cart.module.css";
+
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import Counter from "./Counter/Counter";
 
-import s from "./Cart.module.css";
 import { MdDelete } from "react-icons/md";
 
 import Swal from "sweetalert2";
