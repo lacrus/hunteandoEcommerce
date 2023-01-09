@@ -23,6 +23,7 @@ export default function ComponenteSwiper({ usuario }) {
   const tamanoPantalla = resizeHook();
   let cantidadTarjetas =
     tamanoPantalla.width > 800 ? 3 : tamanoPantalla.width > 400 ? 2 : 1;
+  const esMovil = resizeHook().isMobile;
 
   const navigationPrevRef = React.useRef(null);
   const navigationNextRef = React.useRef(null);
@@ -34,7 +35,16 @@ export default function ComponenteSwiper({ usuario }) {
     };
     try {
       const token = localStorage.getItem("token");
-      await dispatch(agregarProductoCarrito(usuario.id, producto, token));
+      const agregado = await dispatch(
+        agregarProductoCarrito(usuario.id, producto, token)
+      );
+      if (agregado.mensaje === "stock limit") {
+        Swal.fire(
+          "El producto esta en el carrito!",
+          "Llegaste al limite de unidades",
+          "info"
+        );
+      }
     } catch (e) {
       Swal.fire(
         "Error al cargar el producto!",
@@ -80,7 +90,11 @@ export default function ComponenteSwiper({ usuario }) {
                   alt="img producto"
                   className={s.imagenTarjetaSwiper}
                 />
-                <div className={s.agregarAlCarroContenedor}>
+                <div
+                  className={`${s.agregarAlCarroContenedor} ${
+                    esMovil ? s.visible : null
+                  }`}
+                >
                   {agregandoProducto ? (
                     <PulseLoader color="orange" />
                   ) : (

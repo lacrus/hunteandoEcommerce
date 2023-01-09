@@ -77,6 +77,10 @@
   font-size: 1.3rem;
 }
 
+.visible {
+  visibility: visible;
+}
+
 .iconoPrecioSwiper {
   display: flex;
   align-items: center;
