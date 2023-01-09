@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import s from "./AppBar.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { cerrarSesion } from "../../redux/actions/actionsLogin";
 import { BiSearchAlt } from "react-icons/bi";
 import {
@@ -12,10 +12,13 @@ import {
 import MenuHeader from "./MenuHeader/MenuHeader";
 import MenuUser from "./MenuUser/MenuUser";
 import Swal from "sweetalert2";
+import { useEffect } from "react";
 
 export default function AppBar({ usuario }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const carrito = useSelector((e) => e.carro.carro.CartItems);
+  const [cantidadProductosCarrito, setCantidadProductosCarrito] = useState(0);
 
   const [mostrarMenuHeader, setMostrarMenuHeader] = useState(false);
   const [mostrarMiCuenta, setMostrarMiCuenta] = useState(false);
@@ -58,6 +61,16 @@ export default function AppBar({ usuario }) {
     navigate("/carrito");
   }
 
+  useEffect(() => {
+    let result = 0;
+    if (carrito) {
+      carrito.forEach((e) => {
+        result += e.quantity;
+      });
+    }
+    setCantidadProductosCarrito(result);
+  }, [carrito]);
+
   return (
     <div className={s.contenedorHeader}>
       <div className={s.overflowContenedorHeader}>
@@ -97,11 +110,15 @@ export default function AppBar({ usuario }) {
             <option>English (U.S)</option>
             <option>Portugues (Europa)</option>
           </select>
-
-          <AiOutlineShoppingCart
-            onClick={handlerCarrito}
-            className={s.carritoHeader}
-          />
+          <div className={s.contenedorCarritoHeader}>
+            <AiOutlineShoppingCart
+              onClick={handlerCarrito}
+              className={s.carritoHeader}
+            />
+            <div className={s.cantidadCarritoHeader}>
+              {cantidadProductosCarrito}
+            </div>
+          </div>
 
           <div
             onClick={

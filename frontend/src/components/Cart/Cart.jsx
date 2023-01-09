@@ -6,16 +6,17 @@ import Counter from "./Counter/Counter";
 
 import s from "./Cart.module.css";
 import { MdDelete } from "react-icons/md";
-import imgCarroVacio from "../../assets/images/vacio.jpg";
 
 import Swal from "sweetalert2";
 
+import imgCarroVacio from "../../assets/images/vacio.jpg";
 import imgNotFound from "../../assets/images/imgNotFound.jpeg";
 
 import {
   eliminarProductoCarrito,
   vaciarCarrito,
 } from "../../redux/actions/actionsCart";
+
 
 export default function Cart({ usuario }) {
   const dispatch = useDispatch();
@@ -47,7 +48,6 @@ export default function Cart({ usuario }) {
       denyButtonText: "Volver",
     }).then(async ({ isConfirmed }) => {
       if (isConfirmed) {
-        console.log("ñakjdbvasojbvajbv");
         await dispatch(eliminarProductoCarrito(usuario.id, { id: e }, token));
       }
     });

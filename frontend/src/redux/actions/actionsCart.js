@@ -34,7 +34,11 @@ export function agregarProductoCarrito(idUsuario, producto, token) {
           authorization: `${token}`,
         },
       });
-      return dispatch({ type: GET_CART, payload: res.data.cart });
+      return dispatch({
+        type: GET_CART,
+        payload: res.data.cart,
+        mensaje: res.data.message,
+      });
     };
   } catch (error) {
     throw new Error(error);
