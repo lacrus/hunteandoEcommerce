@@ -51,6 +51,7 @@ export default function Counter({
       }
     } catch (e) {
       Swal.fire("Hubo un problema!", "Intentalo nuevamente mas tarde", "error");
+      setCargandoProducto(false);
     }
   }
 

@@ -18,9 +18,11 @@ import DashboardUsuario from "./components/Dashboard/DashboardUsuario/DashboardU
 import DashboardAdmin from "./components/Dashboard/DashboardAdmin/DashboardAdmin";
 import logearToken, { cerrarSesion } from "./redux/actions/actionsLogin";
 import { obtenerCarrito } from "./redux/actions/actionsCart";
+import CheckOut from "./components/CheckOut/CheckOut";
 
 function App() {
   const usuario = useSelector((e) => e.general.usuario);
+  const productosCarrito = useSelector((e) => e.carro.carro?.CartItems);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -79,6 +81,17 @@ function App() {
             )
           }
         />
+        <Route
+          path="/finalizarcompra"
+          element={
+            usuario.username && productosCarrito?.length ? (
+              <CheckOut usuario={usuario} />
+            ) : (
+              <Navigate to="/" replace={true} />
+            )
+          }
+        />
+
         <Route path="*" element={<Navigate to="/" replace={true} />} />
       </Routes>
       <Footer />

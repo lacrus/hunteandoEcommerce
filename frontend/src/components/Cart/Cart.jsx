@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import s from "./Cart.module.css";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import Counter from "./Counter/Counter";
@@ -21,6 +21,7 @@ import {
 
 export default function Cart({ usuario }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const productos = useSelector((e) => e.carro.carro.CartItems);
   const carrito = useSelector((e) => e.carro.carro);
@@ -54,19 +55,33 @@ export default function Cart({ usuario }) {
   }
 
   function handleEliminarProducto(e) {
+    setCargandoProducto(true);
     Swal.fire({
       icon: "question",
       title: "Seguro desea eliminar el producto?",
       showDenyButton: true,
       denyButtonText: "Volver",
     }).then(async ({ isConfirmed }) => {
-      if (isConfirmed) {
-        await dispatch(eliminarProductoCarrito(usuario.id, { id: e }, token));
+      try {
+        if (isConfirmed)
+          await dispatch(eliminarProductoCarrito(usuario.id, { id: e }, token));
+        setCargandoProducto(false);
+      } catch (error) {
+        Swal.fire(
+          "Hubo un problema!",
+          "Intentalo nuevamente mas tarde",
+          "error"
+        );
+        setCargandoProducto(false);
       }
     });
   }
 
-  async function handleCheckOut() {}
+  async function handleCheckOut() {
+    if (productos?.length) {
+      navigate("/finalizarcompra");
+    }
+  }
 
   useEffect(() => {
     let result = 0;
