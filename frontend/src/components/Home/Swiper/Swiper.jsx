@@ -34,10 +34,12 @@ export default function ComponenteSwiper({ usuario }) {
       quantity: 1,
     };
     try {
+      setAgregandoProducto(true);
       const token = localStorage.getItem("token");
       const agregado = await dispatch(
         agregarProductoCarrito(usuario.id, producto, token)
       );
+      setAgregandoProducto(false);
       if (agregado.mensaje === "stock limit") {
         Swal.fire(
           "El producto esta en el carrito!",
@@ -56,7 +58,11 @@ export default function ComponenteSwiper({ usuario }) {
 
   useEffect(() => {
     (async () => {
-      await dispatch(obtenerProductosRandomTienda());
+      try {
+        await dispatch(obtenerProductosRandomTienda());
+      } catch (e) {
+        console.log("Error al obtener productos de la tienda");
+      }
     })();
   }, []);
 

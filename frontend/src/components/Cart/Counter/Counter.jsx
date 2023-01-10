@@ -14,34 +14,43 @@ export default function Counter({
   idProducto,
   handleEliminarProducto,
   itemCartId,
+  setCargandoProducto,
 }) {
   const dispatch = useDispatch();
 
-  async function handlerSumar() {
-    if (cantidadInicial < cantidadDisponible) {
-      const dataCartItem = {
-        id: itemCartId,
-        quantity: cantidadInicial + 1,
-      };
-      await dispatch(modificarProductoCarrito(userId, dataCartItem, token));
-    } else {
-      Swal.fire({
-        icon: "warning",
-        title: "Disculpa",
-        text: `Hay ${cantidadDisponible} unidades disponibles`,
-      });
-    }
-  }
-
-  async function handlerRestar() {
-    if (cantidadInicial > 1) {
-      const dataCartItem = {
-        id: itemCartId,
-        quantity: cantidadInicial - 1,
-      };
-      await dispatch(modificarProductoCarrito(userId, dataCartItem, token));
-    } else {
-      handleEliminarProducto();
+  async function handleModificar(accion) {
+    try {
+      if (accion === "sumar") {
+        if (cantidadInicial < cantidadDisponible) {
+          const dataCartItem = {
+            id: itemCartId,
+            quantity: cantidadInicial + 1,
+          };
+          setCargandoProducto(true);
+          await dispatch(modificarProductoCarrito(userId, dataCartItem, token));
+          setCargandoProducto(false);
+        } else {
+          Swal.fire({
+            icon: "warning",
+            title: "Disculpa",
+            text: `Hay ${cantidadDisponible} unidades disponibles`,
+          });
+        }
+      } else {
+        if (cantidadInicial > 1) {
+          const dataCartItem = {
+            id: itemCartId,
+            quantity: cantidadInicial - 1,
+          };
+          setCargandoProducto(true);
+          await dispatch(modificarProductoCarrito(userId, dataCartItem, token));
+          setCargandoProducto(false);
+        } else {
+          handleEliminarProducto();
+        }
+      }
+    } catch (e) {
+      Swal.fire("Hubo un problema!", "Intentalo nuevamente mas tarde", "error");
     }
   }
 
@@ -51,7 +60,7 @@ export default function Counter({
         className={`${s.contenedorBotonContador} ${
           cantidadInicial >= cantidadDisponible ? s.botonDesabilitado : null
         }`}
-        onClick={handlerSumar}
+        onClick={() => handleModificar("sumar")}
       >
         <div>+</div>
       </div>
@@ -62,7 +71,7 @@ export default function Counter({
         className={`${s.contenedorBotonContador} ${
           cantidadInicial <= 1 ? s.botonDesabilitado : null
         }`}
-        onClick={handlerRestar}
+        onClick={() => handleModificar("restar")}
       >
         {cantidadInicial <= 1 ? <MdDelete color="red" /> : <div>-</div>}
       </div>

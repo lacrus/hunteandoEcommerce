@@ -93,6 +93,12 @@
   margin-bottom: 1rem;
   /* padding: 1rem; */
 }
+.contendedorLoadingTarjetaCart {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .contenedorImagenTarjeta {
   display: flex;

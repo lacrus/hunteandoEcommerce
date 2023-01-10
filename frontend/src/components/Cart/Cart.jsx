@@ -9,6 +9,7 @@ import Counter from "./Counter/Counter";
 import { MdDelete } from "react-icons/md";
 
 import Swal from "sweetalert2";
+import { ClipLoader } from "react-spinners";
 
 import imgCarroVacio from "../../assets/images/vacio.jpg";
 import imgNotFound from "../../assets/images/imgNotFound.jpeg";
@@ -17,7 +18,6 @@ import {
   eliminarProductoCarrito,
   vaciarCarrito,
 } from "../../redux/actions/actionsCart";
-
 
 export default function Cart({ usuario }) {
   const dispatch = useDispatch();
@@ -28,16 +28,28 @@ export default function Cart({ usuario }) {
   const token = localStorage.getItem("token");
 
   const [total, setTotal] = useState(0);
+  const [cargandoProducto, setCargandoProducto] = useState(false);
 
   async function handleVaciarCarrito() {
+    setCargandoProducto(true);
     Swal.fire({
       icon: "question",
       title: "Seguro desea eliminar todo del carrito?",
       showDenyButton: true,
       denyButtonText: "Volver",
-    }).then(({ isConfirmed }) => {
-      if (isConfirmed)
-        dispatch(vaciarCarrito(usuario.id, { id: carrito.id }, token));
+    }).then(async ({ isConfirmed }) => {
+      try {
+        if (isConfirmed)
+          await dispatch(vaciarCarrito(usuario.id, { id: carrito.id }, token));
+      } catch (error) {
+        Swal.fire(
+          "Hubo un problema!",
+          "Intentalo nuevamente mas tarde",
+          "error"
+        );
+      } finally {
+        setCargandoProducto(false);
+      }
     });
   }
 
@@ -53,6 +65,8 @@ export default function Cart({ usuario }) {
       }
     });
   }
+
+  async function handleCheckOut() {}
 
   useEffect(() => {
     let result = 0;
@@ -83,38 +97,49 @@ export default function Cart({ usuario }) {
           {productos?.map((item) => {
             return (
               <div key={item.id} className={s.tarjetaProductos}>
-                <div className={s.contenedorImagenTarjeta}>
-                  <img
-                    src={
-                      item.Product.image?.length
-                        ? item.Product.image[0]
-                        : imgNotFound
-                    }
-                    alt="Imagen producto"
-                    className={s.imagenTarjeta}
-                  />
-                </div>
-                <div className={s.contenedorInformacionTarjeta}>
-                  <h3>Precio: ${item.Product.price}</h3>
-                  <p sx={{ fontFamily: "comspotExI", marginBottom: "2rem" }}>
-                    {item.info}
-                  </p>
-                  <Counter
-                    token={token}
-                    userId={usuario.id}
-                    cantidadInicial={item.quantity}
-                    cantidadDisponible={item.Product.stock}
-                    idProducto={item.Product.id}
-                    itemCartId={item.id}
-                    handleEliminarProducto={() =>
-                      handleEliminarProducto(item.id)
-                    }
-                  />
-                </div>
-                <MdDelete
-                  className={s.botonEliminarTarjeta}
-                  onClick={() => handleEliminarProducto(item.id)}
-                />
+                {cargandoProducto ? (
+                  <div className={s.contendedorLoadingTarjetaCart}>
+                    <ClipLoader color="orange" />
+                  </div>
+                ) : (
+                  <>
+                    <div className={s.contenedorImagenTarjeta}>
+                      <img
+                        src={
+                          item.Product.image?.length
+                            ? item.Product.image[0]
+                            : imgNotFound
+                        }
+                        alt="Imagen producto"
+                        className={s.imagenTarjeta}
+                      />
+                    </div>
+                    <div className={s.contenedorInformacionTarjeta}>
+                      <h3>Precio: ${item.Product.price}</h3>
+                      <p
+                        sx={{ fontFamily: "comspotExI", marginBottom: "2rem" }}
+                      >
+                        {item.info}
+                      </p>
+                      <Counter
+                        token={token}
+                        userId={usuario.id}
+                        cantidadInicial={item.quantity}
+                        cantidadDisponible={item.Product.stock}
+                        idProducto={item.Product.id}
+                        itemCartId={item.id}
+                        handleEliminarProducto={() =>
+                          handleEliminarProducto(item.id)
+                        }
+                        setCargandoProducto={setCargandoProducto}
+                      />
+                    </div>
+                    <MdDelete
+                      className={s.botonEliminarTarjeta}
+                      onClick={() => handleEliminarProducto(item.id)}
+                    />
+                  </>
+                )}
               </div>
             );
           })}
@@ -127,7 +152,9 @@ export default function Cart({ usuario }) {
             Envio: <span>FREE</span>
           </h3>
           <h2 className={s.texto_total}>Total : $ {total}</h2>
-          <div className={s.contenedorBotonCheckout}>CheckOut</div>
+          <div className={s.contenedorBotonCheckout} onClick={handleCheckOut}>
+            CheckOut
+          </div>
         </div>
       </div>
       <div className={s.links}>
