@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { GET_USERS } from "./actionsLogin";
+import logearToken, { GET_USERS } from "./actionsLogin";
 
 export const ADD_PRODUCT_CART = "ADD_PRODUCT_CART";
 export const DELETE_PRODUCT_CART = "DELETE_PRODUCT_CART";
@@ -188,6 +188,7 @@ export function modificarRolUsuario(id, rol, token) {
 }
 
 export function obtenerDetallesUsuario(id, token) {
+  console.log(id, token);
   return async function (dispatch) {
     try {
       const res = await axios({

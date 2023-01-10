@@ -19,6 +19,9 @@ import DashboardAdmin from "./components/Dashboard/DashboardAdmin/DashboardAdmin
 import logearToken, { cerrarSesion } from "./redux/actions/actionsLogin";
 import { obtenerCarrito } from "./redux/actions/actionsCart";
 import CheckOut from "./components/CheckOut/CheckOut";
+import CheckoutConfirmation from "./components/CheckOut/CheckoutConfirmation/CheckoutConfirmation";
+import CheckoutCancel from "./components/CheckOut/CheckoutCancel/CheckoutCancel";
+import CheckoutPending from "./components/CheckOut/CheckoutPending/CheckoutPending";
 
 function App() {
   const usuario = useSelector((e) => e.general.usuario);
@@ -46,9 +49,18 @@ function App() {
       <AppBar usuario={usuario} />
       <Routes>
         <Route path="/" element={<HomePage usuario={usuario} />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/login/:id" element={<Login />} />
-        <Route path="/registrarse" element={<Register />} />
+        <Route
+          path="/login"
+          element={usuario.username ? <Navigate to="/" /> : <Login />}
+        />
+        <Route
+          path="/login/:id"
+          element={usuario.username ? <Navigate to="/" /> : <Login />}
+        />
+        <Route
+          path="/registrarse"
+          element={usuario.username ? <Navigate to="/" /> : <Register />}
+        />
         <Route
           path="/carrito"
           element={
@@ -84,13 +96,22 @@ function App() {
         <Route
           path="/finalizarcompra"
           element={
-            usuario.username && productosCarrito?.length ? (
-              <CheckOut usuario={usuario} />
-            ) : (
-              <Navigate to="/" replace={true} />
-            )
+            // usuario.username && productosCarrito?.length ? (
+            <CheckOut usuario={usuario} />
+            // ) : (
+            //   <Navigate to="/" replace={true} />
+            // )
           }
         />
+        <Route
+          path="/checkout/confirmation"
+          element={<CheckoutConfirmation usuario={usuario} />}
+        />
+        <Route
+          path="/checkout/pending"
+          element={<CheckoutPending usuario={usuario} />}
+        />
+        <Route path="/checkout/cancel" element={<CheckoutCancel />} />
 
         <Route path="*" element={<Navigate to="/" replace={true} />} />
       </Routes>

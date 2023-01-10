@@ -33,6 +33,7 @@ function PanelDireccionesUsuario({ token, usuario }) {
       try {
         await dispatch(obtenerDireccionesUsuario(usuario.id, token));
       } catch (e) {
+        console.log(e)
         Swal.fire(
           "Error al cargar las direcciones",
           "Intenta nuevamente mas tarde",

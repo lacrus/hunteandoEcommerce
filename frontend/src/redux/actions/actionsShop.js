@@ -18,3 +18,22 @@ export const obtenerProductosRandomTienda = () => {
     return new Error(error);
   }
 };
+
+export function compraConML(idUsuario, carritoCompra, token) {
+  return async function (dispatch) {
+    try {
+      const res = await axios({
+        method: "POST",
+        url: "/finalizarcompra/mercadopago/" + idUsuario,
+        data: carritoCompra,
+        headers: {
+          authorization: `${token}`,
+        },
+      });
+      console.log(res.data.init_point);
+      return res.data;
+    } catch (error) {
+      return new Error(error);
+    }
+  };
+}

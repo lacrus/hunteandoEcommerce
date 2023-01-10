@@ -1,5 +1,5 @@
 // CASE ACTIONS
-import { GET_USER, GET_USERS } from "./../actions/actionsLogin";
+import { GET_USER, GET_USERS, CERRAR_SESION } from "./../actions/actionsLogin";
 import {
   ORDER_USERS,
   ORDER_PRODUCTS,
@@ -19,124 +19,125 @@ import functionOrdernarProductos from "../../utils/functionOdenarProductos";
 
 const initialState = {
   usuario: {},
+  direccionesUsuario: [],
   detallesUsuario: {},
   detalleProducto: {},
-  carrito: [
-    {
-      id: 1,
-      nombre: "remera",
-      precio: 300,
-      cantidad: 4,
-      descripcion: "Remera estampada super liviana algodon",
-      imagen: [
-        "https://artelista.s3.amazonaws.com/obras/big/0/4/1/7382666047536905.jpg",
-        "https://i.pinimg.com/736x/69/51/d3/6951d3a58296c1e2886972c9f187478c.jpg",
-        "https://artelista.s3.amazonaws.com/obras/big/0/4/1/7382666047536905.jpg",
-        "https://i.pinimg.com/736x/69/51/d3/6951d3a58296c1e2886972c9f187478c.jpg",
-        "https://artelista.s3.amazonaws.com/obras/big/0/4/1/7382666047536905.jpg",
-      ],
-      disponible: 10,
-    },
-    {
-      id: 2,
-      nombre: "pantalon",
-      precio: 400,
-      cantidad: 1,
-      descripcion: "Pantalon verano - diferentes motivos",
-      imagen: [
-        "https://i.pinimg.com/736x/69/51/d3/6951d3a58296c1e2886972c9f187478c.jpg",
-      ],
-      disponible: 10,
-    },
-    {
-      id: 3,
-      nombre: "gorra",
-      precio: 100,
-      cantidad: 1,
-      descripcion: "Gorra tipo trucker - logo pintado a mano",
-      imagen: [
-        "https://i.pinimg.com/736x/69/51/d3/6951d3a58296c1e2886972c9f187478c.jpg",
-      ],
-      disponible: 10,
-    },
-    {
-      id: 4,
-      nombre: "gorra",
-      precio: 100,
-      cantidad: 1,
-      descripcion: "Gorra tipo trucker - logo pintado a mano",
-      imagen: [
-        "https://i.pinimg.com/736x/69/51/d3/6951d3a58296c1e2886972c9f187478c.jpg",
-      ],
-      disponible: 10,
-    },
-    {
-      id: 5,
-      nombre: "gorra",
-      precio: 100,
-      cantidad: 1,
-      descripcion: "Gorra tipo trucker - logo pintado a mano",
-      imagen: [
-        "https://i.pinimg.com/736x/69/51/d3/6951d3a58296c1e2886972c9f187478c.jpg",
-      ],
-      disponible: 10,
-    },
-    {
-      id: 6,
-      nombre: "gorra",
-      precio: 100,
-      cantidad: 1,
-      descripcion: "Gorra tipo trucker - logo pintado a mano",
-      imagen: [
-        "https://i.pinimg.com/736x/69/51/d3/6951d3a58296c1e2886972c9f187478c.jpg",
-      ],
-      disponible: 10,
-    },
-    {
-      id: 7,
-      nombre: "gorra",
-      precio: 100,
-      cantidad: 1,
-      descripcion: "Gorra tipo trucker - logo pintado a mano",
-      imagen: [
-        "https://i.pinimg.com/736x/69/51/d3/6951d3a58296c1e2886972c9f187478c.jpg",
-      ],
-      disponible: 10,
-    },
-    {
-      id: 8,
-      nombre: "gorra",
-      precio: 100,
-      cantidad: 1,
-      descripcion: "Gorra tipo trucker - logo pintado a mano",
-      imagen: [
-        "https://i.pinimg.com/736x/69/51/d3/6951d3a58296c1e2886972c9f187478c.jpg",
-      ],
-      disponible: 10,
-    },
-    {
-      id: 9,
-      nombre: "gorra",
-      precio: 100,
-      cantidad: 1,
-      descripcion: "Gorra tipo trucker - logo pintado a mano",
-      imagen: [
-        "https://i.pinimg.com/736x/69/51/d3/6951d3a58296c1e2886972c9f187478c.jpg",
-      ],
-      disponible: 10,
-    },
-    {
-      id: 10,
-      nombre: "gorra",
-      precio: 100,
-      cantidad: 1,
-      descripcion: "Gorra tipo trucker - logo pintado a mano",
-      imagen: [
-        "https://i.pinimg.com/736x/69/51/d3/6951d3a58296c1e2886972c9f187478c.jpg",
-      ],
-      disponible: 10,
-    },
-  ],
+  // carrito: [
+  //   {
+  //     id: 1,
+  //     nombre: "remera",
+  //     precio: 300,
+  //     cantidad: 4,
+  //     descripcion: "Remera estampada super liviana algodon",
+  //     imagen: [
+  //       "https://artelista.s3.amazonaws.com/obras/big/0/4/1/7382666047536905.jpg",
+  //       "https://i.pinimg.com/736x/69/51/d3/6951d3a58296c1e2886972c9f187478c.jpg",
+  //       "https://artelista.s3.amazonaws.com/obras/big/0/4/1/7382666047536905.jpg",
+  //       "https://i.pinimg.com/736x/69/51/d3/6951d3a58296c1e2886972c9f187478c.jpg",
+  //       "https://artelista.s3.amazonaws.com/obras/big/0/4/1/7382666047536905.jpg",
+  //     ],
+  //     disponible: 10,
+  //   },
+  //   {
+  //     id: 2,
+  //     nombre: "pantalon",
+  //     precio: 400,
+  //     cantidad: 1,
+  //     descripcion: "Pantalon verano - diferentes motivos",
+  //     imagen: [
+  //       "https://i.pinimg.com/736x/69/51/d3/6951d3a58296c1e2886972c9f187478c.jpg",
+  //     ],
+  //     disponible: 10,
+  //   },
+  //   {
+  //     id: 3,
+  //     nombre: "gorra",
+  //     precio: 100,
+  //     cantidad: 1,
+  //     descripcion: "Gorra tipo trucker - logo pintado a mano",
+  //     imagen: [
+  //       "https://i.pinimg.com/736x/69/51/d3/6951d3a58296c1e2886972c9f187478c.jpg",
+  //     ],
+  //     disponible: 10,
+  //   },
+  //   {
+  //     id: 4,
+  //     nombre: "gorra",
+  //     precio: 100,
+  //     cantidad: 1,
+  //     descripcion: "Gorra tipo trucker - logo pintado a mano",
+  //     imagen: [
+  //       "https://i.pinimg.com/736x/69/51/d3/6951d3a58296c1e2886972c9f187478c.jpg",
+  //     ],
+  //     disponible: 10,
+  //   },
+  //   {
+  //     id: 5,
+  //     nombre: "gorra",
+  //     precio: 100,
+  //     cantidad: 1,
+  //     descripcion: "Gorra tipo trucker - logo pintado a mano",
+  //     imagen: [
+  //       "https://i.pinimg.com/736x/69/51/d3/6951d3a58296c1e2886972c9f187478c.jpg",
+  //     ],
+  //     disponible: 10,
+  //   },
+  //   {
+  //     id: 6,
+  //     nombre: "gorra",
+  //     precio: 100,
+  //     cantidad: 1,
+  //     descripcion: "Gorra tipo trucker - logo pintado a mano",
+  //     imagen: [
+  //       "https://i.pinimg.com/736x/69/51/d3/6951d3a58296c1e2886972c9f187478c.jpg",
+  //     ],
+  //     disponible: 10,
+  //   },
+  //   {
+  //     id: 7,
+  //     nombre: "gorra",
+  //     precio: 100,
+  //     cantidad: 1,
+  //     descripcion: "Gorra tipo trucker - logo pintado a mano",
+  //     imagen: [
+  //       "https://i.pinimg.com/736x/69/51/d3/6951d3a58296c1e2886972c9f187478c.jpg",
+  //     ],
+  //     disponible: 10,
+  //   },
+  //   {
+  //     id: 8,
+  //     nombre: "gorra",
+  //     precio: 100,
+  //     cantidad: 1,
+  //     descripcion: "Gorra tipo trucker - logo pintado a mano",
+  //     imagen: [
+  //       "https://i.pinimg.com/736x/69/51/d3/6951d3a58296c1e2886972c9f187478c.jpg",
+  //     ],
+  //     disponible: 10,
+  //   },
+  //   {
+  //     id: 9,
+  //     nombre: "gorra",
+  //     precio: 100,
+  //     cantidad: 1,
+  //     descripcion: "Gorra tipo trucker - logo pintado a mano",
+  //     imagen: [
+  //       "https://i.pinimg.com/736x/69/51/d3/6951d3a58296c1e2886972c9f187478c.jpg",
+  //     ],
+  //     disponible: 10,
+  //   },
+  //   {
+  //     id: 10,
+  //     nombre: "gorra",
+  //     precio: 100,
+  //     cantidad: 1,
+  //     descripcion: "Gorra tipo trucker - logo pintado a mano",
+  //     imagen: [
+  //       "https://i.pinimg.com/736x/69/51/d3/6951d3a58296c1e2886972c9f187478c.jpg",
+  //     ],
+  //     disponible: 10,
+  //   },
+  // ],
   ventas: [
     {
       id: 1,
@@ -261,6 +262,21 @@ const rootReducer = (state = initialState, action) => {
           firstname: action.payload.UserDetail?.firstname,
           lastname: action.payload.UserDetail?.lastname,
         },
+      };
+    case CERRAR_SESION:
+      return {
+        ...state,
+        usuario: {},
+        direccionesUsuario: [],
+        detallesUsuario: {},
+        detalleProducto: {},
+        ventas: [],
+        detalleVenta: {},
+        usuarios: [],
+        ordenUsuarios: { id: "asc", username: null, email: null, role: null },
+        productos: [],
+        productosEliminados: [],
+        ordenProductos: { id: "asc", name: null, price: null },
       };
 
     case GET_ADDRESSES:

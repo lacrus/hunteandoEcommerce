@@ -36,6 +36,7 @@ export function obtenerDireccionesUsuario(idUsuario, token) {
       });
       return dispatch({ type: GET_ADDRESSES, payload: res.data.addresses });
     } catch (e) {
+      
       throw new Error(e);
     }
   };
@@ -59,8 +60,7 @@ export function crearDireccionUsuario(idUsuario, datosDireccion, token) {
   };
 }
 
-export function modificarrDireccionUsuario(idUsuario, datosDireccion, token) {
-  console.log(datosDireccion);
+export function modificarDireccionUsuario(idUsuario, datosDireccion, token) {
   return async (dispatch) => {
     try {
       const res = await axios({
@@ -71,7 +71,6 @@ export function modificarrDireccionUsuario(idUsuario, datosDireccion, token) {
           authorization: `${token}`,
         },
       });
-      console.log(res);
       return dispatch({ type: GET_ADDRESSES, payload: res.data.addresses });
     } catch (e) {
       throw new Error(e);
@@ -89,7 +88,6 @@ export function eliminarDireccionUsuario(idUsuario, id, token) {
           authorization: `${token}`,
         },
       });
-      console.log(res);
       return dispatch({ type: GET_ADDRESSES, payload: res.data.addresses });
     } catch (e) {
       throw new Error(e);

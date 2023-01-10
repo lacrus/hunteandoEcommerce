@@ -10,7 +10,7 @@ import { PulseLoader } from "react-spinners";
 import SelectInputFormulario from "../../../../../ui/SelectInputFormulario/SelectInputFormulario";
 import {
   crearDireccionUsuario,
-  modificarrDireccionUsuario,
+  modificarDireccionUsuario,
   eliminarDireccionUsuario,
 } from "../../../../../redux/actions/actionsDashboardClient";
 
@@ -60,8 +60,9 @@ function ModalDireccion({
     number: direccion?.number || "",
     city: direccion?.city || "",
     province: direccion?.province || "",
-    detail: direccion?.detail || "",
+    zipCode: direccion?.zipCode || "",
     contact: direccion?.contact || "",
+    detail: direccion?.detail || "",
   };
 
   const validationSchema = Yup.object().shape({
@@ -79,8 +80,11 @@ function ModalDireccion({
       .max(40, "*La ciudad debe tener máximo 40 carácteres")
       .required("*Campo requerido"),
     province: Yup.string().required("*Campo requerido").nullable(),
-    detail: Yup.string().max(40, "*La ciudad debe tener máximo 40 carácteres"),
+    zipCode: Yup.string()
+      .max(10, "*El código postal debe tener máximo 10 carácteres")
+      .required("*Campo requerido"),
     contact: Yup.number().max(8888888888888, "*Número incorrecto"),
+    detail: Yup.string().max(100, "*La ciudad debe tener máximo 100 carácteres"),
   });
 
   async function onSubmit(e) {
@@ -99,7 +103,7 @@ function ModalDireccion({
           if (mostrarModalDireccion === "nuevaDireccion") {
             await dispatch(crearDireccionUsuario(usuario.id, e, token));
           } else {
-            await dispatch(modificarrDireccionUsuario(usuario.id, e, token));
+            await dispatch(modificarDireccionUsuario(usuario.id, e, token));
           }
           setMostrarModalDireccion(false);
           setDireccion({});
@@ -259,12 +263,45 @@ function ModalDireccion({
               touched={touched}
             />
           </div>
+
+          <div className={s.renglon}>
+            <InputFormulario
+              placeholder="Máximo 10 carácteres"
+              tipo="text"
+              name="zipCode"
+              value={values.zipCode}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              estiloError={touched.zipCode && errors.zipCode && true}
+              mostrarError={touched.zipCode && errors.zipCode && true}
+              msjError={errors.zipCode}
+              estilos={s.itemRenglon}
+              id={"zipCode"}
+              label={"Código Postal"}
+            />
+
+            <InputFormulario
+              placeholder="ej: 01115123456"
+              tipo="number"
+              name="contact"
+              value={values.contact}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              estiloError={touched.contact && errors.contact && true}
+              mostrarError={touched.contact && errors.contact && true}
+              msjError={errors.contact}
+              estilos={s.itemRenglon}
+              id={"contact"}
+              label={"Número contacto"}
+            />
+          </div>
+
           <label className={s.textareaLabelModificar} htmlFor="detail">
             Detalles
           </label>
           <textarea
             id="detail"
-            placeholder="Máximo 40 carácteres"
+            placeholder="Máximo 100 carácteres"
             name="detail"
             rows={3}
             value={values.detail}
@@ -277,20 +314,6 @@ function ModalDireccion({
           {touched.detail && errors.detail && (
             <p className={`${s.msjError} ${s.error}`}>{errors.detail}</p>
           )}
-          <InputFormulario
-            placeholder="ej: 01115123456"
-            tipo="number"
-            name="contact"
-            value={values.contact}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            estiloError={touched.contact && errors.contact && true}
-            mostrarError={touched.contact && errors.contact && true}
-            msjError={errors.contact}
-            estilos={s.itemRenglon}
-            id={"contact"}
-            label={"Número contacto"}
-          />
 
           {!loading ? (
             <button

@@ -1,5 +1,5 @@
 // CASE ACTIONS
-import { GET_USER, GET_USERS } from "./../actions/actionsLogin";
+import { GET_USER, GET_USERS, CERRAR_SESION } from "./../actions/actionsLogin";
 import {
   ORDER_USERS,
   ORDER_PRODUCTS,
@@ -24,6 +24,9 @@ const cartReducer = (state = initialState, action) => {
         ...state,
         carro: action.payload,
       };
+
+    case CERRAR_SESION:
+      return { ...state, carro: [] };
     default:
       return { ...state };
   }

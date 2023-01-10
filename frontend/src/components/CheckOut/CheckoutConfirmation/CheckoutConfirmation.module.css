@@ -1,0 +1,86 @@
+.contenedorRespuestaCheckout {
+  width: 100%;
+  height: calc(100vh - var(--altura-header));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.icono {
+  margin-bottom: 30px;
+  font-size: 64px;
+}
+
+.confimacion {
+  color: #f99716;
+}
+
+.cancelado {
+  color: #fd1313;
+}
+
+.tituloRespuestaCheckout {
+  font-size: 2rem;
+  font-family: comspotM;
+  margin-bottom: 5%;
+}
+
+.error_btn,
+.confirmation_btn {
+  z-index: 988;
+  border: none;
+  background-color: #faba67;
+  color: #fafafa;
+  font-size: 1.3vw;
+  padding: 0.8% 4%;
+  text-decoration: none;
+  margin: auto;
+  margin-bottom: 1vw;
+}
+
+.confirmation_btn:hover {
+  background-color: #f99716;
+}
+
+.error_btn {
+  background-color: #f99716;
+}
+
+.error_btn:hover {
+  background-color: #faba67;
+}
+
+.textConfirmation {
+  /* margin: auto; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.contenedorBotonHeader {
+  width: fit-content;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f99716;
+  cursor: pointer;
+  border-radius: var(--border-radius-boton);
+  transition: all 150ms ease;
+  align-self: center;
+  margin: 4% 0;
+}
+
+.contenedorBotonHeader:active {
+  background-color: #1e1e1e;
+}
+
+.botonHeader {
+  font-family: comspotM;
+  font-weight: bold;
+  font-size: 0.875rem;
+  padding: 0 24px;
+  color: #fff;
+}

@@ -12,11 +12,13 @@ import imgNotFound from "../../../assets/images/imgNotFound.jpeg";
 import Swal from "sweetalert2";
 import { PulseLoader } from "react-spinners";
 import { agregarProductoCarrito } from "../../../redux/actions/actionsCart";
+import { useNavigate } from "react-router-dom";
 SwiperCore.use([Navigation]);
 
 export default function ComponenteSwiper({ usuario }) {
   const productos = useSelector((e) => e.tienda.productosRandom);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [agregandoProducto, setAgregandoProducto] = useState(false);
 
@@ -34,18 +36,39 @@ export default function ComponenteSwiper({ usuario }) {
       quantity: 1,
     };
     try {
-      setAgregandoProducto(true);
-      const token = localStorage.getItem("token");
-      const agregado = await dispatch(
-        agregarProductoCarrito(usuario.id, producto, token)
-      );
-      setAgregandoProducto(false);
-      if (agregado.mensaje === "stock limit") {
-        Swal.fire(
-          "El producto esta en el carrito!",
-          "Llegaste al limite de unidades",
-          "info"
+      if (usuario.username) {
+        setAgregandoProducto(true);
+        const token = localStorage.getItem("token");
+        const agregado = await dispatch(
+          agregarProductoCarrito(usuario.id, producto, token)
         );
+        setAgregandoProducto(false);
+        if (agregado.mensaje === "stock limit") {
+          Swal.fire(
+            "El producto esta en el carrito!",
+            "Llegaste al limite de unidades",
+            "info"
+          );
+        }
+      } else {
+        Swal.fire({
+          title: "Inicia sesión",
+          text: "O crea una cuenta para poder comprar",
+          icon: "warning",
+          confirmButtonText: "Iniciar sesión",
+          showCancelButton: true,
+          cancelButtonText: "Volver",
+          cancelButtonColor: "red",
+          showDenyButton: true,
+          denyButtonText: "Registrarse",
+          denyButtonColor: "grey",
+        }).then(({ isConfirmed, isDenied }) => {
+          if (isConfirmed) {
+            navigate("/login");
+          } else if (isDenied) {
+            navigate("/registrarse");
+          }
+        });
       }
     } catch (e) {
       Swal.fire(

@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const GET_USER = "GET_USER";
 export const GET_USERS = "GET_USERS";
+export const CERRAR_SESION = "CERRAR_SESION";
 
 export const registroUsuario = (datosUsuario) => {
   let dataUser = {
@@ -81,8 +82,7 @@ export const cerrarSesion = () => {
       //   url: "/auth/login",
       // });
       return dispatch({
-        type: GET_USER,
-        payload: {},
+        type: CERRAR_SESION,
       });
     };
   } catch (error) {
