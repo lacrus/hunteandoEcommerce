@@ -39,6 +39,13 @@ function CheckOut({ usuario }) {
   async function handleAvanzarCompra(e) {
     if (direccionSeleccionada) {
       try {
+        Swal.fire({
+          title: "Un momento por favor!",
+          text: "En instantes seras dirigido a MercadoPago para continuar",
+          icon: "success",
+          timer: 10000,
+          timerProgressBar: true,
+        });
         setLoading(true);
         carrito.shippingAddress = direccionSeleccionada;
         const respuestaPago = await dispatch(
@@ -80,11 +87,23 @@ function CheckOut({ usuario }) {
         <div className={`${s.contenedorLoading} ${s.sombra}`}>
           <ClipLoader />
         </div>
-      ) : direccionesUsuario?.length ? (
+      ) : (
         <div className={`${s.contenedorDirecciones} ${s.sombra}`}>
           <div className={s.tituloDireccion}>
-            Selecciona una dirección de envío
+            {direccionesUsuario?.length
+              ? "Selecciona una dirección de envío"
+              : "Dirección de envío"}
           </div>
+          {direccionesUsuario?.length ? null : (
+            <div>
+              <div className={s.subTituloDireccion}>
+                Aun no posees direcciones!
+              </div>
+              <div className={s.subTituloDireccion}>
+                Crea una para poder continuar
+              </div>
+            </div>
+          )}
           {direccionesUsuario?.map((i) => {
             return (
               <div
@@ -106,14 +125,16 @@ function CheckOut({ usuario }) {
                     Calle
                   </div>
                   <label id={i.id} for={i.id}>
-                    {i.street + " " + i.number}
+                    {i.street.slice(0, 8) + " " + i.number}
                   </label>
                 </div>
                 <div className={s.contenedorDetalle}>
                   <div id={i.id} className={s.tituloDetalle}>
                     Ciudad
                   </div>
-                  <div id={i.id}>{i.city}</div>
+                  <div id={i.id}>
+                    {i.city.slice(0, 10) + (i.city.length > 10 ? "..." : null)}
+                  </div>
                 </div>
 
                 {anchoPantalla > 1000 ? (
@@ -121,7 +142,7 @@ function CheckOut({ usuario }) {
                     <div id={i.id} className={s.tituloDetalle}>
                       CP
                     </div>
-                    <div id={i.id}>{i.zipCode}</div>
+                    <div id={i.id}>{i.zipCode.slice(0, 5)}</div>
                   </div>
                 ) : null}
 
@@ -130,7 +151,10 @@ function CheckOut({ usuario }) {
                     <div id={i.id} className={s.tituloDetalle}>
                       Provincia
                     </div>
-                    <div id={i.id}>{i.province}</div>{" "}
+                    <div id={i.id}>
+                      {i.province.slice(0, 15) +
+                        (i.province.length > 15 ? "..." : null)}
+                    </div>{" "}
                   </div>
                 ) : null}
 
@@ -149,7 +173,8 @@ function CheckOut({ usuario }) {
                     </div>
                     <div id={i.id}>
                       {i.detail
-                        ? i.detail?.slice(0, 10) + "..."
+                        ? i.detail?.slice(0, 15) +
+                          (i.detail.length > 15 ? "..." : null)
                         : "Sin detalles"}
                     </div>
                   </div>
@@ -169,40 +194,18 @@ function CheckOut({ usuario }) {
           })}
           {direccionesUsuario.length < 5 ? (
             <div
-              className={s.crearNuevaDireccion}
               onClick={() => handleModificarDireccion("nuevaDireccion", {})}
+              className={s.contenedorBotonCheckout}
             >
-              <div className={s.crearNuevaDireccionTexto}>
-                Agregar nueva direccion
-              </div>
+              <div className={s.botonCheckout}>Agregar nueva direccion</div>
             </div>
           ) : null}
-
-          <div
-            className={`${s.crearNuevaDireccion} ${s.botonMP}`}
-            onClick={handleAvanzarCompra}
-          >
-            <div className={s.crearNuevaDireccionTexto}>
-              Avanzar al pago con MERCADOPAGO
-            </div>
-          </div>
-        </div>
-      ) : (
-        <div className={`${s.contenedorDirecciones} ${s.sombra}`}>
-          <div className={s.tituloDireccion}>Dirección de envío</div>
-          <div className={s.subTituloDireccion}>Aun no posees direcciones!</div>
-          <div className={s.subTituloDireccion}>
-            Crea una para poder continuar
-          </div>
-
-          {direccionesUsuario.length < 5 ? (
+          {direccionesUsuario?.length ? (
             <div
-              className={s.crearNuevaDireccion}
-              onClick={() => handleModificarDireccion("nuevaDireccion", {})}
+              onClick={handleAvanzarCompra}
+              className={`${s.contenedorBotonCheckout} ${s.contenedorBotonCheckoutMP}`}
             >
-              <div className={s.crearNuevaDireccionTexto}>
-                Agregar nueva direccion
-              </div>
+              <div className={s.botonMP}>Pagar con MERCADOPAGO</div>
             </div>
           ) : null}
         </div>
