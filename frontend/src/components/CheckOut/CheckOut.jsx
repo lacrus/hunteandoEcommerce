@@ -53,9 +53,9 @@ function CheckOut({ usuario }) {
         );
         console.log("respuestapago", respuestaPago.init_point);
         window.location.replace(`${respuestaPago.init_point}`);
-        setLoading(false);
       } catch (error) {
         Swal.fire("Hubo un problema!", "Intenta nuevamente mas tarde", "error");
+        setLoading(false);
       }
     } else {
       Swal.fire("Ups!", "Primero selecciona una dirección de envio", "warning");

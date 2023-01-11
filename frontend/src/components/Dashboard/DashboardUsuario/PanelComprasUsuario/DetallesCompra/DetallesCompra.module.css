@@ -1,0 +1,102 @@
+.contenedorLoading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  min-height: calc(100% - 6vh);
+  position: absolute;
+  background-color: rgba(128, 128, 128, 0.361);
+}
+
+.iconoCerrar {
+  position: absolute;
+  top: 4vh;
+  right: 8%;
+  cursor: pointer;
+  color: red;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+}
+
+.iconoCerrar:hover {
+  background-color: red;
+  color: white;
+}
+
+.iconoCerrar:active {
+  opacity: 0.7;
+}
+
+.contenedorDetallesCompra {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: calc(100% - 6vh);
+  min-height: calc(100% - 6vh);
+  padding: 3vh 0;
+  background-color: rgba(128, 128, 128, 0.361);
+}
+
+.contenedorIntermedioDetallesCompra {
+  width: 90%;
+  background-color: white;
+  margin: 0 auto;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 90%;
+}
+
+.tituloDetallesCompra {
+  font-family: comspotM;
+  font-size: 2rem;
+  margin: 3% 0;
+}
+
+.tituloProdDetallesCompra {
+  font-family: comspotM;
+  font-size: 1.5rem;
+  margin: 3% 0;
+}
+
+.tablaDetallesCompra {
+  width: 100%;
+  text-align: center;
+}
+
+.encabezadoDetallesCompra {
+  padding-bottom: 15%;
+  border-bottom: 1px solid black;
+}
+
+.bodyDetallesCompra tr {
+  line-height: 25px;
+  align-self: center;
+}
+
+.bodyDetallesCompra tr:nth-child(even) {
+  background: #d8d8d8;
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+.renglonProducto {
+  /* display: flex; */
+}
+
+.imgProd {
+  height: 50px;
+}
+
+.statusCompra {
+  color: white;
+  line-height: 150%;
+  border-radius: 25px;
+  font-size: 0.8rem;
+  width: 90%;
+}

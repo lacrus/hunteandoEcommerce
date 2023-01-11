@@ -2,6 +2,8 @@ import axios from "axios";
 
 import { GET_USER } from "./actionsLogin";
 export const GET_ADDRESSES = "GET_ADDRESSES";
+export const GET_ORDERS = "GET_ORDERS";
+export const GET_ORDER_DETAIL = "GET_ORDER_DETAIL";
 
 export function modificarUsuario(id, datosUsuario, token) {
   delete datosUsuario.contrasena;
@@ -36,7 +38,6 @@ export function obtenerDireccionesUsuario(idUsuario, token) {
       });
       return dispatch({ type: GET_ADDRESSES, payload: res.data.addresses });
     } catch (e) {
-      
       throw new Error(e);
     }
   };
@@ -91,6 +92,41 @@ export function eliminarDireccionUsuario(idUsuario, id, token) {
       return dispatch({ type: GET_ADDRESSES, payload: res.data.addresses });
     } catch (e) {
       throw new Error(e);
+    }
+  };
+}
+
+// -------------------- ACTIONS COMPRAS --------------------
+
+export function obtenerComprasUsuario(idUsuario, token) {
+  return async function (dispatch) {
+    try {
+      const res = await axios({
+        method: "GET",
+        headers: {
+          authorization: `${token}`,
+        },
+        url: "dashboard/admin/users/compras/" + idUsuario,
+      });
+      return dispatch({ type: GET_ORDERS, payload: res.data.orders });
+    } catch (error) {}
+  };
+}
+
+export function obtenerDetalleCompra(idUsuario, idCompra, token) {
+  return async function (dispatch) {
+    try {
+      const res = await axios({
+        method: "GET",
+        headers: {
+          authorization: `${token}`,
+        },
+        url: `dashboard/admin/users/detallecompra/${idUsuario}?orderId=${idCompra}`,
+      });
+      console.log(res.data.order);
+      return dispatch({ type: GET_ORDER_DETAIL, payload: res.data.order });
+    } catch (error) {
+      return new Error(error);
     }
   };
 }

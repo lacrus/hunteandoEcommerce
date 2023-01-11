@@ -1,16 +1,5 @@
 // CASE ACTIONS
 import { GET_USER, GET_USERS, CERRAR_SESION } from "./../actions/actionsLogin";
-import {
-  ORDER_USERS,
-  ORDER_PRODUCTS,
-  ADD_PRODUCT_CART,
-  DELETE_PRODUCT_CART,
-  MODIFY_PRODUCT_CART,
-  DELETE_CART,
-  GET_PRODUCTS,
-  GET_DELETED_PRODUCTS,
-  GET_USER_DETAILS,
-} from "../actions/actionsDashboardAdmin";
 import { GET_CART } from "../actions/actionsCart";
 
 const initialState = {
