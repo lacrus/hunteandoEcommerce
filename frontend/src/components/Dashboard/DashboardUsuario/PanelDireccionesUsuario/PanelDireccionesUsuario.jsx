@@ -88,10 +88,10 @@ function PanelDireccionesUsuario({ token, usuario }) {
 
           {direcciones?.length < 5 ? (
             <div
-              className={s.crearNuevaDireccion}
+              className={s.contenedorBotonCrearDireccion}
               onClick={() => handleModalDireccion("nuevaDireccion", {})}
             >
-              <div className={s.crearNuevaDireccionTexto}>Crear direccion</div>
+              <div className={s.botonCrearDireccion}>Crear dirección</div>
             </div>
           ) : null}
 
