@@ -33,6 +33,10 @@ function PanelUsuarios({ usuario }) {
       }
       setLoading(false);
     })();
+
+    return () => {
+      dispatch(obtenerUsuarios());
+    }
   }, []);
 
   const [cambioOrden, setCambioOrden] = useState(false);

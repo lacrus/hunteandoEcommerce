@@ -83,7 +83,6 @@ export function obtenerDetallesProducto(id) {
           method: "GET",
           url: "/shop/productdetails/" + id,
         });
-        console.log(res);
         if (!res.data.product) {
           throw new Error("Producto inexistente");
         } else {

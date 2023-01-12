@@ -17,7 +17,6 @@ function DetallesCompra({ usuario, token, id, setDetallesCompra }) {
   }
 
   const detallesCompra = useSelector((e) => e.dashboard.detalleCompra);
-  console.log("detallesCompra", detallesCompra);
 
   useEffect(() => {
     (async () => {
@@ -31,6 +30,10 @@ function DetallesCompra({ usuario, token, id, setDetallesCompra }) {
         setCargandoCompra(false);
       }
     })();
+
+    return () => {
+      dispatch(obtenerDetalleCompra());
+    };
   }, []);
 
   return cargandoCompra ? (

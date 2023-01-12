@@ -19,7 +19,6 @@ function DetallesUsuario({
   const [loading, setLoading] = useState(false);
 
   function handleClickCerrarFondo(e) {
-    console.log(e.target.id);
     if (e.target.id === "fondoContenedor") setMostrarDetallesUsuario(false);
   }
 
@@ -38,6 +37,10 @@ function DetallesUsuario({
       }
       setLoading(false);
     })();
+
+    return () => {
+      dispatch(obtenerDetalleCompletoUuario());
+    };
   }, []);
 
   useEffect(() => {

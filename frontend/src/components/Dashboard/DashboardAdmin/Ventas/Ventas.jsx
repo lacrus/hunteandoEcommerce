@@ -170,6 +170,7 @@ function Ventas() {
           </table>
           {mostrarDetalleVenta && (
             <ModalDetalleVenta
+              Loading={Loading}
               setMostrarDetalleVenta={setMostrarDetalleVenta}
               setIdVenta={setIdVenta}
               idVenta={idVenta}

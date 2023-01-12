@@ -89,8 +89,6 @@ export default function ModalModificarVenta({ producto, setEditarProducto }) {
     imagenesABorrar.length &&
       formData.append("imagenesABorrar", imagenesABorrar);
     try {
-      console.log(imagenesABorrar);
-      console.log(imagenes);
       const token = localStorage.getItem("token");
       await dispatch(modificarProducto(producto.id, formData, token));
       Swal.fire({

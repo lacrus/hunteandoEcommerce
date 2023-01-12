@@ -53,7 +53,6 @@ function CheckOut({ usuario }) {
         );
         window.location.replace(`${respuestaPago.init_point}`);
       } catch (error) {
-        console.log(error);
         Swal.fire("Hubo un problema!", "Intenta nuevamente mas tarde", "error");
         setLoading(false);
       }

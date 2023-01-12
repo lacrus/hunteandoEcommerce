@@ -51,7 +51,7 @@ function ProductosCreados() {
       setLoading(true);
       try {
         const token = localStorage.getItem("token");
-        await dispatch(obtenerTodosLosProductos("todos", token));
+        await dispatch(obtenerTodosLosProductos(token));
       } catch (e) {
         Swal.fire(
           "Hubo un problema",
@@ -62,7 +62,7 @@ function ProductosCreados() {
       setLoading(false);
     })();
     return () => {
-      dispatch(obtenerTodosLosProductos("reset"));
+      dispatch(obtenerTodosLosProductos());
     };
   }, []);
 

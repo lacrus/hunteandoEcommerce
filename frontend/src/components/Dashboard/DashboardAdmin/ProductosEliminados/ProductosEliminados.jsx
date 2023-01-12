@@ -58,6 +58,10 @@ function ProductosEliminados({ handleMostrarMenuAdmin }) {
       }
       setLoading(false);
     })();
+
+    return () => {
+      dispatch(obtenerProductosEliminados());
+    };
   }, []);
 
   return (

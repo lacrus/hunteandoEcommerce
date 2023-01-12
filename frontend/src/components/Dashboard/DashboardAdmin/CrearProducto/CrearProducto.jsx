@@ -161,7 +161,6 @@ function CrearProducto({ handleMostrarMenuAdmin }) {
         resetForm();
       });
     } catch (e) {
-      console.log(e);
       Swal.fire({
         icon: "error",
         title: "Hubo un error..",

@@ -32,6 +32,10 @@ function PanelComprasUsuario({ token, usuario }) {
         setLoading(false);
       }
     })();
+
+    return () => {
+      dispatch(obtenerComprasUsuario());
+    };
   }, []);
 
   return loading ? (
