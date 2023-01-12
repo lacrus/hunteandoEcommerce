@@ -6,6 +6,8 @@
   justify-content: center;
   align-items: center;
   position: relative;
+  overflow: hidden;
+  overflow-y: auto;
 }
 
 .contenedorLoading {
@@ -33,8 +35,8 @@
   align-items: center;
 }
 
-.contenedorDetalle{
-  width: 100%
+.contenedorDetalle {
+  width: 100%;
 }
 
 .tituloDireccion {
@@ -100,7 +102,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #67A49B;
+  background-color: #67a49b;
   cursor: pointer;
   border-radius: var(--border-radius-boton);
   transition: all 150ms ease;
