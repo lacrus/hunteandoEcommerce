@@ -76,7 +76,7 @@ function PanelComprasUsuario({ token, usuario }) {
                     {i.paymentStatus === "paid" ? null : (
                       <div
                         onClick={() => {
-                          return window.open(i.paymentLink);
+                          return window.location.replace(`${i.paymentLink}`);
                         }}
                         className={s.statusCompra}
                         style={{
