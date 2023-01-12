@@ -39,7 +39,13 @@ const dashboardReducer = (state = initialState, action) => {
       };
 
     case CERRAR_SESION:
-      return { ...state, comprasUsuario: [], detalleCompra: {} };
+      return {
+        ...state,
+        comprasUsuario: [],
+        detalleCompra: {},
+        ventas: [],
+        detalleVenta: {},
+      };
     default:
       return { ...state };
   }
