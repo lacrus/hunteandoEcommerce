@@ -2,12 +2,21 @@ import React from "react";
 import s from "./SegundoComponente.module.css";
 
 import picture1 from "../../../assets/images/picture1.png";
+import imgNotFound from "../../../assets/images/imgNotFound.jpg";
 
 export default function SegundoComponente() {
   return (
     <div className={s.contenedorSegundoComponente}>
       <div className={s.contenedorImagenHome}>
-        <img src={picture1} alt="img principal home" className={s.imagenHome} />
+        <img
+          src={picture1}
+          alt="img principal home"
+          className={s.imagenHome}
+          onError={({ currentTarget }) => {
+            currentTarget.onerror = null; // prevents looping
+            currentTarget.src = imgNotFound;
+          }}
+        />
       </div>
 
       <div className={s.contenedorDerechaHome}>

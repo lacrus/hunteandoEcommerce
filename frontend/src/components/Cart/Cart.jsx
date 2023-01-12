@@ -12,7 +12,7 @@ import Swal from "sweetalert2";
 import { ClipLoader } from "react-spinners";
 
 import imgCarroVacio from "../../assets/images/vacio.jpg";
-import imgNotFound from "../../assets/images/imgNotFound.jpeg";
+import imgNotFound from "../../assets/images/imgNotFound.jpg";
 
 import {
   eliminarProductoCarrito,
@@ -127,6 +127,10 @@ export default function Cart({ usuario }) {
                         }
                         alt="Imagen producto"
                         className={s.imagenTarjeta}
+                        onError={({ currentTarget }) => {
+                          currentTarget.onerror = null; // prevents looping
+                          currentTarget.src = imgNotFound;
+                        }}
                       />
                     </div>
                     <div className={s.contenedorInformacionTarjeta}>

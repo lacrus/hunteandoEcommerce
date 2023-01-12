@@ -6,7 +6,7 @@ import { obtenerDetalleCompra } from "../../../../../redux/actions/actionsDashbo
 import Swal from "sweetalert2";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import Loading from "../../../../Loading/Loading";
-import imgNotFound from "../../../../../assets/images/imgNotFound.jpeg";
+import imgNotFound from "../../../../../assets/images/imgNotFound.jpg";
 
 function DetallesCompra({ usuario, token, id, setDetallesCompra }) {
   const dispatch = useDispatch();
@@ -131,6 +131,10 @@ function DetallesCompra({ usuario, token, id, setDetallesCompra }) {
                           : imgNotFound
                       }
                       alt="imagen producto"
+                      onError={({ currentTarget }) => {
+                        currentTarget.onerror = null; // prevents looping
+                        currentTarget.src = imgNotFound;
+                      }}
                     />
                   </td>
                   <td>{i.name}</td>

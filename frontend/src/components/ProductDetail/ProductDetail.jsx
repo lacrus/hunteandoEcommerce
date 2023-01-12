@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import s from "./ProductDetail.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import imgNotFound from "../../assets/images/imgNotFound.jpg";
 
 export default function ProductDetail() {
   const navigate = useNavigate();
@@ -44,6 +45,10 @@ export default function ProductDetail() {
           className={s.imagenProducto}
           src={imagenSeleccionada}
           alt="imagen producto"
+          onError={({ currentTarget }) => {
+            currentTarget.onerror = null; // prevents looping
+            currentTarget.src = imgNotFound;
+          }}
         />
         <div className={s.contenedorImagenesMiniaturaProducto}>
           {producto.imagen.map((i) => {
@@ -53,6 +58,10 @@ export default function ProductDetail() {
                 className={s.imagenMiniaturaProducto}
                 src={i}
                 alt="imagen producto"
+                onError={({ currentTarget }) => {
+                  currentTarget.onerror = null; // prevents looping
+                  currentTarget.src = imgNotFound;
+                }}
               />
             );
           })}

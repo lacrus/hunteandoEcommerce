@@ -2,7 +2,7 @@ import React from "react";
 import s from "./SobreMi.module.css";
 
 import imgSobreMi from "../../../assets/images/Sobremi.png";
-
+import imgNotFound from "../../../assets/images/imgNotFound.jpg";
 
 export default function SobreMi() {
   return (
@@ -17,7 +17,15 @@ export default function SobreMi() {
           <div>ACERCA DE MI</div>
         </div>
       </div>
-      <img src={imgSobreMi} alt="sobre mi obra" className={s.imagenSobreMi} />
+      <img
+        src={imgSobreMi}
+        alt="sobre mi obra"
+        className={s.imagenSobreMi}
+        onError={({ currentTarget }) => {
+          currentTarget.onerror = null;
+          currentTarget.src = imgNotFound;
+        }}
+      />
     </div>
   );
 }

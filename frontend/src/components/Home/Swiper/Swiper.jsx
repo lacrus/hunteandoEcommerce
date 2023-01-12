@@ -8,7 +8,7 @@ import "swiper/css/navigation";
 import s from "./Swiper.module.css";
 import resizeHook from "../../../hooks/resizeHook";
 import { obtenerProductosRandomTienda } from "../../../redux/actions/actionsShop";
-import imgNotFound from "../../../assets/images/imgNotFound.jpeg";
+import imgNotFound from "../../../assets/images/imgNotFound.jpg";
 import Swal from "sweetalert2";
 import { PulseLoader } from "react-spinners";
 import { agregarProductoCarrito } from "../../../redux/actions/actionsCart";
@@ -115,9 +115,13 @@ export default function ComponenteSwiper({ usuario }) {
             <SwiperSlide key={i.id} className={s.contenedorTarjetaSwiper}>
               <div className={s.contenedorImg}>
                 <img
-                  src={i.image || imgNotFound}
+                  src={i.image ? i.image[0] : imgNotFound}
                   alt="img producto"
                   className={s.imagenTarjetaSwiper}
+                  onError={({ currentTarget }) => {
+                    currentTarget.onerror = null; // prevents looping
+                    currentTarget.src = imgNotFound;
+                  }}
                 />
                 <div
                   className={`${s.agregarAlCarroContenedor} ${
