@@ -38,7 +38,6 @@ export default function CheckoutConfirmation({ usuario }) {
           Recibirá un mail a {usuario?.email || "su casilla de mensajes "} con
           los datos de su compra.
         </p>
-        <p></p>
       </div>
 
       <div onClick={() => navigate("/")} className={s.contenedorBotonHeader}>
