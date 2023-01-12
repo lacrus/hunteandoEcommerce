@@ -73,23 +73,23 @@ function PanelComprasUsuario({ token, usuario }) {
                     >
                       {i.paymentStatus}
                     </div>
-                    <div
-                      onClick={() => {
-                        return i.paymentStatus !== "paid"
-                          ? window.open(i.paymentLink, "_blank")
-                          : null;
-                      }}
-                      className={s.statusCompra}
-                      style={{
-                        backgroundColor: "#009ee3",
-                        cursor: "pointer",
-                        width: "fit-content",
-                        padding: "0 3%",
-                        marginTop: "1%",
-                      }}
-                    >
-                      Volver al pago
-                    </div>
+                    {i.paymentStatus === "paid" ? null : (
+                      <div
+                        onClick={() => {
+                          return window.open(i.paymentLink, "_blank");
+                        }}
+                        className={s.statusCompra}
+                        style={{
+                          backgroundColor: "#009ee3",
+                          cursor: "pointer",
+                          width: "fit-content",
+                          padding: "0 3%",
+                          marginTop: "1%",
+                        }}
+                      >
+                        Volver al pago
+                      </div>
+                    )}
                   </td>
                   <td>
                     <div

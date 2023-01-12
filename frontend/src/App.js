@@ -111,7 +111,10 @@ function App() {
           path="/checkout/pending"
           element={<CheckoutPending usuario={usuario} />}
         />
-        <Route path="/checkout/cancel" element={<CheckoutCancel />} />
+        <Route
+          path="/checkout/cancel"
+          element={<CheckoutCancel usuario={usuario} />}
+        />
 
         <Route path="*" element={<Navigate to="/" replace={true} />} />
       </Routes>

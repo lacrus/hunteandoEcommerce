@@ -1,5 +1,4 @@
-// CASE ACTIONS
-import { GET_USER, GET_USERS, CERRAR_SESION } from "./../actions/actionsLogin";
+import { CERRAR_SESION } from "./../actions/actionsLogin";
 import { GET_CART } from "../actions/actionsCart";
 
 const initialState = {

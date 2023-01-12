@@ -3,16 +3,11 @@ import { GET_USER, GET_USERS, CERRAR_SESION } from "./../actions/actionsLogin";
 import {
   ORDER_USERS,
   ORDER_PRODUCTS,
-  ADD_PRODUCT_CART,
-  DELETE_PRODUCT_CART,
-  MODIFY_PRODUCT_CART,
-  DELETE_CART,
   GET_PRODUCTS,
   GET_DELETED_PRODUCTS,
   GET_USER_DETAILS,
 } from "../actions/actionsDashboardAdmin";
 import { GET_ADDRESSES } from "../actions/actionsDashboardClient";
-import { GET_CART } from "../actions/actionsCart";
 
 import functionOrdernarUsuarios from "../../utils/functionOdenarUsuarios";
 import functionOrdernarProductos from "../../utils/functionOdenarProductos";
@@ -22,7 +17,6 @@ const initialState = {
   direccionesUsuario: [],
   detallesUsuario: {},
   detalleProducto: {},
-  // carrito: [
   //   {
   //     id: 1,
   //     nombre: "remera",
@@ -138,98 +132,98 @@ const initialState = {
   //     disponible: 10,
   //   },
   // ],
-  ventas: [
-    {
-      id: 1,
-      date: "2022-12-29",
-      status: "pending",
-      products: [1, 2, 3],
-      address: "Calle 123, Ciudad",
-      total: 1500,
-      idUser: 15,
-      mailUser: "b@b.b",
-      statusDelivery: "pending",
-    },
-    {
-      id: 2,
-      date: "2022-12-28",
-      status: "failure",
-      products: [1, 2, 3],
-      address: "Calle 123, Ciudad",
-      total: 2500,
-      idUser: 123,
-      mailUser: "a@a.a",
-      statusDelivery: "failure",
-    },
-    {
-      id: 3,
-      date: "2022-11-29",
-      status: "success",
-      products: [1, 2, 3],
-      address: "Calle 123, Ciudad",
-      total: 150,
-      idUser: 42,
-      mailUser: "c@c.c",
-      statusDelivery: "success",
-    },
-  ],
-  detalleVenta: {
-    id: 1,
-    date: "2022-12-29",
-    status: "pending",
-    products: [
-      {
-        id: 1,
-        nombre: "Nombre del productoo",
-        imagen: [
-          "https://artelista.s3.amazonaws.com/obras/big/0/4/1/7382666047536905.jpg",
-          "https://i.pinimg.com/736x/69/51/d3/6951d3a58296c1e2886972c9f187478c.jpg",
-          "https://artelista.s3.amazonaws.com/obras/big/0/4/1/7382666047536905.jpg",
-          "https://i.pinimg.com/736x/69/51/d3/6951d3a58296c1e2886972c9f187478c.jpg",
-          "https://artelista.s3.amazonaws.com/obras/big/0/4/1/7382666047536905.jpg",
-        ],
-        precio: "15000",
-        descripcion:
-          "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugiat quaerat eaque impedit, dicta voluptatibus quidem incidunt necessitatibus, molestias praesentium a molestiae vel sapiente nostrum, doloremque inventore consequuntur provident placeat illo.",
-        cantidad: 4,
-      },
-      {
-        id: 1,
-        nombre: "Nombre del productoo",
-        imagen: [
-          "https://artelista.s3.amazonaws.com/obras/big/0/4/1/7382666047536905.jpg",
-          "https://i.pinimg.com/736x/69/51/d3/6951d3a58296c1e2886972c9f187478c.jpg",
-          "https://artelista.s3.amazonaws.com/obras/big/0/4/1/7382666047536905.jpg",
-          "https://i.pinimg.com/736x/69/51/d3/6951d3a58296c1e2886972c9f187478c.jpg",
-          "https://artelista.s3.amazonaws.com/obras/big/0/4/1/7382666047536905.jpg",
-        ],
-        precio: "15000",
-        descripcion:
-          "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugiat quaerat eaque impedit, dicta voluptatibus quidem incidunt necessitatibus, molestias praesentium a molestiae vel sapiente nostrum, doloremque inventore consequuntur provident placeat illo.",
-        cantidad: 4,
-      },
-      {
-        id: 3,
-        nombre: "Nombre del productoo",
-        imagen: [
-          "https://artelista.s3.amazonaws.com/obras/big/0/4/1/7382666047536905.jpg",
-          "https://i.pinimg.com/736x/69/51/d3/6951d3a58296c1e2886972c9f187478c.jpg",
-          "https://artelista.s3.amazonaws.com/obras/big/0/4/1/7382666047536905.jpg",
-          "https://i.pinimg.com/736x/69/51/d3/6951d3a58296c1e2886972c9f187478c.jpg",
-          "https://artelista.s3.amazonaws.com/obras/big/0/4/1/7382666047536905.jpg",
-        ],
-        precio: "15000",
-        descripcion:
-          "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugiat quaerat eaque impedit, dicta voluptatibus quidem incidunt necessitatibus, molestias praesentium a molestiae vel sapiente nostrum, doloremque inventore consequuntur provident placeat illo.",
-        cantidad: 4,
-      },
-    ],
-    address: "Calle 123, Ciudad",
-    total: 1500,
-    idUser: 15,
-    mailUser: "b@b.b",
-    statusDelivery: "pending",
-  },
+  // ventas: [
+  //   {
+  //     id: 1,
+  //     date: "2022-12-29",
+  //     status: "pending",
+  //     products: [1, 2, 3],
+  //     address: "Calle 123, Ciudad",
+  //     total: 1500,
+  //     idUser: 15,
+  //     mailUser: "b@b.b",
+  //     statusDelivery: "pending",
+  //   },
+  //   {
+  //     id: 2,
+  //     date: "2022-12-28",
+  //     status: "failure",
+  //     products: [1, 2, 3],
+  //     address: "Calle 123, Ciudad",
+  //     total: 2500,
+  //     idUser: 123,
+  //     mailUser: "a@a.a",
+  //     statusDelivery: "failure",
+  //   },
+  //   {
+  //     id: 3,
+  //     date: "2022-11-29",
+  //     status: "success",
+  //     products: [1, 2, 3],
+  //     address: "Calle 123, Ciudad",
+  //     total: 150,
+  //     idUser: 42,
+  //     mailUser: "c@c.c",
+  //     statusDelivery: "success",
+  //   },
+  // ],
+  // detalleVenta: {
+  //   id: 1,
+  //   date: "2022-12-29",
+  //   status: "pending",
+  //   products: [
+  //     {
+  //       id: 1,
+  //       nombre: "Nombre del productoo",
+  //       imagen: [
+  //         "https://artelista.s3.amazonaws.com/obras/big/0/4/1/7382666047536905.jpg",
+  //         "https://i.pinimg.com/736x/69/51/d3/6951d3a58296c1e2886972c9f187478c.jpg",
+  //         "https://artelista.s3.amazonaws.com/obras/big/0/4/1/7382666047536905.jpg",
+  //         "https://i.pinimg.com/736x/69/51/d3/6951d3a58296c1e2886972c9f187478c.jpg",
+  //         "https://artelista.s3.amazonaws.com/obras/big/0/4/1/7382666047536905.jpg",
+  //       ],
+  //       precio: "15000",
+  //       descripcion:
+  //         "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugiat quaerat eaque impedit, dicta voluptatibus quidem incidunt necessitatibus, molestias praesentium a molestiae vel sapiente nostrum, doloremque inventore consequuntur provident placeat illo.",
+  //       cantidad: 4,
+  //     },
+  //     {
+  //       id: 1,
+  //       nombre: "Nombre del productoo",
+  //       imagen: [
+  //         "https://artelista.s3.amazonaws.com/obras/big/0/4/1/7382666047536905.jpg",
+  //         "https://i.pinimg.com/736x/69/51/d3/6951d3a58296c1e2886972c9f187478c.jpg",
+  //         "https://artelista.s3.amazonaws.com/obras/big/0/4/1/7382666047536905.jpg",
+  //         "https://i.pinimg.com/736x/69/51/d3/6951d3a58296c1e2886972c9f187478c.jpg",
+  //         "https://artelista.s3.amazonaws.com/obras/big/0/4/1/7382666047536905.jpg",
+  //       ],
+  //       precio: "15000",
+  //       descripcion:
+  //         "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugiat quaerat eaque impedit, dicta voluptatibus quidem incidunt necessitatibus, molestias praesentium a molestiae vel sapiente nostrum, doloremque inventore consequuntur provident placeat illo.",
+  //       cantidad: 4,
+  //     },
+  //     {
+  //       id: 3,
+  //       nombre: "Nombre del productoo",
+  //       imagen: [
+  //         "https://artelista.s3.amazonaws.com/obras/big/0/4/1/7382666047536905.jpg",
+  //         "https://i.pinimg.com/736x/69/51/d3/6951d3a58296c1e2886972c9f187478c.jpg",
+  //         "https://artelista.s3.amazonaws.com/obras/big/0/4/1/7382666047536905.jpg",
+  //         "https://i.pinimg.com/736x/69/51/d3/6951d3a58296c1e2886972c9f187478c.jpg",
+  //         "https://artelista.s3.amazonaws.com/obras/big/0/4/1/7382666047536905.jpg",
+  //       ],
+  //       precio: "15000",
+  //       descripcion:
+  //         "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugiat quaerat eaque impedit, dicta voluptatibus quidem incidunt necessitatibus, molestias praesentium a molestiae vel sapiente nostrum, doloremque inventore consequuntur provident placeat illo.",
+  //       cantidad: 4,
+  //     },
+  //   ],
+  //   address: "Calle 123, Ciudad",
+  //   total: 1500,
+  //   idUser: 15,
+  //   mailUser: "b@b.b",
+  //   statusDelivery: "pending",
+  // },
   // Store Admin
   usuarios: [],
   ordenUsuarios: { id: "asc", username: null, email: null, role: null },
@@ -254,14 +248,7 @@ const rootReducer = (state = initialState, action) => {
     case GET_USER_DETAILS:
       return {
         ...state,
-        detallesUsuario: {
-          id: action.payload.id,
-          email: action.payload.email,
-          role: action.payload.role,
-          username: action.payload.username,
-          firstname: action.payload.UserDetail?.firstname,
-          lastname: action.payload.UserDetail?.lastname,
-        },
+        detallesUsuario: action.payload,
       };
     case CERRAR_SESION:
       return {
@@ -270,8 +257,8 @@ const rootReducer = (state = initialState, action) => {
         direccionesUsuario: [],
         detallesUsuario: {},
         detalleProducto: {},
-        ventas: [],
-        detalleVenta: {},
+        // ventas: [],
+        // detalleVenta: {},
         usuarios: [],
         ordenUsuarios: { id: "asc", username: null, email: null, role: null },
         productos: [],
@@ -295,43 +282,6 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         productosEliminados: action.payload,
-      };
-
-    // ACTIONS CARRITO
-    case GET_CART:
-      return {
-        ...state,
-        carro: [],
-      };
-
-    case ADD_PRODUCT_CART:
-      return {
-        ...state,
-        carro: [...state.carro.push(action.payload)],
-      };
-
-    case DELETE_PRODUCT_CART:
-      const productos = state.carro.filter((i) => i.id !== action.idProducto);
-      return {
-        ...state,
-        carro: productos,
-      };
-
-    case MODIFY_PRODUCT_CART:
-      const idxProducto = state.carro.findIndex(
-        (i) => i.id === action.payload.idProducto
-      );
-      const nuevaCantidad = [...state.carro];
-      nuevaCantidad[idxProducto].cantidad = action.payload.cantidad;
-      return {
-        ...state,
-        carro: nuevaCantidad,
-      };
-
-    case DELETE_CART:
-      return {
-        ...state,
-        carro: [],
       };
 
     // ACTIONS ORDENAR DASHBOARD

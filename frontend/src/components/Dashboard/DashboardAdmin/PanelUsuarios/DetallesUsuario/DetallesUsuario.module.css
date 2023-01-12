@@ -84,3 +84,11 @@
   border-radius: 25px;
   font-size: 0.8rem;
 }
+
+.botonDetallesVenta {
+  cursor: pointer;
+}
+
+.botonDetallesVenta:hover {
+  color: #f99716;
+}

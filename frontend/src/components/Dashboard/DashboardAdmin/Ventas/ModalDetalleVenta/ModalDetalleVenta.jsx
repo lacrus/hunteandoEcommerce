@@ -1,22 +1,64 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import s from "./ModalDetalleVenta.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { AiOutlineCloseCircle, AiOutlineLogout } from "react-icons/ai";
+import {
+  modificarEstadoEnvio,
+  obtenerDetallesVentaUsuario,
+  obtenerVentasUsuarios,
+} from "../../../../../redux/actions/actionsDashboardAdmin";
+import Swal from "sweetalert2";
 
 function ModalDetalleVenta({ idVenta, setMostrarDetalleVenta, setIdVenta }) {
-  const detalleVenta = useSelector((e) => e.general.detalleVenta);
+  const [cargando, setCargando] = useState(false);
+  const detalleVenta = useSelector((e) => e.dashboard.detalleVenta);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    async function fetch() {
+  async function handleChangeShippingStatus(e) {
+    setCargando(true);
+    Swal.fire({
+      title: "Cambiando estado del envío",
+      text: "Confirma realizar la acción?",
+      icon: "question",
+      showDenyButton: true,
+    }).then(async ({ isConfirmed }) => {
       try {
-        //await dispatch(obtenerDetallesVenta(idVenta)) // ACTION para recibir los detalles de la venta
-      } catch (e) {
-        alert("No se pudieron obtener los detalles de la venta");
+        if (isConfirmed) {
+          const token = localStorage.getItem("token");
+          await dispatch(
+            modificarEstadoEnvio(
+              idVenta,
+              { shippingStatus: e.target.value },
+              token
+            )
+          );
+          await dispatch(obtenerVentasUsuarios(token));
+        } else {
+          e.target.value = detalleVenta?.shippingStatus;
+        }
+      } catch (error) {
+        Swal.fire(
+          "Error al cambiar el rol de usuario",
+          "Intentalo nuevamente mas tarde",
+          "error"
+        );
       }
-    }
-    fetch();
+      setCargando(false);
+    });
+  }
+
+  useEffect(() => {
+    (async () => {
+      setCargando(true);
+      try {
+        const token = localStorage.getItem("token");
+        await dispatch(obtenerDetallesVentaUsuario(idVenta, token)); // ACTION para recibir los detalles de la venta
+      } catch (e) {
+        Swal.fire("Hubo un problema", "Vuelve a intentarlo mas tarde", "error");
+      }
+      setCargando(false);
+    })();
   }, []);
 
   return (
@@ -27,53 +69,64 @@ function ModalDetalleVenta({ idVenta, setMostrarDetalleVenta, setIdVenta }) {
         </div>
         <table className={s.tablaDetalleVenta}>
           <thead className={s.encabezadoDetalleVenta}>
-            <th>Id venta</th>
-            <th>Id usuario</th>
-            <th>mailUser</th>
-            <th>Fecha venta</th>
-            <th>Estado pago</th>
-            <th>Dirección</th>
-            <th>Estado envío</th>
-            <th>total</th>
+            <tr>
+              <th>Id venta</th>
+              <th>Total</th>
+              <th>Mail</th>
+              <th>Fecha venta</th>
+              <th>Estado pago</th>
+              <th>Estado envío</th>
+              <th>Dirección</th>
+            </tr>
           </thead>
           <tbody className={s.bodyDetalleVenta}>
             <tr>
-              <td>{detalleVenta.id}</td>
-              <td>{detalleVenta.idUser}</td>
-              <td>{detalleVenta.mailUser}</td>
-              <td>{detalleVenta.date}</td>
+              <td>{detalleVenta?.id}</td>
+              <td>$ {detalleVenta?.total}</td>
+              <td>{detalleVenta?.User?.email}</td>
+              <td>{detalleVenta?.createdAt?.slice(0, 10)}</td>
               <td>
                 <div
                   className={s.statusVenta}
                   style={{
                     backgroundColor:
-                      detalleVenta.status === "failure"
+                      detalleVenta?.paymentStatus === "failure"
                         ? "red"
-                        : detalleVenta.status === "pending"
+                        : detalleVenta?.paymentStatus === "pending"
                         ? "orange"
                         : "green",
                   }}
                 >
-                  {detalleVenta.status}
+                  {detalleVenta?.paymentStatus}
                 </div>
               </td>
-              <td>{detalleVenta.address}</td>
               <td>
-                <div
-                  className={s.statusVenta}
-                  style={{
-                    backgroundColor:
-                      detalleVenta.statusDelivery === "failure"
-                        ? "red"
-                        : detalleVenta.statusDelivery === "pending"
-                        ? "orange"
-                        : "green",
-                  }}
-                >
-                  {detalleVenta.status}
-                </div>
+                {detalleVenta?.shippingStatus !== "completed" ? (
+                  <select
+                    name="shippingStatus"
+                    id="shippingStatus"
+                    defaultValue={detalleVenta?.shippingStatus}
+                    onChange={handleChangeShippingStatus}
+                  >
+                    <option value="pending">Pendiente</option>
+                    <option value="sending">Enviado</option>
+                    <option value="completed">Entregado</option>
+                  </select>
+                ) : (
+                  <div
+                    className={s.statusVenta}
+                    style={{
+                      backgroundColor: "green",
+                    }}
+                  >
+                    {detalleVenta?.shippingStatus}
+                  </div>
+                )}
               </td>
-              <td>{detalleVenta.total}</td>
+              <td>
+                {detalleVenta?.shippingAddress?.slice(0, 15) +
+                  (detalleVenta?.shippingAddress?.length > 15 ? "..." : null)}
+              </td>
             </tr>
           </tbody>
         </table>
@@ -82,22 +135,24 @@ function ModalDetalleVenta({ idVenta, setMostrarDetalleVenta, setIdVenta }) {
         </div>
         <table className={s.tablaDetalleVenta}>
           <thead className={s.encabezadoDetalleVenta}>
-            <th>Id producto</th>
-            <th>Nombre producto</th>
-            <th>Cantidad ordenada</th>
-            <th>Precio unitario</th>
-            <th>Total</th>
-            <th>Ir al producto</th>
+            <tr>
+              <th>Id</th>
+              <th>Nombre</th>
+              <th>Cant. ordenada</th>
+              <th>Precio</th>
+              <th>Total</th>
+              <th>Ir al producto</th>
+            </tr>
           </thead>
           <tbody className={s.bodyDetalleVenta}>
-            {detalleVenta.products.map((i) => {
+            {detalleVenta?.OrderItems?.map((i) => {
               return (
                 <tr>
                   <td>{i.id}</td>
-                  <td>{i.nombre}</td>
-                  <td>{i.cantidad}</td>
-                  <td>$ {i.precio}</td>
-                  <td>$ {i.cantidad * i.precio}</td>
+                  <td>{i.name}</td>
+                  <td>{i.quantity}</td>
+                  <td>$ {i.price}</td>
+                  <td>$ {i.quantity * i.price}</td>
                   <td>
                     <Link
                       className={s.linkDetalleVenta}

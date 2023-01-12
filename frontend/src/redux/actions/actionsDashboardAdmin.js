@@ -1,16 +1,14 @@
 import axios from "axios";
 
-import logearToken, { GET_USERS } from "./actionsLogin";
+import { GET_USERS } from "./actionsLogin";
 
-export const ADD_PRODUCT_CART = "ADD_PRODUCT_CART";
-export const DELETE_PRODUCT_CART = "DELETE_PRODUCT_CART";
-export const MODIFY_PRODUCT_CART = "MODIFY_PRODUCT_CART";
-export const DELETE_CART = "DELETE_CART";
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_DELETED_PRODUCTS = "GET_DELETED_PRODUCTS";
 export const ORDER_USERS = "ORDER_USERS";
 export const ORDER_PRODUCTS = "ORDER_PRODUCTS";
 export const GET_USER_DETAILS = "GET_USER_DETAILS";
+export const GET_SALES = "GET_SALES";
+export const GET_SALE_DETAILS = "GET_SALE_DETAILS";
 
 // ------------------ ACTIONS PRODUCTOS ------------------
 
@@ -187,20 +185,76 @@ export function modificarRolUsuario(id, rol, token) {
   }
 }
 
-export function obtenerDetallesUsuario(id, token) {
-  console.log(id, token);
+export function obtenerDetalleCompletoUuario(idUsuario, token) {
+  return async function (dispatch) {
+    if (!token) {
+      return dispatch({ type: GET_USER_DETAILS, payload: {} });
+    } else {
+      try {
+        const res = await axios({
+          method: "GET",
+          url: "/dashboard/admin/users/userdetailcomplete/" + idUsuario,
+          headers: {
+            authorization: `${token}`,
+          },
+        });
+        console.log(res.data.user);
+        return dispatch({ type: GET_USER_DETAILS, payload: res.data.user });
+      } catch (error) {
+        return new Error(error);
+      }
+    }
+  };
+}
+
+export function obtenerVentasUsuarios(token) {
   return async function (dispatch) {
     try {
       const res = await axios({
         method: "GET",
-        url: "/dashboard/admin/users/userdetail/" + id,
+        url: "/dashboard/admin/users/getuserssales",
         headers: {
           authorization: `${token}`,
         },
       });
-      return dispatch({ type: GET_USER_DETAILS, payload: res.data.user });
-    } catch (e) {
-      throw new Error(e);
+      return dispatch({ type: GET_SALES, payload: res.data.sales });
+    } catch (error) {
+      return new Error(error);
+    }
+  };
+}
+
+export function obtenerDetallesVentaUsuario(idVenta, token) {
+  return async function (dispatch) {
+    try {
+      const res = await axios({
+        method: "GET",
+        url: "/dashboard/admin/users/getsaledetails/" + idVenta,
+        headers: {
+          authorization: `${token}`,
+        },
+      });
+      return dispatch({ type: GET_SALE_DETAILS, payload: res.data.sale });
+    } catch (error) {
+      return new Error(error);
+    }
+  };
+}
+
+export function modificarEstadoEnvio(idVenta, estadoEnvio, token) {
+  return async function (dispatch) {
+    try {
+      const res = await axios({
+        method: "PUT",
+        data: estadoEnvio,
+        url: "/dashboard/admin/users/modifysaledetails/" + idVenta,
+        headers: {
+          authorization: `${token}`,
+        },
+      });
+      return dispatch({ type: GET_SALE_DETAILS, payload: res.data.sale });
+    } catch (error) {
+      return new Error(error);
     }
   };
 }

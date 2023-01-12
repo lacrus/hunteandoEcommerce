@@ -126,11 +126,11 @@ export default function AppBar({ usuario }) {
             onClick={() => setMostrarMenuHeader(true)}
           />
 
-          <select className={s.selectHeader}>
+          {/* <select className={s.selectHeader}>
             <option>Español (Latinoaméricano)</option>
             <option>English (U.S)</option>
             <option>Portugues (Europa)</option>
-          </select>
+          </select> */}
 
           <div className={s.contenedorCarritoHeader}>
             <AiOutlineShoppingCart

@@ -30,10 +30,26 @@ export function compraConML(idUsuario, carritoCompra, token) {
           authorization: `${token}`,
         },
       });
-      console.log(res.data.init_point);
       return res.data;
     } catch (error) {
       return new Error(error);
+    }
+  };
+}
+
+export function verificarPago(pagoId) {
+  return async function (dispatch) {
+    try {
+      const res = await axios({
+        method: "POST",
+        data: {
+          action: "desdeFront",
+          data: { id: pagoId },
+        },
+        url: `/finalizarcompra/mercadopago/respuesta`,
+      });
+    } catch (error) {
+      throw new Error(error);
     }
   };
 }

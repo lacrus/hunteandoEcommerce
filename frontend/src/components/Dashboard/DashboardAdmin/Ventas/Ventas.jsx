@@ -6,10 +6,12 @@ import ModalDetalleVenta from "./ModalDetalleVenta/ModalDetalleVenta";
 import functionOrdernarVentas from "../../../../utils/functionOdenarVentas";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
+import { obtenerVentasUsuarios } from "../../../../redux/actions/actionsDashboardAdmin";
 
 function Ventas() {
   const dispatch = useDispatch();
-  const ventas = useSelector((e) => e.general.ventas);
+  // const ventas = useSelector((e) => e.general.ventas);
+  const ventas = useSelector((e) => e.dashboard.ventas);
   const [mostrarDetalleVenta, setMostrarDetalleVenta] = useState(false);
   const [idVenta, setIdVenta] = useState(null);
 
@@ -43,9 +45,9 @@ function Ventas() {
     (async () => {
       setLoading(true);
       try {
-        // await dispatch(obtenerVentas());
+        const token = localStorage.getItem("token");
+        await dispatch(obtenerVentasUsuarios(token));
       } catch (e) {
-        console.log(e);
         Swal.fire({
           icon: "error",
           title: "Error!",
@@ -77,12 +79,6 @@ function Ventas() {
               Total
             </th>
             <th
-              onClick={() => handleOrdenarVentas("idUser")}
-              className={s.cursor}
-            >
-              Id Usuario
-            </th>
-            <th
               onClick={() => handleOrdenarVentas("mailUser")}
               className={s.cursor}
             >
@@ -104,56 +100,56 @@ function Ventas() {
           </tr>
         </thead>
         <tbody className={s.bodyVentas}>
-          {ventasOrdenadas?.length &&
-            ventasOrdenadas?.map((a) => {
-              return (
-                <tr key={"ventas" + a.id}>
-                  <td>{a.id}</td>
-                  <td>{a.date}</td>
-                  <td>{a.total}</td>
-                  <td>{a.idUser}</td>
-                  <td>{a.mailUser}</td>
-                  <td>
-                    <div
-                      className={s.statusVenta}
-                      style={{
-                        backgroundColor:
-                          a.status === "failure"
-                            ? "red"
-                            : a.status === "pending"
-                            ? "orange"
-                            : "green",
-                      }}
-                    >
-                      {a.status}
-                    </div>
-                  </td>
-                  <td>
-                    <div
-                      className={s.statusVenta}
-                      style={{
-                        backgroundColor:
-                          a.statusDelivery === "failure"
-                            ? "red"
-                            : a.statusDelivery === "pending"
-                            ? "orange"
-                            : "green",
-                      }}
-                    >
-                      {a.statusDelivery}
-                    </div>
-                  </td>
-                  <td>
-                    <div
-                      className={s.botonDetallesVenta}
-                      onClick={(e) => handleVerDetalle(e, a.id)}
-                    >
-                      <CgDetailsMore />
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
+          {ventas?.length
+            ? ventas?.map((a) => {
+                return (
+                  <tr key={"ventas" + a.id}>
+                    <td>{a.id}</td>
+                    <td>{a.createdAt.slice(0, 10)}</td>
+                    <td>{a.total}</td>
+                    <td>{a.User.email}</td>
+                    <td>
+                      <div
+                        className={s.statusVenta}
+                        style={{
+                          backgroundColor:
+                            a.paymentStatus === "failure"
+                              ? "red"
+                              : a.paymentStatus === "pending"
+                              ? "orange"
+                              : "green",
+                        }}
+                      >
+                        {a.paymentStatus}
+                      </div>
+                    </td>
+                    <td>
+                      <div
+                        className={s.statusVenta}
+                        style={{
+                          backgroundColor:
+                            a.shippingStatus === "pending"
+                              ? "red"
+                              : a.shippingStatus === "sending"
+                              ? "orange"
+                              : "green",
+                        }}
+                      >
+                        {a.shippingStatus}
+                      </div>
+                    </td>
+                    <td>
+                      <div
+                        className={s.botonDetallesVenta}
+                        onClick={(e) => handleVerDetalle(e, a.id)}
+                      >
+                        <CgDetailsMore />
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })
+            : null}
         </tbody>
       </table>
       {mostrarDetalleVenta && (
