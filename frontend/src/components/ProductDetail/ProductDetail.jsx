@@ -3,25 +3,32 @@ import s from "./ProductDetail.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import imgNotFound from "../../assets/images/imgNotFound.jpg";
+import { useEffect } from "react";
+import { obtenerDetallesProducto } from "../../redux/actions/actionsShop";
+import Swal from "sweetalert2";
+import { agregarProductoCarrito } from "../../redux/actions/actionsCart";
 
-export default function ProductDetail() {
+export default function ProductDetail({ usuario }) {
   const navigate = useNavigate();
-  const params = useParams();
   const dispatch = useDispatch();
-
-  const producto = useSelector((e) => e.general.detalleProducto);
-  const usuario = useSelector((e) => e.general.usuario);
+  const { id } = useParams();
+  const producto = useSelector((e) => e.tienda.detallesProducto);
+  // const usuario = useSelector((e) => e.general.usuario);
   const [pedido, setPedido] = useState({ cantidad: 1 });
-  const [imagenSeleccionada, setImagenSeleccionada] = useState(
-    producto.imagen[0]
-  );
+  const [loading, setLoading] = useState(false);
+  const [imagenSeleccionada, setImagenSeleccionada] = useState(null);
   const [cantidadSeleccionada, setCantidadSeleccionada] = useState(1);
 
   async function handleAgregarCarrito() {
-    if (usuario.username) {
-      await dispatch();
+    const prod = {
+      id,
+      quantity: cantidadSeleccionada,
+    };
+    if (usuario?.username) {
+      const token = localStorage.getItem("token");
+      await dispatch(agregarProductoCarrito(usuario.id, prod, token));
     } else {
-      navigate(`/login/${params.id}`);
+      navigate(`/login/${id}`);
     }
   }
 
@@ -30,14 +37,40 @@ export default function ProductDetail() {
   }
 
   function handleCantidadSeleccionada(e) {
-    console.log(e.target.value);
     setCantidadSeleccionada(e.target.value);
   }
+
+  useEffect(() => {
+    if (id) {
+      console.log(id);
+      (async () => {
+        setLoading(true);
+        try {
+          const respuesta = await dispatch(obtenerDetallesProducto(id));
+          setImagenSeleccionada(respuesta.payload?.image[0]);
+        } catch (error) {
+          console.log(error);
+          Swal.fire(
+            "Hubo un problema",
+            "Vuelve a intentarlo mas tarde",
+            "error"
+          );
+        }
+        setLoading(false);
+      })();
+    }
+  }, [id]);
+
+  // useEffect(() => {
+  //   return () => {
+  //     dispatch(obtenerDetallesProducto());
+  //   };
+  // }, []);
 
   return (
     <div className={s.contenedorDetalle}>
       <div className={`${s.nombreProducto} ${s.nombreProductoCel}`}>
-        {producto.nombre}
+        {producto?.name}
       </div>
 
       <div className={s.contenedorIzquierdo}>
@@ -51,9 +84,10 @@ export default function ProductDetail() {
           }}
         />
         <div className={s.contenedorImagenesMiniaturaProducto}>
-          {producto.imagen.map((i) => {
+          {producto?.image?.map((i, idx) => {
             return (
               <img
+                key={"img" + idx}
                 onClick={() => handleSeleccionarImagen(i)}
                 className={s.imagenMiniaturaProducto}
                 src={i}
@@ -70,10 +104,10 @@ export default function ProductDetail() {
 
       <div className={s.contenedorDerecho}>
         <div className={s.detalles}>
-          <div className={s.nombreProducto}>{producto.nombre}</div>
+          <div className={s.nombreProducto}>{producto?.name}</div>
           <div className={s.precioProducto}>
             ${" "}
-            {parseInt(producto.precio * cantidadSeleccionada).toLocaleString(
+            {parseInt(producto?.price * cantidadSeleccionada).toLocaleString(
               "es"
             )}
           </div>
@@ -85,7 +119,7 @@ export default function ProductDetail() {
               name="cantidad"
               id="cantidad"
             >
-              {new Array(producto.cantidad || 1).fill().map((i, idx) => {
+              {new Array(producto?.stock || 1).fill().map((i, idx) => {
                 return (
                   <option key={idx} value={idx + 1}>{`${idx + 1} ${
                     idx === 0 ? "unidad" : "unidades"

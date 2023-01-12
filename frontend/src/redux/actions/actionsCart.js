@@ -23,6 +23,7 @@ export const obtenerCarrito = (idUsuario, token) => {
 };
 
 export function agregarProductoCarrito(idUsuario, producto, token) {
+  console.log(idUsuario, producto, token);
   try {
     return async function (dispatch) {
       let res = await axios({

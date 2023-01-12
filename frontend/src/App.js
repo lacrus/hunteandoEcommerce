@@ -7,6 +7,7 @@ import "./App.css";
 import AppBar from "./components/AppBar/AppBar";
 import HomePage from "./components/Home/Home";
 
+import NavigateToTop from "./hooks/NavigateToTop/NavigateToTop";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Cart from "./components/Cart/Cart.jsx";
@@ -16,12 +17,13 @@ import Footer from "./components/Footer/Footer";
 import BotonWapp from "./components/BotonWapp/BotonWapp";
 import DashboardUsuario from "./components/Dashboard/DashboardUsuario/DashboardUsuario";
 import DashboardAdmin from "./components/Dashboard/DashboardAdmin/DashboardAdmin";
-import logearToken, { cerrarSesion } from "./redux/actions/actionsLogin";
+import { logearToken, cerrarSesion } from "./redux/actions/actionsLogin";
 import { obtenerCarrito } from "./redux/actions/actionsCart";
 import CheckOut from "./components/CheckOut/CheckOut";
 import CheckoutConfirmation from "./components/CheckOut/CheckoutConfirmation/CheckoutConfirmation";
 import CheckoutCancel from "./components/CheckOut/CheckoutCancel/CheckoutCancel";
 import CheckoutPending from "./components/CheckOut/CheckoutPending/CheckoutPending";
+import Tienda from "./components/Tienda/Tienda";
 
 function App() {
   const usuario = useSelector((e) => e.general.usuario);
@@ -46,6 +48,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <NavigateToTop />
       <AppBar usuario={usuario} />
       <Routes>
         <Route path="/" element={<HomePage usuario={usuario} />} />
@@ -61,6 +64,11 @@ function App() {
           path="/registrarse"
           element={usuario.username ? <Navigate to="/" /> : <Register />}
         />
+        <Route path="/tienda" element={<Tienda />} />
+        <Route
+          path="/tienda/detalles/:id"
+          element={<ProductDetail usuario={usuario} />}
+        />
         <Route
           path="/carrito"
           element={
@@ -71,8 +79,7 @@ function App() {
             )
           }
         />
-        {/* <Route path="/productos" element={<Products />} />
-        <Route path="/productos/detalle/:id" element={<ProductDetail />} /> */}
+        {/* <Route path="/productos" element={<Products />} /> */}
         <Route
           path="/dashboard/admin"
           element={
@@ -96,11 +103,11 @@ function App() {
         <Route
           path="/finalizarcompra"
           element={
-            // usuario.username && productosCarrito?.length ? (
-            <CheckOut usuario={usuario} />
-            // ) : (
-            //   <Navigate to="/" replace={true} />
-            // )
+            usuario.username && productosCarrito?.length ? (
+              <CheckOut usuario={usuario} />
+            ) : (
+              <Navigate to="/" replace={true} />
+            )
           }
         />
         <Route

@@ -1,7 +1,13 @@
-import { GET_RANDOM_PRODUCTS_TIENDA } from "../actions/actionsShop";
+import {
+  GET_RANDOM_PRODUCTS_TIENDA,
+  GET_PRODUCTS_TIENDA,
+  GET_PRODUCT_DETAIL,
+} from "../actions/actionsShop";
 
 const initialState = {
   productosRandom: [],
+  productosTienda: [],
+  detallesProducto: {},
 };
 
 const shopReducer = (state = initialState, action) => {
@@ -10,6 +16,16 @@ const shopReducer = (state = initialState, action) => {
       return {
         ...state,
         productosRandom: action.payload,
+      };
+    case GET_PRODUCTS_TIENDA:
+      return {
+        ...state,
+        productosTienda: action.payload,
+      };
+    case GET_PRODUCT_DETAIL:
+      return {
+        ...state,
+        detallesProducto: action.payload,
       };
     default:
       return { ...state };

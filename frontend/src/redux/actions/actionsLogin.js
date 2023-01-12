@@ -90,7 +90,7 @@ export const cerrarSesion = () => {
   }
 };
 
-export default function logearToken(token) {
+export function logearToken(token) {
   try {
     return async function (dispatch) {
       const res = await axios({

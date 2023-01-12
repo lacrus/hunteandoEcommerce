@@ -93,7 +93,10 @@ export default function ComponenteSwiper({ usuario }) {
     <div className={s.contenedorSwiper}>
       <div className={s.encabezadoSwiper}>
         <div className={s.tituloSwiper}>Mi tienda</div>
-        <div className={s.vermasSwiper}>{`Ver más ->`}</div>
+        <div
+          onClick={() => navigate("/tienda")}
+          className={s.vermasSwiper}
+        >{`Ver más ->`}</div>
       </div>
       <Swiper
         navigation={{
