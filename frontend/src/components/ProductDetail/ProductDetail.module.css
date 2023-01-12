@@ -26,7 +26,8 @@
   border-radius: 25px;
   width: 90%;
   height: 75%;
-  object-fit: contain;
+  object-fit: cover; /* Recorta la imagen sin deformarla */
+  object-position: center;
 }
 
 .contenedorImagenesMiniaturaProducto {

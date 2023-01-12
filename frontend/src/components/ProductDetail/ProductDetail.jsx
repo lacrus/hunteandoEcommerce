@@ -61,11 +61,11 @@ export default function ProductDetail({ usuario }) {
     }
   }, [id]);
 
-  // useEffect(() => {
-  //   return () => {
-  //     dispatch(obtenerDetallesProducto());
-  //   };
-  // }, []);
+  useEffect(() => {
+    return () => {
+      dispatch(obtenerDetallesProducto());
+    };
+  }, []);
 
   return (
     <div className={s.contenedorDetalle}>
@@ -76,7 +76,7 @@ export default function ProductDetail({ usuario }) {
       <div className={s.contenedorIzquierdo}>
         <img
           className={s.imagenProducto}
-          src={imagenSeleccionada}
+          src={imagenSeleccionada || imgNotFound}
           alt="imagen producto"
           onError={({ currentTarget }) => {
             currentTarget.onerror = null; // prevents looping
@@ -119,25 +119,31 @@ export default function ProductDetail({ usuario }) {
               name="cantidad"
               id="cantidad"
             >
-              {new Array(producto?.stock || 1).fill().map((i, idx) => {
-                return (
-                  <option key={idx} value={idx + 1}>{`${idx + 1} ${
-                    idx === 0 ? "unidad" : "unidades"
-                  }`}</option>
-                );
-              })}
+              {producto?.stock < 1 ? (
+                <option value="sinStock">Sin Stock</option>
+              ) : (
+                new Array(producto?.stock || 1).fill().map((i, idx) => {
+                  return (
+                    <option key={idx} value={idx + 1}>{`${idx + 1} ${
+                      idx === 0 ? "unidad" : "unidades"
+                    }`}</option>
+                  );
+                })
+              )}
             </select>
           </div>
         </div>
-        <div className={s.botones}>
-          <div className={`${s.boton} ${s.botonComprar}`}>Comprar</div>
-          <div
-            onClick={handleAgregarCarrito}
-            className={`${s.boton} ${s.botonAgregar}`}
-          >
-            Agregar al carrito
+        {producto?.stock >= 1 ? (
+          <div className={s.botones} display={producto?.stock ? true : "none"}>
+            <div className={`${s.boton} ${s.botonComprar}`}>Comprar</div>
+            <div
+              onClick={handleAgregarCarrito}
+              className={`${s.boton} ${s.botonAgregar}`}
+            >
+              Agregar al carrito
+            </div>
           </div>
-        </div>
+        ) : null}
       </div>
     </div>
   );

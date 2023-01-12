@@ -209,6 +209,7 @@ export function obtenerDetalleCompletoUuario(idUsuario, token) {
 
 export function obtenerVentasUsuarios(token) {
   return async function (dispatch) {
+    if (!token) dispatch({ type: GET_SALES, payload: [] });
     try {
       const res = await axios({
         method: "GET",

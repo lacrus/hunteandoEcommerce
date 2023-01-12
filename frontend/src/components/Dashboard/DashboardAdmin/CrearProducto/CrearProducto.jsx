@@ -190,7 +190,7 @@ function CrearProducto({ handleMostrarMenuAdmin }) {
         onSubmit={handleSubmit}
         encType="multipart/form-data"
       >
-        <h1 className={s.titulo}>Crear Producto</h1>
+        {/* <h1 className={s.titulo}>Crear Producto</h1> */}
         <InputFormulario
           placeholder="Máximo 20 carácteres"
           tipo="text"

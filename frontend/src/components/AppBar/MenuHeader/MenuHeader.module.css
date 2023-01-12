@@ -116,4 +116,5 @@
 .cerrarSesionTexto {
   width: 100%;
   color: #f99716;
+  cursor: pointer;
 }

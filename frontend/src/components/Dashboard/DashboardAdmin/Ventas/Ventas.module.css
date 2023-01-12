@@ -1,3 +1,10 @@
+.contenedorLoading{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
+}
+
 .contenedorVentas {
   position: relative;
   width: calc(100vw - 15vw);

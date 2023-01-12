@@ -98,7 +98,11 @@ export default function MenuHeader({
           <div className={s.renglonMiCuenta}>
             <AiOutlineUser className={s.miCuentaIcono} />
             {usuario.username ? (
-              <Link to="/dashboard" className={`${s.itemsMenu}`}>
+              <Link
+                to="/dashboard/client"
+                onClick={() => setMostrarMenu(false)}
+                className={`${s.itemsMenu}`}
+              >
                 Mi cuenta
               </Link>
             ) : (

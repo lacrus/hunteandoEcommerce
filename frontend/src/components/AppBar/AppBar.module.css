@@ -125,7 +125,7 @@
 }
 
 .botonMenuHeader {
-  display: none;
+  /* display: none; */
   width: 0px;
   cursor: pointer;
   width: calc(var(--altura-header) * 0.4);

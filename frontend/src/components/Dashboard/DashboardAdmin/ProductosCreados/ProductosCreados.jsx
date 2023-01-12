@@ -87,6 +87,7 @@ function ProductosCreados() {
               <th onClick={() => handleOrdernar("price")} className={s.cursor}>
                 Precio
               </th>
+              <th>Stock</th>
               <th>Descripción</th>
               <th>Editar</th>
               <th>Eliminar</th>
@@ -100,6 +101,7 @@ function ProductosCreados() {
                     <td>{a.id}</td>
                     <td>{a.name}</td>
                     <td>{a.price}</td>
+                    <th>{a.stock}</th>
                     <td>{a.description.substring(0, 20)}</td>
                     <td>
                       <div
