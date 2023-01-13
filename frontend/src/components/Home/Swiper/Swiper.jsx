@@ -143,7 +143,10 @@ export default function ComponenteSwiper({ usuario }) {
                   )}
                 </div>
               </div>
-              <div className={s.nombreSwiper}>
+              <div
+                className={s.nombreSwiper}
+                onClick={() => navigate(`/tienda/detalles/${i.id}`)}
+              >
                 {i.name[0].toUpperCase() + i.name.substring(1)}
               </div>
 

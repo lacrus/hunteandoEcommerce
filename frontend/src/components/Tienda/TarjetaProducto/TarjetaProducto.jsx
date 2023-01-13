@@ -7,14 +7,14 @@ function TarjetaProducto({
   imgNotFound,
   agregandoProducto,
   esMovil,
-  handleAgregarAlCarro,
+  accionEnHover,
   imagen,
   id,
   nombre,
   precio,
 }) {
   return (
-    <div className={s.contenedorTarjeta} onClick={handleAgregarAlCarro}>
+    <div className={s.contenedorTarjeta} onClick={accionEnHover}>
       <div className={s.contenedorImg}>
         <img
           // id="imagenCuadrada"
@@ -36,7 +36,6 @@ function TarjetaProducto({
           ) : (
             <div
               className={s.agregarAlCarro}
-              // onClick={() => handleAgregarAlCarro(id)}
             >
               Ir al producto
             </div>
