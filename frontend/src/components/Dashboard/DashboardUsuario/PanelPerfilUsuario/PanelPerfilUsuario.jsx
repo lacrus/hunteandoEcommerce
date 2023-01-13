@@ -7,17 +7,34 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import YupPassword from "yup-password";
 
-import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import Swal from "sweetalert2";
 import { PulseLoader } from "react-spinners";
 import { modificarUsuario } from "../../../../redux/actions/actionsDashboardClient";
+import { recuperarContrasena } from "../../../../redux/actions/actionsLogin";
 
 YupPassword(Yup);
 
 function PanelPerfilUsuario({ token, usuario }) {
-  const [mostrarContrasena, setMostrarContrasena] = useState(false);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+
+  function handleCambioContrasena() {
+    try {
+      Swal.fire({
+        title: "Deseas cambiar la contraseña?",
+        icon: "question",
+        showDenyButton: true,
+        footer: "Te enviaremos un link al mail registrado.",
+      }).then(async ({ isConfirmed }) => {
+        if (isConfirmed) {
+          Swal.fire("Revisa tu casilla de mail", "", "success");
+          await dispatch(recuperarContrasena(usuario.email));
+        }
+      });
+    } catch (error) {
+      Swal.fire("Hubo un problema", "Vuelve a intentarlo mas tarde", "error");
+    }
+  }
 
   async function onSubmit(e) {
     Swal.fire({
@@ -42,26 +59,15 @@ function PanelPerfilUsuario({ token, usuario }) {
     nombre: usuario?.firstname || "",
     apellido: usuario?.lastname || "",
     email: usuario?.email || "",
-    contrasena: "",
   };
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().email("*Ingrese un mail valido"),
-    // .required("*Campo obligatorio"),
-    contrasena: Yup.string()
-      .min(6, "*La contraseña debe tener mínimo 6 caracteres")
-      .max(18, "*La contraseña debe tener máximo 18 carácteres")
-      .minUppercase(1, "*La contraseña debe tener al menos 1 mayúscula")
-      .minLowercase(1, "*La contraseña debe tener al menos 1 minúscula")
-      .minNumbers(1, "*La contraseña debe tener al menos 1 número"),
-    // .required("*Campo obligatorio"),
     nombre: Yup.string().max(20, "*El nombre debe tener máximo 20 carácteres"),
-    // .required("*Campo obligatorio"),
     apellido: Yup.string().max(
       15,
       "*El apellido debe tener máximo 15 carácteres"
     ),
-    // .required("*Campo obligatorio"),
   });
 
   const formik = useFormik({ initialValues, validationSchema, onSubmit });
@@ -160,52 +166,6 @@ function PanelPerfilUsuario({ token, usuario }) {
             </div>
           )}
         </div>
-
-        <div className={s.divInputLabel}>
-          <div className={s.divMostrarContrasena}>
-            <label
-              className={`${s.labelForm} ${
-                touched.contrasena && errors.contrasena
-                  ? s.errorColor
-                  : undefined
-              }`}
-              htmlFor="password"
-            >
-              Contraseña
-            </label>
-
-            <div
-              onClick={() => setMostrarContrasena(!mostrarContrasena)}
-              className={s.renglonMostrarContrasena}
-            >
-              {mostrarContrasena ? (
-                <AiFillEyeInvisible className={s.iconoMostrarContrasena} />
-              ) : (
-                <AiFillEye className={s.iconoMostrarContrasena} />
-              )}
-              <p className={s.textoMostrarContrasena}>
-                {mostrarContrasena ? "    Ocultar" : "    Mostrar"}
-              </p>
-            </div>
-          </div>
-
-          <input
-            id="password"
-            name="contrasena"
-            className={`${s.inputRegistro} ${
-              touched.contrasena && errors.contrasena ? s.error : undefined
-            }`}
-            type={mostrarContrasena ? "text" : "password"}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.contrasena}
-          />
-          {touched.contrasena && errors.contrasena && (
-            <div className={`${s.errorColor} ${s.msjError}`}>
-              {errors.contrasena}
-            </div>
-          )}
-        </div>
         {loading ? (
           <div className={s.contenedorSpinnerBoton}>
             <PulseLoader color="orange" />
@@ -213,6 +173,20 @@ function PanelPerfilUsuario({ token, usuario }) {
         ) : (
           <button className={s.botonRegistrarse} type="submit">
             Modificar datos
+          </button>
+        )}
+
+        {loading ? (
+          <div className={s.contenedorSpinnerBoton}>
+            <PulseLoader color="orange" />
+          </div>
+        ) : (
+          <button
+            className={`${s.botonRegistrarse} ${s.botonRecuperoContrasena}`}
+            onClick={handleCambioContrasena}
+            type="button"
+          >
+            Solicitar cambio contraseña
           </button>
         )}
       </form>

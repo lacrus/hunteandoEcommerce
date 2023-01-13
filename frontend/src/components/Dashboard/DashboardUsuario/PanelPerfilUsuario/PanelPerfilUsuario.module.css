@@ -67,6 +67,7 @@
   margin-top: 4vh;
   font-size: 1rem;
   color: white;
+  width: fit-content;
 }
 
 .botonRegistrarse:hover {
@@ -75,6 +76,14 @@
 
 .botonRegistrarse:active {
   opacity: 0.7;
+}
+
+.botonRecuperoContrasena {
+  background-color: #8e5798;
+}
+
+.botonRecuperoContrasena:hover {
+  background-color: #703e79;
 }
 
 .error {
