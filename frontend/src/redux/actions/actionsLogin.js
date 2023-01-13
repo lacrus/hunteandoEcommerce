@@ -107,3 +107,44 @@ export function logearToken(token) {
     throw new Error(e.message);
   }
 }
+
+export function recuperarContrasena(email) {
+  return async function (dispatch) {
+    try {
+      const respuesta = await axios({
+        method: "POST",
+        data: {
+          email,
+        },
+        url: `/auth/recuperarcontrasena`,
+      });
+      return;
+    } catch (e) {
+      console.log(e);
+      return new Error(e);
+    }
+  };
+}
+
+export function cambiarContrasena(contrasena, token) {
+  return async function (dispatch) {
+    try {
+      const res = await axios({
+        method: "POST",
+        url: "/auth/cambiarcontrasena",
+        data: { password: contrasena },
+        headers: {
+          authorization: `${token}`,
+        },
+      });
+      console.log(res);
+      return dispatch({
+        type: GET_USER,
+        payload: res.data.user,
+        success: true,
+      });
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+}

@@ -181,6 +181,23 @@
   height: 48px;
 }
 
+.recuerdameContraseña {
+  display: flex;
+  justify-content: space-between;
+  color: #7f265b;
+}
+
+.checkbox:active {
+  background-color: #71357c !important;
+}
+
+.recuperarContrasena {
+  /* margin-top: 1%; */
+  align-self: flex-end;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
 @media (max-width: 800px) {
   .contenedorIzquierdo {
     width: 100%;

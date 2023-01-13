@@ -8,7 +8,10 @@ import * as Yup from "yup";
 import YupPassword from "yup-password";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { useDispatch } from "react-redux";
-import { iniciarSesion } from "../../redux/actions/actionsLogin";
+import {
+  iniciarSesion,
+  recuperarContrasena,
+} from "../../redux/actions/actionsLogin";
 import Swal from "sweetalert2";
 import { ClipLoader } from "react-spinners";
 import { obtenerCarrito } from "../../redux/actions/actionsCart";
@@ -22,6 +25,41 @@ export default function Login() {
   const params = useParams();
 
   const [loading, setLoading] = useState(false);
+  const [cambioContraseña, setCambioContraseña] = useState(false);
+  const [mailEnviado, setMailEnviado] = useState(false);
+
+  async function handleCambiarContrasena() {
+    if (!values.email || errors.email) {
+      touched.email = true;
+      errors.email = "*Campo obligatorio";
+      setCambioContraseña(!cambioContraseña);
+      Swal.fire(
+        "Ingresa tu email",
+        "Te enviaremos un mail para la recuperación",
+        "info"
+      );
+    } else {
+      if (mailEnviado) {
+        Swal.fire("Ya se te envio el mail", "Revisa tu correo", "warning");
+      } else {
+        try {
+          setMailEnviado(true);
+          dispatch(recuperarContrasena(values.email));
+          Swal.fire(
+            "Revisa tu mail!",
+            "Si estas registrado te enviaremos la recuperación",
+            "success"
+          );
+        } catch (error) {
+          Swal.fire(
+            "Hubo un problema!",
+            "Vuelve a intentarlo mas tarde..",
+            "error"
+          );
+        }
+      }
+    }
+  }
 
   async function onSubmit(e) {
     setLoading(true);
@@ -166,6 +204,23 @@ export default function Login() {
                   {errors.contrasena}
                 </div>
               )}
+            </div>
+            {/* <div className={s.recuerdameContraseña}>
+              <div>
+                <input
+                  type="checkbox"
+                  name="recuerdame"
+                  id="recuerdame"
+                  className={s.checkbox}
+                />
+                <label htmlFor="recuerdame">Recuerdame</label>
+              </div>
+            </div> */}
+            <div
+              className={s.recuperarContrasena}
+              onClick={handleCambiarContrasena}
+            >
+              ¿Olvido la contraseña?
             </div>
 
             {!loading ? (
