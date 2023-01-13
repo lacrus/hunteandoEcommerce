@@ -78,10 +78,26 @@
   font-size: 0.8rem;
 }
 
-
 .contenedorSpinnerSelect {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
+}
+
+.renglonDireccion {
+  position: relative;
+}
+
+.renglonDireccion:hover .direccionHover {
+  display: block;
+}
+
+.direccionHover {
+  display: none;
+  position: absolute;
+  background-color: rgb(174, 174, 174);
+  padding: 1%;
+  top: 0;
+  border-radius: 15px;
 }

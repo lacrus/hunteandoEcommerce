@@ -55,8 +55,8 @@ function DetallesCompra({ usuario, token, id, setDetallesCompra }) {
               <th>Fecha</th>
               <th>Total</th>
               <th>Metodo Pago</th>
-              <th>Estado Pago</th>
-              <th>Estado Envío</th>
+              {/* <th>Estado Pago</th>
+              <th>Estado Envío</th> */}
               <th>Dirección Envío</th>
             </tr>
           </thead>
@@ -66,8 +66,7 @@ function DetallesCompra({ usuario, token, id, setDetallesCompra }) {
               <td>{detallesCompra?.createdAt?.slice(0, 10)}</td>
               <td>$ {detallesCompra?.total}</td>
               <td>{detallesCompra?.paymentMethod}</td>
-              {/* <td>{detallesCompra?.paymentStatus}</td> */}
-              <td>
+              {/* <td>
                 <div
                   className={s.statusCompra}
                   style={{
@@ -81,9 +80,8 @@ function DetallesCompra({ usuario, token, id, setDetallesCompra }) {
                 >
                   {detallesCompra.paymentStatus}
                 </div>
-              </td>
-              {/* <td>{detallesCompra?.shippingStatus}</td> */}
-              <td>
+              </td> */}
+              {/* <td>
                 <div
                   className={s.statusCompra}
                   style={{
@@ -97,12 +95,15 @@ function DetallesCompra({ usuario, token, id, setDetallesCompra }) {
                 >
                   {detallesCompra.paymentStatus}
                 </div>
-              </td>
-              <td>
+              </td> */}
+              <td className={s.renglonDireccion}>
                 {`${detallesCompra?.shippingAddress?.slice(0, 15)}
                   ${
                     detallesCompra?.shippingAddress?.length > 15 ? "..." : null
                   }`}
+                <div className={s.direccionHover}>
+                  {detallesCompra?.shippingAddress}
+                </div>
               </td>
             </tr>
           </tbody>

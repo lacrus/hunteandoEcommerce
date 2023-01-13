@@ -100,3 +100,21 @@
   font-size: 0.8rem;
   width: 90%;
 }
+
+.renglonDireccion {
+  position: relative;
+}
+
+.renglonDireccion:hover .direccionHover {
+  display: block;
+}
+
+.direccionHover {
+  display: none;
+  position: absolute;
+  background-color: rgb(174, 174, 174);
+  /* left: -10%; */
+  padding: 1%;
+  top: 0;
+  border-radius: 15px;
+}
