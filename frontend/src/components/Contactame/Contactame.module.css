@@ -1,0 +1,84 @@
+.contenedorContactame {
+  margin-top: var(--altura-header);
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - var(--altura-header));
+}
+
+.formContactame {
+  padding: 0 10%;
+  width: 100%;
+  background-color: #e5e5e5;
+  min-height: calc(100vh - var(--altura-header));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.input {
+  margin-bottom: 3%;
+}
+
+.inputInRow {
+  margin-bottom: 0%;
+}
+
+/* RENGLON FORMULARIO */
+.formRenglon {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 3%;
+}
+.inputFormRenglon {
+  width: 48%;
+}
+/* RENGLON FORMULARIO */
+
+/* BOTON */
+.botonEnviar {
+  align-self: center;
+  width: fit-content;
+  margin-top: 5%;
+  min-width: fit-content;
+  min-height: 30px;
+  background-color: #f99716;
+  cursor: pointer;
+  border: 0;
+  border-radius: var(--border-radius-boton);
+  font-family: comspotM;
+  font-weight: bold;
+  font-size: 0.875rem;
+  padding: 10px 24px;
+  color: #fff;
+  transition: all 150ms ease;
+}
+
+.botonEnviar:active {
+  background-color: #1e1e1e;
+}
+
+.botonEnviar:hover {
+  background-color: #f9971695;
+}
+
+/* LOADING */
+.contenedorLoadingBoton {
+  align-self: center;
+  margin-top: 5%;
+}
+
+@media (max-width: 800px) {
+  .formRenglon {
+    flex-direction: column;
+    margin-bottom: 0%;
+  }
+  .inputFormRenglon {
+    width: 100%;
+  }
+  .inputInRow {
+    margin-bottom: 3%;
+  }
+}

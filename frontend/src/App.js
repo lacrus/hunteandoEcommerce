@@ -25,6 +25,7 @@ import CheckoutCancel from "./components/CheckOut/CheckoutCancel/CheckoutCancel"
 import CheckoutPending from "./components/CheckOut/CheckoutPending/CheckoutPending";
 import Tienda from "./components/Tienda/Tienda";
 import CambioContrasena from "./components/CambioContrasena/CambioContrasena";
+import Contactame from "./components/Contactame/Contactame";
 
 function App() {
   const usuario = useSelector((e) => e.general.usuario);
@@ -124,7 +125,12 @@ function App() {
           element={<CheckoutCancel usuario={usuario} />}
         />
 
-        <Route path="/CambiarContrasena/:token" element={<CambioContrasena />} />
+        <Route
+          path="/CambiarContrasena/:token"
+          element={<CambioContrasena />}
+        />
+
+        <Route path="/contactame" element={<Contactame />} />
 
         <Route path="*" element={<Navigate to="/" replace={true} />} />
       </Routes>

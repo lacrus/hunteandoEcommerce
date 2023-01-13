@@ -1,0 +1,35 @@
+/* TEXT AREA */
+.contenedorTextArea {
+  width: 100%;
+}
+.textareaLabelCrear {
+  margin-top: 5%;
+  width: 100%;
+}
+
+.textareaCrear {
+}
+
+.input {
+  border: 1px solid grey;
+  border-radius: 8px;
+  padding: 5px 10px;
+  width: calc(100% - 20px);
+  font-size: 100%;
+  font-family: "Rubik", sans-serif;
+  resize: none;
+}
+
+.msjError {
+  font-size: 0.75rem;
+  width: 100%;
+}
+
+.error {
+  color: red;
+  border-color: red;
+}
+
+.input.error.input::placeholder {
+  color: red;
+}
