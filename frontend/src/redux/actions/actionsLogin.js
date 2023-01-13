@@ -120,7 +120,6 @@ export function recuperarContrasena(email) {
       });
       return;
     } catch (e) {
-      console.log(e);
       return new Error(e);
     }
   };
@@ -137,7 +136,6 @@ export function cambiarContrasena(contrasena, token) {
           authorization: `${token}`,
         },
       });
-      console.log(res);
       return dispatch({
         type: GET_USER,
         payload: res.data.user,
