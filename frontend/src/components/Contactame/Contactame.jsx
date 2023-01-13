@@ -146,7 +146,7 @@ function Contactame() {
         />
         {!loading ? (
           <button className={s.botonEnviar} type="submit">
-            Crear producto
+            Enviar Mail
           </button>
         ) : (
           <div className={s.contenedorLoadingBoton}>
