@@ -105,7 +105,7 @@ function DetallesUsuario({
                     <th>Total</th>
                     <th>Estado pago</th>
                     <th>Estado entrega</th>
-                    <th>Detalles</th>
+                    {/* <th>Detalles</th> */}
                   </tr>
                 </thead>
                 <tbody className={s.bodyComprasUsuario}>
@@ -147,14 +147,14 @@ function DetallesUsuario({
                                 {a.shippingStatus}
                               </div>
                             </td>
-                            <td>
+                            {/* <td>
                               <div
                                 className={s.botonDetallesVenta}
                                 // onClick={(e) => handleVerDetalle(e, a.id)}
                               >
                                 <CgDetailsMore />
                               </div>
-                            </td>
+                            </td> */}
                           </tr>
                         );
                       })

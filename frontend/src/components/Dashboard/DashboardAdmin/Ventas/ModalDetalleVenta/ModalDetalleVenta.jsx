@@ -69,8 +69,8 @@ function ModalDetalleVenta({
     })();
 
     return () => {
-      dispatch(obtenerDetallesVentaUsuario())
-    }
+      dispatch(obtenerDetallesVentaUsuario());
+    };
   }, []);
 
   return (
@@ -143,11 +143,14 @@ function ModalDetalleVenta({
                       </div>
                     )}
                   </td>
-                  <td>
+                  <td className={s.renglonDireccion}>
                     {detalleVenta?.shippingAddress?.slice(0, 15) +
                       (detalleVenta?.shippingAddress?.length > 15
                         ? "..."
                         : null)}
+                    <div className={s.direccionHover}>
+                      {detalleVenta?.shippingAddress}
+                    </div>
                   </td>
                 </tr>
               </tbody>
