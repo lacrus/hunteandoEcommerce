@@ -45,11 +45,12 @@ export default function Login() {
         try {
           setMailEnviado(true);
           dispatch(recuperarContrasena(values.email));
-          Swal.fire(
-            "Revisa tu mail!",
-            "Si estas registrado te enviaremos la recuperación",
-            "success"
-          );
+          Swal.fire({
+            title: "Revisa tu mail!",
+            text: "Si estas registrado te enviaremos la recuperación.",
+            icon: "success",
+            footer: "El link expira en 30 minutos.",
+          });
         } catch (error) {
           Swal.fire(
             "Hubo un problema!",
@@ -205,17 +206,6 @@ export default function Login() {
                 </div>
               )}
             </div>
-            {/* <div className={s.recuerdameContraseña}>
-              <div>
-                <input
-                  type="checkbox"
-                  name="recuerdame"
-                  id="recuerdame"
-                  className={s.checkbox}
-                />
-                <label htmlFor="recuerdame">Recuerdame</label>
-              </div>
-            </div> */}
             <div
               className={s.recuperarContrasena}
               onClick={handleCambiarContrasena}

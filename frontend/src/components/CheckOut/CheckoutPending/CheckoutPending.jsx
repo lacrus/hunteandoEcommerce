@@ -1,30 +1,10 @@
-import React, { useEffect } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import { BsPatchExclamation } from "react-icons/bs";
 import s from "../CheckoutConfirmation/CheckoutConfirmation.module.css";
 
-import { useDispatch } from "react-redux";
-import { verificarPago } from "../../../redux/actions/actionsShop";
-
 export default function CheckoutPending({ usuario }) {
   const navigate = useNavigate();
-
-  const { search } = useLocation();
-
-  const payment_id = search
-    ?.split("&")
-    ?.find((i) => i.includes("payment_id"))
-    ?.split("=")[1];
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (payment_id && usuario.id) {
-      (async () => {
-        dispatch(verificarPago(payment_id, usuario.id));
-      })();
-    }
-  }, [usuario, payment_id]);
 
   return (
     <div className={s.contenedorRespuestaCheckout}>

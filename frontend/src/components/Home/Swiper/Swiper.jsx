@@ -39,17 +39,7 @@ export default function ComponenteSwiper({ usuario }) {
       if (usuario.username) {
         setAgregandoProducto(true);
         const token = localStorage.getItem("token");
-        const agregado = await dispatch(
-          agregarProductoCarrito(usuario.id, producto, token)
-        );
-        setAgregandoProducto(false);
-        if (agregado.mensaje === "stock limit") {
-          Swal.fire(
-            "El producto esta en el carrito!",
-            "Llegaste al limite de unidades",
-            "info"
-          );
-        }
+        await dispatch(agregarProductoCarrito(usuario.id, producto, token));
       } else {
         Swal.fire({
           title: "Inicia sesión",
@@ -77,6 +67,7 @@ export default function ComponenteSwiper({ usuario }) {
         "error"
       );
     }
+    setAgregandoProducto(false);
   }
 
   useEffect(() => {

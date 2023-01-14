@@ -21,8 +21,15 @@ function CambioContrasena() {
   async function onSubmit(e) {
     setLoading(true);
     try {
-      const respuesta = await dispatch(cambiarContrasena(e.contrasena, token));
-      if (respuesta.success === true) navigate("/");
+      await dispatch(cambiarContrasena(e.contrasena, token));
+      Swal.fire({
+        title: "Exito!",
+        text: "Contraseña modificada",
+        icon: "success",
+        confirmButtonText: "Volver a la pagina",
+      }).then(() => {
+        navigate("/");
+      });
     } catch (error) {
       Swal.fire(
         "Error al cambiar la contraseña",

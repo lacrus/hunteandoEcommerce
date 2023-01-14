@@ -136,7 +136,9 @@ export function cambiarContrasena(contrasena, token) {
           authorization: `${token}`,
         },
       });
-      return dispatch({
+      console.log(res);
+      localStorage.setItem("token", res.data.token);
+      dispatch({
         type: GET_USER,
         payload: res.data.user,
         success: true,

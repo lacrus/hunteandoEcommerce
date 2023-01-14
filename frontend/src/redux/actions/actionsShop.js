@@ -22,23 +22,6 @@ export function compraConML(idUsuario, carritoCompra, token) {
   };
 }
 
-export function verificarPago(pagoId) {
-  return async function (dispatch) {
-    try {
-      const res = await axios({
-        method: "POST",
-        data: {
-          action: "desdeFront",
-          data: { id: pagoId },
-        },
-        url: `/finalizarcompra/mercadopago/respuesta`,
-      });
-    } catch (error) {
-      throw new Error(error);
-    }
-  };
-}
-
 export function obtenerProductosRandomTienda() {
   try {
     return async function (dispatch) {

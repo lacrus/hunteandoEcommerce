@@ -22,9 +22,10 @@ function PanelPerfilUsuario({ token, usuario }) {
     try {
       Swal.fire({
         title: "Deseas cambiar la contraseña?",
+        text: "Te enviaremos un link al mail registrado.",
         icon: "question",
         showDenyButton: true,
-        footer: "Te enviaremos un link al mail registrado.",
+        footer: "El link expira en 30 minutos.",
       }).then(async ({ isConfirmed }) => {
         if (isConfirmed) {
           Swal.fire("Revisa tu casilla de mail", "", "success");
