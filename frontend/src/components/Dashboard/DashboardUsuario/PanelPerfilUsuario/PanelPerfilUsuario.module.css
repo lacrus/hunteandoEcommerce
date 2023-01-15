@@ -2,7 +2,8 @@
   width: 100%;
   min-height: calc(100% - var(--alto-menu-usuario));
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .tituloPanelUsuario {

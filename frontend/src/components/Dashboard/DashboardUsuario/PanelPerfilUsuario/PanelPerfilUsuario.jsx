@@ -18,6 +18,52 @@ function PanelPerfilUsuario({ token, usuario }) {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
+  async function onSubmit(e) {
+    Swal.fire({
+      title: "Cambiando datos usuario",
+      text: "Confirma modificar los datos?",
+      icon: "question",
+      showDenyButton: true,
+    }).then(async ({ isConfirmed }) => {
+      if (e.nombre.length || e.apellido.length) {
+        setLoading(true);
+        try {
+          if (isConfirmed) {
+            await dispatch(modificarUsuario(usuario.id, e, token));
+          }
+        } catch (e) {
+          Swal.fire("Hubo un problema", "Vuelve a intentar mas tarde", "error");
+        }
+        setLoading(false);
+      }
+    });
+  }
+
+  const initialValues = {
+    nombre: usuario?.firstname || "",
+    apellido: usuario?.lastname || "",
+  };
+
+  const validationSchema = Yup.object().shape({
+    // email: Yup.string().email("*Ingrese un mail valido"),
+    nombre: Yup.string().max(20, "*El nombre debe tener máximo 20 carácteres"),
+    apellido: Yup.string().max(
+      15,
+      "*El apellido debe tener máximo 15 carácteres"
+    ),
+  });
+  const formik = useFormik({ initialValues, validationSchema, onSubmit });
+
+  const {
+    handleChange,
+    handleSubmit,
+    errors,
+    values,
+    touched,
+    handleBlur,
+    resetForm,
+  } = formik;
+
   function handleCambioContrasena() {
     try {
       Swal.fire({
@@ -36,52 +82,6 @@ function PanelPerfilUsuario({ token, usuario }) {
       Swal.fire("Hubo un problema", "Vuelve a intentarlo mas tarde", "error");
     }
   }
-
-  async function onSubmit(e) {
-    Swal.fire({
-      title: "Cambiando datos usuario",
-      text: "Confirma modificar los datos?",
-      icon: "question",
-      showDenyButton: true,
-    }).then(async ({ isConfirmed }) => {
-      setLoading(true);
-      try {
-        if (isConfirmed) {
-          await dispatch(modificarUsuario(usuario.id, e, token));
-        }
-      } catch (e) {
-        Swal.fire("Hubo un problema", "Vuelve a intentar mas tarde", "error");
-      }
-      setLoading(false);
-    });
-  }
-
-  const initialValues = {
-    nombre: usuario?.firstname || "",
-    apellido: usuario?.lastname || "",
-    email: usuario?.email || "",
-  };
-
-  const validationSchema = Yup.object().shape({
-    email: Yup.string().email("*Ingrese un mail valido"),
-    nombre: Yup.string().max(20, "*El nombre debe tener máximo 20 carácteres"),
-    apellido: Yup.string().max(
-      15,
-      "*El apellido debe tener máximo 15 carácteres"
-    ),
-  });
-
-  const formik = useFormik({ initialValues, validationSchema, onSubmit });
-
-  const {
-    handleChange,
-    handleSubmit,
-    errors,
-    values,
-    touched,
-    handleBlur,
-    resetForm,
-  } = formik;
 
   return (
     <div className={s.contenedorPanelPerfilUsuario}>
@@ -141,32 +141,7 @@ function PanelPerfilUsuario({ token, usuario }) {
             )}
           </div>
         </div>
-        <div className={s.divInputLabel}>
-          <label
-            className={`${s.labelForm} ${
-              touched.email && errors.email ? s.errorColor : undefined
-            }`}
-            htmlFor="email"
-          >
-            Email
-          </label>
-          <input
-            id="email"
-            name="email"
-            className={`${s.inputRegistro} ${
-              touched.email && errors.email ? s.error : undefined
-            }`}
-            type="email"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.email}
-          />
-          {touched.email && errors.email && (
-            <div className={`${s.errorColor} ${s.msjError}`}>
-              {errors.email}
-            </div>
-          )}
-        </div>
+
         {loading ? (
           <div className={s.contenedorSpinnerBoton}>
             <PulseLoader color="orange" />
@@ -176,6 +151,37 @@ function PanelPerfilUsuario({ token, usuario }) {
             Modificar datos
           </button>
         )}
+      </form>
+
+      <form className={s.formPanelUsuario}>
+        <div className={s.divInputLabel} style={{ width: "fit-content" }}>
+          <label
+            className={`${s.labelForm} ${
+              null
+              // touchedMail.email && errorsMail.email ? s.errorColor : undefined
+            }`}
+            htmlFor="email"
+          >
+            Email
+          </label>
+          <input
+            id="email"
+            name="email"
+            className={`${s.inputRegistro} ${
+              null
+              // touchedMail.email && errorsMail.email ? s.error : undefined
+            }`}
+            type="email"
+            onChange={null}
+            onBlur={null}
+            value={usuario?.email}
+          />
+          {/* {touched.email && errors.email && (
+            <div className={`${s.errorColor} ${s.msjError}`}>
+              {errors.email}
+            </div>
+          )} */}
+        </div>
 
         {loading ? (
           <div className={s.contenedorSpinnerBoton}>

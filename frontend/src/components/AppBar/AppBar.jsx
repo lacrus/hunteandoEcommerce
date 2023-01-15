@@ -13,12 +13,15 @@ import MenuHeader from "./MenuHeader/MenuHeader";
 import MenuUser from "./MenuUser/MenuUser";
 import Swal from "sweetalert2";
 import { useEffect } from "react";
+import resizeHook from "../../hooks/resizeHook";
 
 export default function AppBar({ usuario }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const carrito = useSelector((e) => e.carro?.carro?.CartItems);
   const [cantidadProductosCarrito, setCantidadProductosCarrito] = useState(0);
+
+  const { width: anchoPantalla } = resizeHook();
 
   const [mostrarMenuHeader, setMostrarMenuHeader] = useState(false);
   const [mostrarMiCuenta, setMostrarMiCuenta] = useState(false);
@@ -95,17 +98,21 @@ export default function AppBar({ usuario }) {
   return (
     <div className={s.contenedorHeader}>
       <div className={s.overflowContenedorHeader}>
-        <AiOutlineMenu
-          className={s.botonMenuHeader}
-          onClick={() => setMostrarMenuHeader(!mostrarMenuHeader)}
-        />
+        {anchoPantalla < 800 ? (
+          <>
+            <AiOutlineMenu
+              className={s.botonMenuHeader}
+              onClick={() => setMostrarMenuHeader(!mostrarMenuHeader)}
+            />
 
-        <MenuHeader
-          mostrarMenu={mostrarMenuHeader}
-          setMostrarMenu={setMostrarMenuHeader}
-          cerrarSesion={handleCerrarSesion}
-          usuario={usuario}
-        />
+            <MenuHeader
+              mostrarMenu={mostrarMenuHeader}
+              setMostrarMenu={setMostrarMenuHeader}
+              cerrarSesion={handleCerrarSesion}
+              usuario={usuario}
+            />
+          </>
+        ) : null}
 
         <Link to="/" className={s.tituloHeader}>
           Melinda Muriel
