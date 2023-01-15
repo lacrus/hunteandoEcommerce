@@ -7,6 +7,7 @@ import {
 const initialState = {
   productosRandom: [],
   productosTienda: [],
+  totalProductos: 0,
   detallesProducto: {},
 };
 
@@ -21,6 +22,7 @@ const shopReducer = (state = initialState, action) => {
       return {
         ...state,
         productosTienda: action.payload,
+        totalProductos: action.total,
       };
     case GET_PRODUCT_DETAIL:
       return {

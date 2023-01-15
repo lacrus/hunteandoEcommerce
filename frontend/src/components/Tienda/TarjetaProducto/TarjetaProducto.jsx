@@ -5,7 +5,6 @@ import { GrCart } from "react-icons/gr";
 
 function TarjetaProducto({
   imgNotFound,
-  agregandoProducto,
   esMovil,
   accionEnHover,
   imagen,
@@ -17,7 +16,6 @@ function TarjetaProducto({
     <div className={s.contenedorTarjeta} onClick={accionEnHover}>
       <div className={s.contenedorImg}>
         <img
-          // id="imagenCuadrada"
           src={imagen ? imagen : imgNotFound}
           alt="img producto"
           className={s.imagenTarjeta}
@@ -31,15 +29,7 @@ function TarjetaProducto({
             esMovil ? s.visible : null
           }`}
         >
-          {agregandoProducto ? (
-            <PulseLoader color="orange" />
-          ) : (
-            <div
-              className={s.agregarAlCarro}
-            >
-              Ir al producto
-            </div>
-          )}
+          <div className={s.agregarAlCarro}>Ir al producto</div>
         </div>
       </div>
       <div className={s.nombre}>

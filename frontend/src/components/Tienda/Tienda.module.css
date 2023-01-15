@@ -34,61 +34,11 @@
   justify-content: flex-start;
 }
 
-/* FILTROS LATERALES */
-.filtrosLateral {
-  display: flex;
-  flex-direction: column;
-  width: 20%;
-}
-
-.filtrosLateralRenglonTitulo {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20%;
-}
-
-.iconoFiltros {
-  transform: rotate(-90deg);
-}
-.filtrosLateralTitulo {
-  font-size: 1.5rem;
-  padding-left: 10px;
-  font-weight: bold;
-}
-
-.filtrosLateralSelect {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  border-bottom: 1px solid #c0c0c0;
-  padding: 5% 0;
-}
-.filtrosLateralIcono {
-  color: black;
-}
-
-.filtrosLateralPrecio {
-  font-size: 1rem;
-}
-
 /* FILTROS SUPERIORES Y TAJETAS */
 .contenedorTarjetasFiltros {
   width: 80%;
   display: flex;
   flex-direction: column;
-}
-
-/* FILTROS SUPERIORES */
-.contenedorFiltrosSuperiores {
-  width: 96%;
-  display: flex;
-  justify-content: space-between;
-  align-self: center;
-}
-
-.cantidadProductos {
-  font-size: 1rem;
-  font-weight: bold;
 }
 
 /* TARJETAS */
@@ -100,15 +50,3 @@
   justify-items: center;
 }
 
-/* PAGINADO */
-
-.paginado {
-  align-self: center;
-  margin-top: 5%;
-}
-
-.pagina {
-  cursor: pointer;
-  /* font-weight: bold; */
-  font-size: 1.125rem;
-}

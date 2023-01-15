@@ -5,29 +5,35 @@ import s from "./Tienda.module.css";
 import Swal from "sweetalert2";
 import { obtenerProductosTienda } from "../../redux/actions/actionsShop";
 import imgNotFound from "../../assets/images/imgNotFound.jpg";
-import { GiSettingsKnobs } from "react-icons/gi";
-import { BsChevronCompactDown } from "react-icons/bs";
 import TarjetaProducto from "./TarjetaProducto/TarjetaProducto";
 import resizeHook from "../../hooks/resizeHook";
 import { useNavigate } from "react-router-dom";
-import Loading from "../Loading/Loading"
+import Loading from "../Loading/Loading";
+import FiltrosLateral from "./FiltrosLateral/FiltrosLateral";
+import FiltrosSuperiores from "./FiltrosSuperiores/FiltrosSuperiores";
+import Paginado from "./Paginado/Paginado";
 
 function Tienda({ usuario }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const productos = useSelector((e) => e.tienda.productosTienda);
+  const totalProductos = useSelector((e) => e.tienda.totalProductos);
+  const esMovil = resizeHook().isMobile;
+
   const [cargando, setCargando] = useState(false);
-  const [agregandoProducto, setAgregandoProducto] = useState(false);
+
   const [filtros, setFiltros] = useState({
-    porpag: 6, // 9, 12, 15, 18, 21
+    porpag: 6,
     pag: 1,
     price: "all",
-    stock: "all",
-    ordenPor: "default", // "default", "precio", "nombre", "fecha", "aleatorio", "idProducto"
+    stock: false,
+    ordenado: "name",
     orden: "ASC",
   });
 
-  const esMovil = resizeHook().isMobile;
-  const productos = useSelector((e) => e.tienda.productosTienda);
+  function handleFiltros(e) {
+    setFiltros({ ...filtros, [e.target.id]: e.target.title });
+  }
 
   async function handleAgregarAlCarro(id, producto) {
     navigate(`/tienda/detalles/${id}`, { producto });
@@ -35,9 +41,15 @@ function Tienda({ usuario }) {
 
   useEffect(() => {
     (async () => {
+      dispatch(obtenerProductosTienda(filtros.porpag, filtros));
+    })();
+  }, [filtros]);
+
+  useEffect(() => {
+    (async () => {
       setCargando(true);
       try {
-        await dispatch(obtenerProductosTienda());
+        await dispatch(obtenerProductosTienda(6));
       } catch (error) {
         Swal.fire(
           "Ups! Hubo problemas!",
@@ -47,7 +59,7 @@ function Tienda({ usuario }) {
       }
       setCargando(false);
     })();
-  }, [filtros]);
+  }, []);
 
   return (
     <div className={s.contenedorTienda}>
@@ -61,29 +73,19 @@ function Tienda({ usuario }) {
           <div className={s.contenedorSegundoTienda}>
             <div className={s.tituloTienda}>Todos los productos</div>
             <div className={s.contenedorTerceroTienda}>
-              <div className={s.filtrosLateral}>
-                <div className={s.filtrosLateralRenglonTitulo}>
-                  <GiSettingsKnobs className={s.iconoFiltros} size="22" />
-                  <div className={s.filtrosLateralTitulo}>Filtros</div>
-                </div>
-                <div className={s.filtrosLateralSelect}>
-                  <div className={s.filtrosLateralPrecio}>PRECIO</div>
-                  <BsChevronCompactDown className={s.filtrosLateralIcono} />
-                </div>
-                <div className={s.filtrosLateralSelect}>
-                  <div className={s.filtrosLateralPrecio}>CATEGORIAS</div>
-                  <BsChevronCompactDown className={s.filtrosLateralIcono} />
-                </div>
-              </div>
+              <FiltrosLateral
+                filtros={filtros}
+                setFiltros={setFiltros}
+                handleFiltros={handleFiltros}
+              />
+
               <div className={s.contenedorTarjetasFiltros}>
-                <div className={s.contenedorFiltrosSuperiores}>
-                  <div className={s.cantidadProductos}>
-                    {productos?.length} PRODUCTOS
-                  </div>
-                  <div>filtros ordenado</div>
-                  <div>cantidad productos</div>
-                  <div>ordenado</div>
-                </div>
+                <FiltrosSuperiores
+                  filtros={filtros}
+                  setFiltros={setFiltros}
+                  cantidadProductos={totalProductos}
+                  handleFiltros={handleFiltros}
+                />
                 <div className={s.contenedorTarjetas}>
                   {productos?.length
                     ? productos?.map((i) => {
@@ -91,7 +93,6 @@ function Tienda({ usuario }) {
                           <TarjetaProducto
                             key={i.id}
                             imgNotFound={imgNotFound}
-                            agregandoProducto={agregandoProducto}
                             accionEnHover={() => handleAgregarAlCarro(i.id, i)}
                             esMovil={esMovil}
                             imagen={i.image ? i.image[0] : imgNotFound}
@@ -103,9 +104,11 @@ function Tienda({ usuario }) {
                       })
                     : null}
                 </div>
-                <div className={s.paginado}>
-                  <div className={s.pagina}>1</div>
-                </div>
+                <Paginado
+                  totalProductos={totalProductos}
+                  handleFiltros={handleFiltros}
+                  filtros={filtros}
+                />
               </div>
             </div>
           </div>

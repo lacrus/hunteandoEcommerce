@@ -68,7 +68,7 @@ function PanelComprasUsuario({ token, usuario }) {
                       className={s.statusCompra}
                       style={{
                         backgroundColor:
-                          i.paymentStatus === "failure"
+                          i.paymentStatus === "cancel"
                             ? "red"
                             : i.paymentStatus === "pending"
                             ? "orange"
@@ -77,32 +77,15 @@ function PanelComprasUsuario({ token, usuario }) {
                     >
                       {i.paymentStatus}
                     </div>
-                    {i.paymentStatus === "paid" ? null : (
-                      <div
-                        onClick={() => {
-                          return window.location.replace(`${i.paymentLink}`);
-                        }}
-                        className={s.statusCompra}
-                        style={{
-                          backgroundColor: "#009ee3",
-                          cursor: "pointer",
-                          width: "fit-content",
-                          padding: "0 3%",
-                          marginTop: "1%",
-                        }}
-                      >
-                        Volver al pago
-                      </div>
-                    )}
                   </td>
                   <td>
                     <div
                       className={s.statusCompra}
                       style={{
                         backgroundColor:
-                          i.shippingStatus === "failure"
+                          i.shippingStatus === "pending"
                             ? "red"
-                            : i.shippingStatus === "pending"
+                            : i.shippingStatus === "sending"
                             ? "orange"
                             : "green",
                       }}

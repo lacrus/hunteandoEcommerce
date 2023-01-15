@@ -39,16 +39,21 @@ export function obtenerProductosRandomTienda() {
   }
 }
 
-export function obtenerProductosTienda(porpag) {
+export function obtenerProductosTienda(porpag, filtros) {
   try {
     return async function (dispatch) {
       let res = await axios({
         method: "GET",
-        url: `/shop/randomall/${porpag}`,
+        url: `/shop/filtered/${porpag}?pag=${filtros?.pag || 1}&price=${
+          filtros?.price || "all"
+        }&stock=${filtros?.stock || false}&ordenado=${
+          filtros?.ordenado || "name"
+        }&orden=${filtros?.orden || "ASC"}`,
       });
       return dispatch({
         type: GET_PRODUCTS_TIENDA,
         payload: res.data.products,
+        total: res.data.total,
       });
     };
   } catch (error) {

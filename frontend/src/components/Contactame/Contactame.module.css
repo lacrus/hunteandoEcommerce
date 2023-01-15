@@ -25,6 +25,11 @@
   margin-bottom: 0%;
 }
 
+.labelInput {
+  font-weight: bold;
+  font-family: comspotM;
+}
+
 /* RENGLON FORMULARIO */
 .formRenglon {
   display: flex;

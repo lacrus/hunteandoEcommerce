@@ -12,10 +12,16 @@ function TextAreaInput({
   estiloError,
   mostrarError,
   msjError,
+  estilosLabel,
 }) {
   return (
     <div classname={s.contenedorTextArea}>
-      <label className={s.textareaLabelCrear} htmlFor="descripcion">
+      <label
+        className={`${s.textareaLabelCrear} ${
+          estilosLabel ? s.estilosLabel : null
+        }`}
+        htmlFor="descripcion"
+      >
         Descripción
       </label>
       <textarea

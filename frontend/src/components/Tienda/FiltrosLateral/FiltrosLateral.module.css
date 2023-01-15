@@ -1,0 +1,93 @@
+/* FILTROS LATERALES */
+.filtrosLateral {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  height: fit-content;
+}
+
+.filtrosLateralRenglonTitulo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20%;
+}
+
+.iconoFiltrosLateral {
+  transform: rotate(-90deg);
+}
+
+.filtrosLateralTitulo {
+  font-size: 1.5rem;
+  padding-left: 10px;
+  font-weight: bold;
+}
+
+.filtrosLateralSelect {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  border-bottom: 1px solid #c0c0c0;
+  padding: 5% 0;
+  cursor: pointer;
+}
+
+.filtrosLateralIcono {
+  color: black;
+  transition: transform 0.5s ease-in-out;
+  -webkit-transition: transform 0.5s ease-in-out;
+  -ms-transition: transform 0.5s ease-in-out;
+}
+
+.filtrosLateralIconoAbierto {
+  transform: rotate(-540deg);
+  -ms-transform: rotate(-540deg);
+  -webkit-transform: rotate(-540deg);
+}
+
+.listaFiltroLateral {
+  margin-top: 0%;
+  font-size: 0rem;
+  color: transparent;
+  overflow: hidden;
+  transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  -ms-transition: all 0.5s;
+}
+
+.listaFiltroLateralAbierta {
+  margin-top: 2%;
+  font-size: 0.9rem;
+  color: black;
+}
+
+.enStock {
+  margin-top: 45%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.contenedorBoton {
+  height: 20px;
+  width: 33.33px;
+  min-width: 25px;
+  border-radius: 25px;
+  background-color: #707070;
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 3px;
+}
+
+.contenedorBotonOn {
+  justify-content: flex-end;
+  background-color: green;
+}
+
+.bolitaBoton {
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  background-color: #f5f5f5;
+}

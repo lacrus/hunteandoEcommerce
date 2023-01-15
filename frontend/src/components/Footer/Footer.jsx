@@ -42,16 +42,24 @@ export default function Footer() {
       <div className={s.contenedorDos}>
         <div className={s.columnaContenedorDos}>
           <div className={s.tituloContenedorDos}>La artista</div>
-          <Link to="/" className={s.textoContenedorDos}>Home</Link>
-          <Link to="/carrito" className={s.textoContenedorDos}>Carrito</Link>
-          <Link to="/" className={s.textoContenedorDos}>Sobre mi obra</Link>
+          <Link to="/" className={s.textoContenedorDos}>
+            Home
+          </Link>
+          <Link to="/carrito" className={s.textoContenedorDos}>
+            Carrito
+          </Link>
+          <Link to="/" className={s.textoContenedorDos}>
+            Sobre mi obra
+          </Link>
         </div>
 
         <div className={s.columnaContenedorDos}>
           <div className={s.tituloContenedorDos}>FAQ</div>
           <Link className={s.textoContenedorDos}>Preguntas frecuentes</Link>
           <Link className={s.textoContenedorDos}>Políticas de Privacidad</Link>
-          <Link className={s.textoContenedorDos}>Contáctame</Link>
+          <Link to="/contactame" className={s.textoContenedorDos}>
+            Contáctame
+          </Link>
         </div>
       </div>
       <div className={s.contenedorTres}>

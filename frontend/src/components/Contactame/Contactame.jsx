@@ -93,8 +93,7 @@ function Contactame() {
               msjError={errors.nombre}
               onBlur={handleBlur}
               estilos={s.inputInRow}
-              //   estilosLabel={estilosLabel}
-              //   rows={rows}
+              estilosLabel={s.labelInput}
             />
           </div>
           <div className={s.inputFormRenglon}>
@@ -111,7 +110,7 @@ function Contactame() {
               msjError={errors.email}
               onBlur={handleBlur}
               estilos={s.inputInRow}
-              //   estilosLabel={estilosLabel}
+              estilosLabel={s.labelInput}
               //   rows={rows}
             />
           </div>
@@ -129,7 +128,7 @@ function Contactame() {
           msjError={errors.email}
           onBlur={handleBlur}
           estilos={s.input}
-          //   estilosLabel={estilosLabel}
+          estilosLabel={s.labelInput}
           //   rows={rows}
         />
         <TextAreaInput
@@ -143,6 +142,7 @@ function Contactame() {
           estiloError={touched.mensaje && errors.mensaje && true}
           mostrarError={touched.mensaje && errors.mensaje && true}
           msjError={errors.mensaje}
+          estilosLabel={s.labelInput}
         />
         {!loading ? (
           <button className={s.botonEnviar} type="submit">
