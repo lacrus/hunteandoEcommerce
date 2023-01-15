@@ -10,11 +10,14 @@ import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import {
   iniciarSesion,
+  logearToken,
   recuperarContrasena,
 } from "../../redux/actions/actionsLogin";
 import Swal from "sweetalert2";
 import { ClipLoader } from "react-spinners";
 import { obtenerCarrito } from "../../redux/actions/actionsCart";
+import { useEffect } from "react";
+import axios from "axios";
 
 YupPassword(Yup);
 
@@ -120,12 +123,31 @@ export default function Login() {
     resetForm,
   } = formik;
 
+  useEffect(() => {
+    if (params.token) {
+      (async () => {
+        console.log(params.token);
+        const dataUser = await dispatch(logearToken(params.token));
+        await dispatch(obtenerCarrito(dataUser.payload.id, params.token));
+        navigate("/");
+      })();
+    }
+  }, []);
+
   return (
     <div className={s.contenedorGeneralLogin}>
       <div className={s.contenedorLogin}>
         <div className={s.contenedorIzquierdo}>
           <h1 className={s.tituloIniciarSesion}>Iniciar sesión</h1>
-          <div className={s.contenedorLogeoGoogle}>
+          <div
+            onClick={() => {
+              window.open(
+                `${axios.defaults.baseURL}/auth/login/google`,
+                "_self"
+              );
+            }}
+            className={s.contenedorLogeoGoogle}
+          >
             <img src={logoGoogle} alt="logo Google" className={s.logoGoogle} />
             <p className={s.tituloGoogle}>Continuar con Google</p>
           </div>

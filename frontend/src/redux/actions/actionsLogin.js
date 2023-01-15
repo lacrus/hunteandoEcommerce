@@ -6,7 +6,6 @@ export const CERRAR_SESION = "CERRAR_SESION";
 
 export const registroUsuario = (datosUsuario) => {
   let dataUser = {
-    // username: `${datosUsuario.nombre} ${datosUsuario.apellido}`,
     username: datosUsuario.email,
     email: datosUsuario.email,
     password: datosUsuario.contrasena,
@@ -16,7 +15,6 @@ export const registroUsuario = (datosUsuario) => {
       let res = await axios({
         method: "POST",
         data: dataUser,
-        // withCredentials: true,
         url: "/auth/register",
       });
       if (res.data.success === true) {

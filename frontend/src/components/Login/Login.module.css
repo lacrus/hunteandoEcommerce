@@ -26,7 +26,19 @@
   font-size: 3.5rem;
 }
 
+.contendorLoadingGoogle {
+  cursor: pointer;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+  border-radius: 8px;
+  height: 50px;
+}
+
 .contenedorLogeoGoogle {
+  cursor: pointer;
   background-color: white;
   display: flex;
   justify-content: center;
@@ -41,7 +53,6 @@
 }
 
 .tituloGoogle {
-  cursor: pointer;
   margin: 0;
   margin-left: 8px;
   font-size: 1.2rem;

@@ -63,6 +63,11 @@ function App() {
           element={usuario.username ? <Navigate to="/" /> : <Login />}
         />
         <Route
+          path="/login/google/:token"
+          element={usuario.username ? <Navigate to="/" /> : <Login />}
+        />
+        
+        <Route
           path="/registrarse"
           element={usuario.username ? <Navigate to="/" /> : <Register />}
         />
