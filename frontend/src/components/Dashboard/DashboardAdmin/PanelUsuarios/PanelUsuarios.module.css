@@ -1,6 +1,6 @@
 .contenedorPanelUsuarios {
   position: relative;
-  width: calc(100vw - 15vw);
+  width: 100%;
   min-height: calc(100vh - var(--altura-header));
   height: fit-content;
   overflow: hidden;

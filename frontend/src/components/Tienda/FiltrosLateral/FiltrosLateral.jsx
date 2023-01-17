@@ -31,7 +31,7 @@ function FiltrosLateral({ filtros, setFiltros }) {
         <div className={s.filtrosLateralTitulo}>Filtros</div>
       </div>
 
-      <div
+      {/* <div
         id="price"
         className={s.filtrosLateralSelect}
         onClick={handleAbrirFiltro}
@@ -43,7 +43,7 @@ function FiltrosLateral({ filtros, setFiltros }) {
             filtroAbierto.price ? s.filtrosLateralIconoAbierto : false
           }`}
         />
-      </div>
+      </div> */}
       <div
         className={`${s.listaFiltroLateral} ${
           filtroAbierto.price ? s.listaFiltroLateralAbierta : false

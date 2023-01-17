@@ -2,6 +2,7 @@ import {
   GET_RANDOM_PRODUCTS_TIENDA,
   GET_PRODUCTS_TIENDA,
   GET_PRODUCT_DETAIL,
+  GET_CATEGORIES,
 } from "../actions/actionsShop";
 
 const initialState = {
@@ -9,6 +10,7 @@ const initialState = {
   productosTienda: [],
   totalProductos: 0,
   detallesProducto: {},
+  categorias: [],
 };
 
 const shopReducer = (state = initialState, action) => {
@@ -28,6 +30,11 @@ const shopReducer = (state = initialState, action) => {
       return {
         ...state,
         detallesProducto: action.payload,
+      };
+    case GET_CATEGORIES:
+      return {
+        ...state,
+        categorias: action.payload,
       };
     default:
       return { ...state };

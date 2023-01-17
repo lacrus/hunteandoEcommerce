@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import s from "./Tienda.module.css";
 import Swal from "sweetalert2";
-import { obtenerProductosTienda } from "../../redux/actions/actionsShop";
+import { obtenerCategorias, obtenerProductosTienda } from "../../redux/actions/actionsShop";
 import imgNotFound from "../../assets/images/imgNotFound.jpg";
 import TarjetaProducto from "./TarjetaProducto/TarjetaProducto";
 import resizeHook from "../../hooks/resizeHook";
@@ -12,13 +12,14 @@ import Loading from "../Loading/Loading";
 import FiltrosLateral from "./FiltrosLateral/FiltrosLateral";
 import FiltrosSuperiores from "./FiltrosSuperiores/FiltrosSuperiores";
 import Paginado from "./Paginado/Paginado";
+import FiltrosMovil from "./FiltrosMovil/FiltrosMovil";
 
 function Tienda({ usuario }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const productos = useSelector((e) => e.tienda.productosTienda);
   const totalProductos = useSelector((e) => e.tienda.totalProductos);
-  const esMovil = resizeHook().isMobile;
+  const { isMobile: esMovil, width: anchoPantalla } = resizeHook();
 
   const [cargando, setCargando] = useState(false);
 
@@ -50,6 +51,7 @@ function Tienda({ usuario }) {
       setCargando(true);
       try {
         await dispatch(obtenerProductosTienda(6));
+        await dispatch(obtenerCategorias());
       } catch (error) {
         Swal.fire(
           "Ups! Hubo problemas!",
@@ -59,6 +61,11 @@ function Tienda({ usuario }) {
       }
       setCargando(false);
     })();
+
+    return () => {
+      dispatch(obtenerProductosTienda(false));
+      dispatch(obtenerCategorias("reset"));
+    };
   }, []);
 
   return (
@@ -72,20 +79,31 @@ function Tienda({ usuario }) {
           </div>
           <div className={s.contenedorSegundoTienda}>
             <div className={s.tituloTienda}>Todos los productos</div>
-            <div className={s.contenedorTerceroTienda}>
-              <FiltrosLateral
+            {anchoPantalla < 800 ? (
+              <FiltrosMovil
+                totalProductos={totalProductos}
+                handleFiltros={handleFiltros}
                 filtros={filtros}
                 setFiltros={setFiltros}
-                handleFiltros={handleFiltros}
               />
-
-              <div className={s.contenedorTarjetasFiltros}>
-                <FiltrosSuperiores
+            ) : null}
+            <div className={s.contenedorTerceroTienda}>
+              {anchoPantalla > 800 ? (
+                <FiltrosLateral
                   filtros={filtros}
                   setFiltros={setFiltros}
-                  cantidadProductos={totalProductos}
                   handleFiltros={handleFiltros}
                 />
+              ) : null}
+              <div className={s.contenedorTarjetasFiltros}>
+                {anchoPantalla > 800 ? (
+                  <FiltrosSuperiores
+                    filtros={filtros}
+                    setFiltros={setFiltros}
+                    cantidadProductos={totalProductos}
+                    handleFiltros={handleFiltros}
+                  />
+                ) : null}
                 <div className={s.contenedorTarjetas}>
                   {productos?.length
                     ? productos?.map((i) => {

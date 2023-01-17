@@ -10,6 +10,10 @@
   cursor: pointer;
 }
 
+.contenedorTarjeta:hover .agregarAlCarroContenedor {
+  visibility: visible;
+}
+
 .contenedorImg {
   width: 100%;
   height: 75%;
@@ -19,12 +23,8 @@
 .imagenTarjeta {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Recorta la imagen sin deformarla */
+  object-fit: cover;
   object-position: center;
-}
-
-.contenedorTarjeta:hover .agregarAlCarroContenedor {
-  visibility: visible;
 }
 
 .agregarAlCarroContenedor {

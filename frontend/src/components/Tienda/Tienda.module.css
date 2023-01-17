@@ -42,7 +42,6 @@
 }
 
 /* TARJETAS */
-
 .contenedorTarjetas {
   width: 100%;
   display: grid;
@@ -50,3 +49,17 @@
   justify-items: center;
 }
 
+@media (max-width: 800px) {
+  .contenedorTarjetasFiltros {
+    width: 100%;
+  }
+}
+
+@media (max-width: 500px) {
+  .contenedorTarjetas {
+    grid-template-columns: 50% 50%;
+  }
+  .tituloTienda {
+    font-size: 1.8rem;
+  }
+}

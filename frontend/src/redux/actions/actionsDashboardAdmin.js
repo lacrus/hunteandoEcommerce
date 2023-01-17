@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import { GET_USERS } from "./actionsLogin";
+import { GET_CATEGORIES } from "./actionsShop";
 
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_DELETED_PRODUCTS = "GET_DELETED_PRODUCTS";
@@ -275,6 +276,60 @@ export function modificarEstadoEnvio(idVenta, estadoEnvio, token) {
         },
       });
       return dispatch({ type: GET_SALE_DETAILS, payload: res.data.sale });
+    } catch (error) {
+      return new Error(error);
+    }
+  };
+}
+
+// ------------------ ACTIONS CATEGORIAS ------------------
+
+export function crearCategoria(categoria, token) {
+  return async function (dispatch) {
+    try {
+      const res = await axios({
+        method: "POST",
+        url: "/dashboard/admin/categories",
+        data: categoria,
+        headers: {
+          authorization: `${token}`,
+        },
+      });
+      console.log(res);
+      return dispatch({ type: GET_CATEGORIES, payload: res.data.categories });
+    } catch (error) {
+      return new Error(error);
+    }
+  };
+}
+
+export function modificarCategoria(categoria, token) {
+  return async function (dispatch) {
+    try {
+      const res = await axios({
+        method: "PUT",
+        url: "/dashboard/admin/categories",
+        data: categoria,
+        headers: {
+          authorization: `${token}`,
+        },
+      });
+    } catch (error) {
+      return new Error(error);
+    }
+  };
+}
+
+export function eliminarCategoria(idCategoria, token) {
+  return async function (dispatch) {
+    try {
+      const res = await axios({
+        method: "DELETE",
+        url: "/dashboard/admin/categories/" + idCategoria,
+        headers: {
+          authorization: `${token}`,
+        },
+      });
     } catch (error) {
       return new Error(error);
     }

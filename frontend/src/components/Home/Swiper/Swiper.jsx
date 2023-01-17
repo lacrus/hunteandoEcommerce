@@ -78,6 +78,10 @@ export default function ComponenteSwiper({ usuario }) {
         console.log("Error al obtener productos de la tienda");
       }
     })();
+
+    return () => {
+      dispatch(obtenerProductosRandomTienda("reset"));
+    };
   }, []);
 
   return (

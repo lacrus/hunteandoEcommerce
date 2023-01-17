@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Categorias from "./Categorias/Categorias";
 import CrearProducto from "./CrearProducto/CrearProducto";
 import s from "./DashboardAdmin.module.css";
 import PanelLateralAdmin from "./PanelLateralAdmin/PanelLateralAdmin";
@@ -24,6 +25,7 @@ function DashboardAdmin({ usuario }) {
         productosEliminados: false,
         ventas: false,
         usuarios: false,
+        categorias: false,
       };
       res[elMenu] = true;
       return res;
@@ -53,6 +55,12 @@ function DashboardAdmin({ usuario }) {
         <PanelUsuarios
           handleMostrarMenuAdmin={handleMostrarMenuAdmin}
           usuario={usuario}
+        />
+      )}
+      {mostrarMenuAdmin.categorias && (
+        <Categorias
+          usuario={usuario}
+          handleMostrarMenuAdmin={handleMostrarMenuAdmin}
         />
       )}
     </div>

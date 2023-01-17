@@ -24,6 +24,7 @@
 .tituloMenuUser {
   text-align: center;
   width: 80%;
+  min-width: fit-content;
   padding: 3% 0;
   font-family: comspotM;
   font-size: 1.8rem;
@@ -37,4 +38,13 @@
   margin: 3% 0;
   font-family: comspotM;
   font-size: 1.5rem;
+}
+
+@media (max-width: 400px) {
+  .tituloMenuUser {
+    font-size: 1.5rem;
+  }
+  .itemMenuUser {
+    font-size: 1rem;
+  }
 }

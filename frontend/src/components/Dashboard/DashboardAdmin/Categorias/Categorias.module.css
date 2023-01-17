@@ -1,0 +1,77 @@
+.contenedorCategoria {
+  position: relative;
+  width: 100%;
+  min-height: calc(100vh - var(--altura-header));
+  height: fit-content;
+  overflow: hidden;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loadingTrue {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tablaCategoria {
+  width: 100%;
+  text-align: center;
+}
+
+.encabezadoCategoria {
+  padding-bottom: 15%;
+  border-bottom: 1px solid black;
+}
+
+.bodyCategoria tr {
+  line-height: 25px;
+}
+
+.bodyCategoria tr:nth-child(even) {
+  background: #d8d8d8;
+}
+
+.botonEditarCategoria:hover {
+  cursor: pointer;
+  color: #f99716;
+}
+
+.botonEliminarCategoria:hover {
+  cursor: pointer;
+  color: red;
+}
+
+.renglonVacio {
+  padding-top: 2vh;
+}
+
+/* BOTON */
+.contenedorBoton {
+  width: fit-content;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #67a49b;
+  cursor: pointer;
+  border-radius: var(--border-radius-boton);
+  transition: all 150ms ease;
+  align-self: center;
+  margin: 2% 0;
+}
+
+.contenedorBoton:active {
+  background-color: #1e1e1e;
+}
+
+.boton {
+  font-family: comspotM;
+  font-weight: bold;
+  font-size: 0.875rem;
+  padding: 0 24px;
+  color: #fff;
+}

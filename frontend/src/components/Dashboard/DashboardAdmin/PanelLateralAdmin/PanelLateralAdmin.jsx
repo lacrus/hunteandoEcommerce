@@ -56,6 +56,16 @@ function PanelLateralAdmin({ handleMostrarMenuAdmin, mostrarMenuAdmin }) {
       >
         Usuarios
       </div>
+      <div
+        onClick={() => {
+          handleMostrarMenuAdmin("categorias");
+        }}
+        className={`${s.itemPanelLateralAdmin} ${
+          mostrarMenuAdmin.categorias && s.itemPanelLateralAdminSeleccionado
+        }`}
+      >
+        Categorias
+      </div>
     </div>
   );
 }
