@@ -295,7 +295,6 @@ export function crearCategoria(categoria, token) {
           authorization: `${token}`,
         },
       });
-      console.log(res);
       return dispatch({ type: GET_CATEGORIES, payload: res.data.categories });
     } catch (error) {
       return new Error(error);
@@ -314,6 +313,7 @@ export function modificarCategoria(categoria, token) {
           authorization: `${token}`,
         },
       });
+      return dispatch({ type: GET_CATEGORIES, payload: res.data.categories });
     } catch (error) {
       return new Error(error);
     }
@@ -330,6 +330,7 @@ export function eliminarCategoria(idCategoria, token) {
           authorization: `${token}`,
         },
       });
+      return dispatch({ type: GET_CATEGORIES, payload: res.data.categories });
     } catch (error) {
       return new Error(error);
     }
