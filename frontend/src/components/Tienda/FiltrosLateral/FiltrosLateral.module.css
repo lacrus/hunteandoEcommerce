@@ -23,6 +23,7 @@
 }
 
 .filtrosLateralSelect {
+  font-family: comspotM;
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -52,12 +53,40 @@
   transition: all 0.5s;
   -webkit-transition: all 0.5s;
   -ms-transition: all 0.5s;
+  display: none;
 }
 
 .listaFiltroLateralAbierta {
+  display: block;
   margin-top: 2%;
   font-size: 0.9rem;
   color: black;
+}
+
+.contenedorItemCategorias {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 50px;
+  cursor: pointer;
+}
+
+.itemCategorias {
+  margin-left: 2%;
+  font-family: comspotM;
+  font-size: 1rem;
+}
+
+.checkboxItemCategorias {
+  border-radius: 50%;
+  border: 2px solid black;
+  height: 15px;
+  width: 15px;
+  margin-right: 2%;
+}
+
+.checkboxItemCategoriasActivo {
+  background-color: green;
 }
 
 .enStock {

@@ -63,7 +63,9 @@ export function obtenerProductosTienda(porpag, filtros) {
             filtros?.price || "all"
           }&stock=${filtros?.stock || false}&ordenado=${
             filtros?.ordenado || "name"
-          }&orden=${filtros?.orden || "ASC"}`,
+          }&orden=${filtros?.orden || "ASC"}&categorias=${
+            filtros?.categorias?.length ? filtros.categorias : "all"
+          }`,
         });
         return dispatch({
           type: GET_PRODUCTS_TIENDA,

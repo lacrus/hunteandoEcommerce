@@ -3,7 +3,10 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import s from "./Tienda.module.css";
 import Swal from "sweetalert2";
-import { obtenerCategorias, obtenerProductosTienda } from "../../redux/actions/actionsShop";
+import {
+  obtenerCategorias,
+  obtenerProductosTienda,
+} from "../../redux/actions/actionsShop";
 import imgNotFound from "../../assets/images/imgNotFound.jpg";
 import TarjetaProducto from "./TarjetaProducto/TarjetaProducto";
 import resizeHook from "../../hooks/resizeHook";
@@ -19,6 +22,7 @@ function Tienda({ usuario }) {
   const navigate = useNavigate();
   const productos = useSelector((e) => e.tienda.productosTienda);
   const totalProductos = useSelector((e) => e.tienda.totalProductos);
+  const categorias = useSelector((e) => e.tienda.categorias);
   const { isMobile: esMovil, width: anchoPantalla } = resizeHook();
 
   const [cargando, setCargando] = useState(false);
@@ -30,6 +34,7 @@ function Tienda({ usuario }) {
     stock: false,
     ordenado: "name",
     orden: "ASC",
+    categorias: [],
   });
 
   function handleFiltros(e) {
@@ -79,12 +84,13 @@ function Tienda({ usuario }) {
           </div>
           <div className={s.contenedorSegundoTienda}>
             <div className={s.tituloTienda}>Todos los productos</div>
-            {anchoPantalla < 800 ? (
+            {anchoPantalla <= 800 ? (
               <FiltrosMovil
                 totalProductos={totalProductos}
                 handleFiltros={handleFiltros}
                 filtros={filtros}
                 setFiltros={setFiltros}
+                categorias={categorias}
               />
             ) : null}
             <div className={s.contenedorTerceroTienda}>
@@ -93,6 +99,7 @@ function Tienda({ usuario }) {
                   filtros={filtros}
                   setFiltros={setFiltros}
                   handleFiltros={handleFiltros}
+                  categorias={categorias}
                 />
               ) : null}
               <div className={s.contenedorTarjetasFiltros}>

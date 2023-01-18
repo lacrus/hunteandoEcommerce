@@ -11,7 +11,7 @@ import {
 } from "../../../../../redux/actions/actionsDashboardAdmin";
 import { useDispatch } from "react-redux";
 
-function ModalCategoria({ categoria, setMostrarModal }) {
+function ModalCategoria({ categoria, setCategoriaSeleccionada, setMostrarModal }) {
   const dispatch = useDispatch();
   const [cargando, setCargando] = useState(false);
 
@@ -28,6 +28,7 @@ function ModalCategoria({ categoria, setMostrarModal }) {
       }).then(({ isConfirmed }) => {
         if (isConfirmed) {
           setMostrarModal(false);
+          setCategoriaSeleccionada(false);
           resetForm();
         }
       });
@@ -45,7 +46,6 @@ function ModalCategoria({ categoria, setMostrarModal }) {
   });
 
   function onSubmit(e) {
-    console.log(e);
     setCargando(true);
     try {
       const token = localStorage.getItem("token");
@@ -67,6 +67,7 @@ function ModalCategoria({ categoria, setMostrarModal }) {
             } correctamente!`,
           }).then((i) => {
             setMostrarModal(false);
+            setCategoriaSeleccionada(false);
             resetForm();
           });
         }

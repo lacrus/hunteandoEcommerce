@@ -102,3 +102,13 @@
 .botonCancelar:hover {
   background-color: rgba(255, 0, 0, 0.684);
 }
+
+.renglonSelects {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.inputsRenglon {
+  width: 48%;
+}

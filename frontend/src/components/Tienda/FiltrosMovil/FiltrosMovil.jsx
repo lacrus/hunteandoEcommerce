@@ -4,7 +4,13 @@ import { GiSettingsKnobs } from "react-icons/gi";
 import { BsChevronCompactDown } from "react-icons/bs";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 
-function FiltrosMovil({ totalProductos, handleFiltros, filtros, setFiltros }) {
+function FiltrosMovil({
+  totalProductos,
+  handleFiltros,
+  filtros,
+  setFiltros,
+  categorias,
+}) {
   const [filtroMovilAbierto, setFiltroMovilAbierto] = useState(false);
   const [filtroAbierto, setFiltroAbierto] = useState({
     ordenado: false,
@@ -12,6 +18,21 @@ function FiltrosMovil({ totalProductos, handleFiltros, filtros, setFiltros }) {
     orden: false,
     categorias: false,
   });
+
+  function handleSelectCategorias(e) {
+    if (filtros.categorias.includes(e.target.id)) {
+      let categoriasFiltradas = filtros.categorias.filter(
+        (i) => i !== e.target.id
+      );
+      setFiltros({ ...filtros, categorias: [...categoriasFiltradas] });
+    } else {
+      // const categoriaAgregada = [...filtros.categorias, e.target.id];
+      setFiltros({
+        ...filtros,
+        categorias: [...filtros.categorias, e.target.id],
+      });
+    }
+  }
 
   function handleAbrirFiltro(e, cerrar) {
     if (!cerrar) {
@@ -80,6 +101,44 @@ function FiltrosMovil({ totalProductos, handleFiltros, filtros, setFiltros }) {
           </div>
         </div>
         {/* FIN FILTRO STOCK */}
+
+        {/* FILTRO ORDEN */}
+        <div className={`${s.contenedorSelectMobil}`}>
+          <div
+            id="orden"
+            onClick={handleAbrirFiltro}
+            className={`${s.contenedorTituloSelectMobil}`}
+          >
+            <div id="orden" className={s.tituloSelectMobil}>
+              Orden
+            </div>
+            <BsChevronCompactDown
+              id="orden"
+              className={`${s.filtrosIconoMobil} ${
+                filtroAbierto.orden ? s.filtrosIconoMobilAbierto : false
+              }`}
+            />
+          </div>
+
+          <div
+            className={`${s.listadoFiltroMobil} ${
+              filtroAbierto.orden ? s.listadoFiltroMobilMostrar : false
+            }`}
+          >
+            <div
+              id="orden"
+              title={filtros.orden === "ASC" ? "DESC" : "ASC"}
+              onClick={(e) => {
+                handleAbrirFiltro(e, true);
+                handleFiltros(e);
+              }}
+              className={s.itemListadoMobil}
+            >
+              {filtros.orden === "ASC" ? "Descendente" : "Ascendente"}
+            </div>
+          </div>
+        </div>
+        {/* FIN FILTRO ORDEN */}
 
         {/* FILTRO ORDENADO */}
         <div className={s.contenedorSelectMobil}>
@@ -254,44 +313,6 @@ function FiltrosMovil({ totalProductos, handleFiltros, filtros, setFiltros }) {
         </div>
         {/* FIN FILTRO CANTIDAD */}
 
-        {/* FILTRO ORDEN */}
-        <div className={`${s.contenedorSelectMobil}`}>
-          <div
-            id="orden"
-            onClick={handleAbrirFiltro}
-            className={`${s.contenedorTituloSelectMobil}`}
-          >
-            <div id="orden" className={s.tituloSelectMobil}>
-              Orden
-            </div>
-            <BsChevronCompactDown
-              id="orden"
-              className={`${s.filtrosIconoMobil} ${
-                filtroAbierto.orden ? s.filtrosIconoMobilAbierto : false
-              }`}
-            />
-          </div>
-
-          <div
-            className={`${s.listadoFiltroMobil} ${
-              filtroAbierto.orden ? s.listadoFiltroMobilMostrar : false
-            }`}
-          >
-            <div
-              id="orden"
-              title={filtros.orden === "ASC" ? "DESC" : "ASC"}
-              onClick={(e) => {
-                handleAbrirFiltro(e, true);
-                handleFiltros(e);
-              }}
-              className={s.itemListadoMobil}
-            >
-              {filtros.orden === "ASC" ? "Descendente" : "Ascendente"}
-            </div>
-          </div>
-        </div>
-        {/* FIN FILTRO ORDEN */}
-
         {/* FILTRO CATEGORIAS */}
         <div className={`${s.contenedorSelectMobil}`}>
           <div
@@ -315,19 +336,28 @@ function FiltrosMovil({ totalProductos, handleFiltros, filtros, setFiltros }) {
               filtroAbierto.categorias ? s.listadoFiltroMobilMostrar : false
             }`}
           >
-            <div
-              id="categorias"
-              title="categoria1"
-              onClick={(e) => {
-                handleAbrirFiltro(e, true);
-                // handleFiltros(e);
-              }}
-              className={`${s.itemListadoMobil} ${
-                filtros.porpag == 18 ? s.itemListadoMobilActive : false
-              }`}
-            >
-              categoria 1
-            </div>
+            {categorias?.map((i, idx) => {
+              return (
+                <div
+                  key={i.name}
+                  id={i.name}
+                  className={`${s.itemListadoMobil} ${s.contenedorItemCategorias}`}
+                  onClick={handleSelectCategorias}
+                >
+                  <div id={i.name} className={s.itemCategorias}>
+                    {i.name[0].toUpperCase() + i.name.slice(1)}
+                  </div>
+                  <div
+                    id={i.name}
+                    className={`${s.checkboxItemCategorias} ${
+                      filtros.categorias.includes(i.name)
+                        ? s.checkboxItemCategoriasActivo
+                        : null
+                    }`}
+                  ></div>
+                </div>
+              );
+            })}
           </div>
         </div>
         {/* FIN FILTRO CATEGORIAS */}

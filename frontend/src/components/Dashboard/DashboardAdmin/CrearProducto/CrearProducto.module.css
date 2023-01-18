@@ -85,3 +85,13 @@
 .botonCrear:hover {
   background-color: #f9971695;
 }
+
+.renglonSelects{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.inputsRenglon {
+  width: 48%;
+}

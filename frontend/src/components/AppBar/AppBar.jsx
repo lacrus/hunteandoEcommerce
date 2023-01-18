@@ -98,7 +98,7 @@ export default function AppBar({ usuario }) {
   return (
     <div className={s.contenedorHeader}>
       <div className={s.overflowContenedorHeader}>
-        {anchoPantalla < 800 ? (
+        {anchoPantalla <= 800 ? (
           <>
             <AiOutlineMenu
               className={s.botonMenuHeader}

@@ -2,22 +2,30 @@ import React from "react";
 import s from "./CrearProducto.module.css";
 
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import ClipLoader from "react-spinners/ClipLoader";
 
 import InputFormulario from "../../../../ui/InputFormulario/InputFormulario";
+import SelectInputFormulario from "../../../../ui/SelectInputFormulario/SelectInputFormulario";
+
 import ImagenesVender from "./ImagenesVender/ImagenesVender";
 
 import { crearProducto } from "../../../../redux/actions/actionsDashboardAdmin";
 import Swal from "sweetalert2";
+import { useEffect } from "react";
+import { obtenerCategorias } from "../../../../redux/actions/actionsShop";
 
 let verificarDosNumerosDespuesDeLaComa = /^\d+(\.\d{0,2})?$/;
 
 function CrearProducto({ handleMostrarMenuAdmin }) {
   const dispatch = useDispatch();
+  const categorias = useSelector((e) => e.tienda.categorias);
+  const nombresCategorias = categorias?.map((i) => {
+    return i.name;
+  });
 
   const [imagen1, setImagen1] = useState("");
   const [imagen2, setImagen2] = useState("");
@@ -33,6 +41,9 @@ function CrearProducto({ handleMostrarMenuAdmin }) {
     precio: "",
     descripcion: "",
     cantidad: "",
+    categories: [],
+    offSale: "",
+    marked: "",
   };
 
   const validationSchema = Yup.object().shape({
@@ -148,6 +159,9 @@ function CrearProducto({ handleMostrarMenuAdmin }) {
     formData.append("price", e.precio);
     formData.append("description", e.descripcion);
     formData.append("stock", e.cantidad);
+    formData.append("categoria", e.categories);
+    formData.append("offSale", e.offSale);
+    formData.append("marked", e.marked);
 
     try {
       const token = localStorage.getItem("token");
@@ -181,6 +195,16 @@ function CrearProducto({ handleMostrarMenuAdmin }) {
     handleBlur,
     resetForm,
   } = formik;
+
+  useEffect(() => {
+    (async () => {
+      dispatch(obtenerCategorias());
+    })();
+
+    return () => {
+      dispatch(obtenerCategorias("reset"));
+    };
+  }, []);
 
   return (
     <div className={s.contenedorCrearProducto}>
@@ -251,6 +275,55 @@ function CrearProducto({ handleMostrarMenuAdmin }) {
           estilos={s.inputFormCrear}
           id={"cantidad"}
           label={"Cantidad"}
+        />
+        <div className={s.renglonSelects}>
+          <SelectInputFormulario
+            name="offSale"
+            value={values.offSale}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            estiloError={touched.offSale && errors.offSale && true}
+            mostrarError={touched.offSale && errors.offSale && true}
+            msjError={errors.offSale}
+            estilos={`${s.inputFormCrear} ${s.inputsRenglon}`}
+            // estilosLabel=
+            id="offSale"
+            label="En oferta"
+            options={["Verdadero", "Falso"]}
+            // touched={}
+          />
+
+          <SelectInputFormulario
+            name="marked"
+            value={values.marked}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            estiloError={touched.marked && errors.marked && true}
+            mostrarError={touched.marked && errors.marked && true}
+            msjError={errors.marked}
+            estilos={`${s.inputFormCrear} ${s.inputsRenglon}`}
+            // estilosLabel=
+            id="marked"
+            label="Destacado"
+            options={["Verdadero", "Falso"]}
+            // touched={}
+          />
+        </div>
+        
+        <SelectInputFormulario
+          name="categories"
+          value={values.categories}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          estiloError={touched.categories && errors.categories && true}
+          mostrarError={touched.categories && errors.categories && true}
+          msjError={errors.categories}
+          estilos={s.inputFormCrear}
+          // estilosLabel=
+          id="categories"
+          label="Categorias"
+          options={nombresCategorias.length ? nombresCategorias : []}
+          // touched={}
         />
 
         <ImagenesVender

@@ -9,7 +9,7 @@ import {
   eliminarProducto,
   obtenerTodosLosProductos,
 } from "../../../../redux/actions/actionsDashboardAdmin";
-import ModalModificarVenta from "./ModalModificarVenta/ModalModificarVenta";
+import ModalModificarProducto from "./ModalModificarProducto/ModalModificarProducto";
 import Loading from "../../../Loading/Loading";
 import Swal from "sweetalert2";
 
@@ -88,7 +88,9 @@ function ProductosCreados() {
                 Precio
               </th>
               <th>Stock</th>
-              <th>Descripción</th>
+              {/* <th>Descripción</th> */}
+              <th>Destacado</th>
+              <th>En oferta</th>
               <th>Editar</th>
               <th>Eliminar</th>
             </tr>
@@ -102,7 +104,9 @@ function ProductosCreados() {
                     <td>{a.name}</td>
                     <td>{a.price}</td>
                     <th>{a.stock}</th>
-                    <td>{a.description.substring(0, 20)}</td>
+                    {/* <td>{a.description.substring(0, 20)}</td> */}
+                    <td>{a.marked ? "Verdadero" : "Falso"}</td>
+                    <td>{a.offSale ? "Verdadero" : "Falso"}</td>
                     <td>
                       <div
                         className={s.botonEditarProducto}
@@ -136,7 +140,7 @@ function ProductosCreados() {
         </table>
       )}
       {editarProducto && (
-        <ModalModificarVenta
+        <ModalModificarProducto
           producto={producto}
           editarProducto={editarProducto}
           setEditarProducto={setEditarProducto}

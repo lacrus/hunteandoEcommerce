@@ -44,6 +44,10 @@ function Categorias({ usuario }) {
       await dispatch(obtenerCategorias());
       setLoading(false);
     })();
+
+    return () => {
+      dispatch(obtenerCategorias("reset"));
+    };
   }, []);
 
   return (
@@ -115,6 +119,7 @@ function Categorias({ usuario }) {
           {mostrarModal ? (
             <ModalCategoria
               categoria={categoriaSeleccionada}
+              setCategoriaSeleccionada={setCategoriaSeleccionada}
               setMostrarModal={setMostrarModal}
             />
           ) : (
