@@ -122,3 +122,10 @@
   margin: 0;
   font-size: 0.6rem;
 }
+
+@media (max-width: 800px) {
+  .renglonNombreApellido {
+    display: flex;
+    flex-direction: column;
+  }
+}
