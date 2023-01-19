@@ -66,11 +66,17 @@ function App() {
           path="/login/google/:token"
           element={usuario.username ? <Navigate to="/" /> : <Login />}
         />
-        
+
         <Route
           path="/registrarse"
           element={usuario.username ? <Navigate to="/" /> : <Register />}
         />
+
+        <Route
+          path="/registrarse/:id"
+          element={usuario.username ? <Navigate to="/" /> : <Register />}
+        />
+
         <Route path="/tienda" element={<Tienda />} />
         <Route
           path="/tienda/detalles/:id"

@@ -6,6 +6,10 @@
   src: url("./assets/fonts/arsenale_white.ttf");
 }
 @font-face {
+  font-family: comspotR;
+  src: url("./assets/fonts/ComspotTec-Regular.ttf");
+}
+@font-face {
   font-family: comspotM;
   src: url("./assets/fonts/Comspot-Medium.ttf");
 }
@@ -159,7 +163,7 @@ table {
   --color-bg-claro: #fafafa;
   --color-bg-oscuro: #236803;
   --color-border: #fafafa;
-  --altura-header: 112px;
+  --altura-header: 82px;
   --border-radius-boton: 5px;
   --ancho-menu-admin: 20vw;
   --ancho-menu-usuario: 20vw;

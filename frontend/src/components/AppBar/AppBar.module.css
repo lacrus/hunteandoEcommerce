@@ -5,11 +5,12 @@
   top: 0px;
   background-color: white;
   width: 100%;
-  height: calc(var(--altura-header) - 30px);
+  height: var(--altura-header);
+  /* height: calc(var(--altura-header) - 30px); */
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  padding-top: 30px;
+  /* padding-top: 30px; */
 }
 
 .overflowContenedorHeader {
@@ -29,6 +30,13 @@
   font-size: 4rem;
   white-space: nowrap;
   height: fit-content;
+}
+
+.imagenLogo {
+  height: 90%;
+  object-fit: cover; /* Recorta la imagen sin deformarla */
+  object-position: center;
+  cursor: pointer;
 }
 
 .contenedorDerecha {
@@ -83,7 +91,7 @@
   cursor: pointer;
   border-radius: 8px;
   width: calc(var(--altura-header) * 0.4);
-  height: calc((var(--altura-header) - 30px) * 0.4);
+  height: calc((var(--altura-header)) * 0.4);
 }
 .cantidadCarritoHeader {
   text-align: center;
@@ -129,7 +137,8 @@
   width: 0px;
   cursor: pointer;
   width: calc(var(--altura-header) * 0.4);
-  height: calc((var(--altura-header) - 30px) * 0.4);
+  /* height: calc((var(--altura-header) - 30px) * 0.4); */
+  height: calc((var(--altura-header)) * 0.4);
 }
 
 .imagenBuscadorTablet {
@@ -171,7 +180,8 @@
     border-radius: 8px;
     cursor: pointer;
     width: calc(var(--altura-header) * 0.4);
-    height: calc((var(--altura-header) - 30px) * 0.4);
+    /* height: calc((var(--altura-header) - 30px) * 0.4); */
+    height: calc((var(--altura-header)) * 0.4);
     display: inline;
   }
   .imagenBuscadorTablet:active {
@@ -191,7 +201,8 @@
   .iconoUsuarioTablet {
     display: inline;
     width: calc(var(--altura-header) * 0.4);
-    height: calc((var(--altura-header) - 30px) * 0.4);
+    /* height: calc((var(--altura-header) - 30px) * 0.4); */
+    height: calc((var(--altura-header)) * 0.4);
   }
   .carritoHeader:active {
     background-color: #1e1e1e;

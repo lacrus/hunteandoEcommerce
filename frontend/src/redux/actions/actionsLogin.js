@@ -46,7 +46,6 @@ export const iniciarSesion = (datosUsuario) => {
       let res = await axios({
         method: "POST",
         data: dataUser,
-        // withCredentials: true,
         url: "/auth/login",
       });
       if (res.data.success === true) {
@@ -73,12 +72,6 @@ export const iniciarSesion = (datosUsuario) => {
 export const cerrarSesion = () => {
   try {
     return async function (dispatch) {
-      // let res = await axios({
-      //   method: "POST",
-      //   data: dataUser,
-      //   withCredentials: true,
-      //   url: "/auth/login",
-      // });
       return dispatch({
         type: CERRAR_SESION,
       });
@@ -109,7 +102,7 @@ export function logearToken(token) {
 export function recuperarContrasena(email) {
   return async function (dispatch) {
     try {
-      const respuesta = await axios({
+      const res = await axios({
         method: "POST",
         data: {
           email,

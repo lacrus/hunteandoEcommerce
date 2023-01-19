@@ -20,16 +20,40 @@ export default function ProductDetail({ usuario }) {
   const [imagenSeleccionada, setImagenSeleccionada] = useState(null);
   const [cantidadSeleccionada, setCantidadSeleccionada] = useState(1);
 
-  async function handleAgregarCarrito() {
+  async function handleAgregarCarrito(accion) {
     const prod = {
       id,
       quantity: cantidadSeleccionada,
     };
     if (usuario?.username) {
-      const token = localStorage.getItem("token");
-      await dispatch(agregarProductoCarrito(usuario.id, prod, token));
+      try {
+        const token = localStorage.getItem("token");
+        await dispatch(agregarProductoCarrito(usuario.id, prod, token));
+        if (accion) {
+          navigate("/carrito");
+        }
+      } catch (error) {
+        Swal.fire("Hubo un problema!", "Vuelve a intentarlo.", "error");
+      }
     } else {
-      navigate(`/login/${id}`);
+      Swal.fire({
+        title: "Inicia sesión!",
+        text: "O crea una cuenta.",
+        icon: "warning",
+        showConfirmButton: true,
+        confirmButtonText: "Iniciar sesión",
+        showCancelButton: true,
+        showDenyButton: true,
+        denyButtonText: "Registrarse",
+        denyButtonColor: "grey",
+        cancelButtonColor: "red",
+      }).then(({ isConfirmed, isDenied }) => {
+        if (isConfirmed) {
+          navigate(`/login/${id}`);
+        } else if (isDenied) {
+          navigate(`/registrarse/${id}`);
+        }
+      });
     }
   }
 
@@ -37,8 +61,17 @@ export default function ProductDetail({ usuario }) {
     setImagenSeleccionada(foto);
   }
 
-  function handleCantidadSeleccionada(e) {
-    setCantidadSeleccionada(e.target.value);
+  function handleCantidadSeleccionada(accion) {
+    let cantidad = cantidadSeleccionada;
+    if (accion === "mas") {
+      if (cantidadSeleccionada < producto?.stock) {
+        setCantidadSeleccionada((cantidad += 1));
+      }
+    } else {
+      if (cantidadSeleccionada > 0) {
+        setCantidadSeleccionada((cantidad -= 1));
+      }
+    }
   }
 
   useEffect(() => {
@@ -76,15 +109,6 @@ export default function ProductDetail({ usuario }) {
             {producto?.name}
           </div>
           <div className={s.contenedorIzquierdo}>
-            <img
-              className={s.imagenProducto}
-              src={imagenSeleccionada || imgNotFound}
-              alt="imagen producto"
-              onError={({ currentTarget }) => {
-                currentTarget.onerror = null; // prevents looping
-                currentTarget.src = imgNotFound;
-              }}
-            />
             <div className={s.contenedorImagenesMiniaturaProducto}>
               {producto?.image?.map((i, idx) => {
                 return (
@@ -102,53 +126,79 @@ export default function ProductDetail({ usuario }) {
                 );
               })}
             </div>
+            <img
+              className={s.imagenProducto}
+              src={imagenSeleccionada || imgNotFound}
+              alt="imagen producto"
+              onError={({ currentTarget }) => {
+                currentTarget.onerror = null; // prevents looping
+                currentTarget.src = imgNotFound;
+              }}
+            />
           </div>
+
           <div className={s.contenedorDerecho}>
             <div className={s.detalles}>
-              <div className={s.nombreProducto}>{producto?.name}</div>
+              <div className={s.nombreProducto}>
+                {producto.name
+                  ? producto?.name[0]?.toUpperCase() + producto?.name?.slice(1)
+                  : producto?.name}
+              </div>
               <div className={s.precioProducto}>
                 ${" "}
                 {parseInt(
                   producto?.price * cantidadSeleccionada
                 ).toLocaleString("es")}
               </div>
-              <div className={s.contenedorCantidad}>
-                <div>Cantidad</div>
-                <select
-                  onChange={handleCantidadSeleccionada}
-                  className={s.selectCantidadProducto}
-                  name="cantidad"
-                  id="cantidad"
-                >
-                  {producto?.stock < 1 ? (
-                    <option value="sinStock">Sin Stock</option>
-                  ) : (
-                    new Array(producto?.stock || 1).fill().map((i, idx) => {
-                      return (
-                        <option key={idx} value={idx + 1}>{`${idx + 1} ${
-                          idx === 0 ? "unidad" : "unidades"
-                        }`}</option>
-                      );
-                    })
-                  )}
-                </select>
+              <div className={s.contenedorCantidadStock}>
+                <div className={s.contenedorCantidad}>
+                  <div className={s.tituloCantidad}>Cantidad</div>
+
+                  <div className={s.selectorCantidad}>
+                    <div
+                      className={s.masMenos}
+                      onClick={() => handleCantidadSeleccionada("menos")}
+                    >
+                      -
+                    </div>
+                    <div className={s.cantidad}>
+                      {producto?.stock < 1 ? 0 : cantidadSeleccionada}
+                    </div>
+                    <div
+                      className={s.masMenos}
+                      onClick={() => handleCantidadSeleccionada("mas")}
+                    >
+                      +
+                    </div>
+                  </div>
+                </div>
+                <div className={s.contenedorCantidad}>
+                  <div className={s.tituloCantidad}>Stock</div>
+                  <div className={s.tituloCantidad}>{producto?.stock}</div>
+                </div>
               </div>
+              <div className={s.descripcion}>{producto?.description}</div>
             </div>
             {producto?.stock >= 1 ? (
               <div
                 className={s.botones}
                 display={producto?.stock ? true : "none"}
               >
-                <div className={`${s.boton} ${s.botonComprar}`}>Comprar</div>
                 <div
-                  onClick={handleAgregarCarrito}
+                  onClick={() => handleAgregarCarrito()}
                   className={`${s.boton} ${s.botonAgregar}`}
                 >
-                  Agregar al carrito
+                  AGREGAR AL CARRO
+                </div>
+                <div
+                  className={`${s.boton} ${s.botonComprar}`}
+                  onClick={() => handleAgregarCarrito("comprar")}
+                >
+                  REALIZAR COMPRA
                 </div>
               </div>
             ) : null}
-          </div>{" "}
+          </div>
         </>
       )}
     </div>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 // import { Copyright } from "../../utils/utils";
 import logoGoogle from "../../assets/images/logoGoogle.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import s from "./Register.module.css";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -19,28 +19,17 @@ export default function Register() {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const params = useParams();
 
   async function onSubmit(e) {
     setLoading(true);
     try {
       const registro = await dispatch(registroUsuario(e));
-      if (registro.success === true) {
-        Swal.fire(
-          "Bienvenido!",
-          "Usuario creado correctamente",
-          "success"
-        ).then(() => {
-          navigate("/");
-        });
+      Swal.fire("Bienvenido!", "Usuario creado correctamente", "success");
+      if (params.id !== undefined) {
+        navigate(`/tienda/detalles/${params.id}`);
       } else {
-        Swal.fire(
-          "Error!",
-          registro.mensaje === "email must be unique" ||
-            registro.mensaje === "username must be unique"
-            ? "Mail ya registrado"
-            : registro.mensaje,
-          "error"
-        );
+        navigate("/");
       }
     } catch (e) {
       Swal.fire(

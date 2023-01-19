@@ -45,7 +45,6 @@ function PanelPerfilUsuario({ token, usuario }) {
   };
 
   const validationSchema = Yup.object().shape({
-    // email: Yup.string().email("*Ingrese un mail valido"),
     nombre: Yup.string().max(20, "*El nombre debe tener máximo 20 carácteres"),
     apellido: Yup.string().max(
       15,
@@ -65,21 +64,29 @@ function PanelPerfilUsuario({ token, usuario }) {
   } = formik;
 
   function handleCambioContrasena() {
-    try {
-      Swal.fire({
-        title: "Deseas cambiar la contraseña?",
-        text: "Te enviaremos un link al mail registrado.",
-        icon: "question",
-        showDenyButton: true,
-        footer: "El link expira en 30 minutos.",
-      }).then(async ({ isConfirmed }) => {
-        if (isConfirmed) {
-          Swal.fire("Revisa tu casilla de mail", "", "success");
-          await dispatch(recuperarContrasena(usuario.email));
-        }
-      });
-    } catch (error) {
-      Swal.fire("Hubo un problema", "Vuelve a intentarlo mas tarde", "error");
+    if (usuario.createdIn !== "local") {
+      Swal.fire(
+        "Imposible cambiar contraseña",
+        "Tu cuenta no se creo localmente",
+        "warning"
+      );
+    } else {
+      try {
+        Swal.fire({
+          title: "Deseas cambiar la contraseña?",
+          text: "Te enviaremos un link al mail registrado.",
+          icon: "question",
+          showDenyButton: true,
+          footer: "El link expira en 30 minutos.",
+        }).then(async ({ isConfirmed }) => {
+          if (isConfirmed) {
+            await dispatch(recuperarContrasena(usuario.email));
+            Swal.fire("Revisa tu casilla de mail", "", "success");
+          }
+        });
+      } catch (error) {
+        Swal.fire("Hubo un problema", "Vuelve a intentarlo mas tarde", "error");
+      }
     }
   }
 
@@ -114,6 +121,8 @@ function PanelPerfilUsuario({ token, usuario }) {
               </div>
             )}
           </div>
+
+          
           <div className={s.divInputLabel}>
             <label
               className={`${s.labelForm} ${

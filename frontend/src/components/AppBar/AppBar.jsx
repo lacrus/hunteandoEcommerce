@@ -14,6 +14,7 @@ import MenuUser from "./MenuUser/MenuUser";
 import Swal from "sweetalert2";
 import { useEffect } from "react";
 import resizeHook from "../../hooks/resizeHook";
+import logo from "../../assets/images/logo.png";
 
 export default function AppBar({ usuario }) {
   const dispatch = useDispatch();
@@ -25,6 +26,16 @@ export default function AppBar({ usuario }) {
 
   const [mostrarMenuHeader, setMostrarMenuHeader] = useState(false);
   const [mostrarMiCuenta, setMostrarMiCuenta] = useState(false);
+
+  // const [buscador, setBuscador] = useState("");
+  // function handleBuscar() {
+  //   if (buscador.length) {
+  //     // dispatch()
+  //     console.log("buscando");
+  //   } else {
+  //     console.log("nada que buscar");
+  //   }
+  // }
 
   async function handleCerrarSesion() {
     try {
@@ -114,14 +125,27 @@ export default function AppBar({ usuario }) {
           </>
         ) : null}
 
-        <Link to="/" className={s.tituloHeader}>
-          Melinda Muriel
-        </Link>
+        {/* <Link to="/" className={s.tituloHeader}> */}
+        {/* Melinda Muriel */}
+        <img
+          className={s.imagenLogo}
+          src={logo}
+          alt="Melinda Muriel"
+          onClick={() => navigate("/")}
+        />
+        {/* </Link> */}
 
         <div className={s.contenedorDerecha}>
           <div className={s.contenedorBuscar}>
             <BiSearchAlt className={s.imagenBuscador} />
             <input
+              // value={buscador}
+              // onKeyDown={(e) => {
+              //   if (e.code === "Enter") handleBuscar();
+              // }}
+              // onChange={(e) => {
+              //   setBuscador(e.target.value);
+              // }}
               type="text"
               placeholder="Buscar"
               className={s.inputBuscarHeader}

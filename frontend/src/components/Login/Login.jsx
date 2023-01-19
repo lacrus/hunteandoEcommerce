@@ -64,18 +64,13 @@ export default function Login() {
       }
     }
   }
-
   async function onSubmit(e) {
     setLoading(true);
     try {
       const registro = await dispatch(iniciarSesion(e));
       await dispatch(obtenerCarrito(registro.payload.id, registro.token));
       if (params.id !== undefined) {
-        if (registro.success === true) {
-          navigate(`/productos/detalle/${params.id}`);
-        } else {
-          Swal.fire(registro.mensaje, "", "error");
-        }
+        navigate(`/tienda/detalles/${params.id}`);
       } else {
         if (registro.success === true) {
           navigate("/");
@@ -126,7 +121,6 @@ export default function Login() {
   useEffect(() => {
     if (params.token) {
       (async () => {
-        console.log(params.token);
         const dataUser = await dispatch(logearToken(params.token));
         await dispatch(obtenerCarrito(dataUser.payload.id, params.token));
         navigate("/");
