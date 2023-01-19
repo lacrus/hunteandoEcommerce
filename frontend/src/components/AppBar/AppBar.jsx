@@ -163,11 +163,8 @@ export default function AppBar({ usuario }) {
             <option>Portugues (Europa)</option>
           </select> */}
 
-          <div className={s.contenedorCarritoHeader}>
-            <AiOutlineShoppingCart
-              onClick={handlerCarrito}
-              className={s.carritoHeader}
-            />
+          <div onClick={handlerCarrito} className={s.contenedorCarritoHeader}>
+            <AiOutlineShoppingCart className={s.carritoHeader} />
             <div className={s.cantidadCarritoHeader}>
               {cantidadProductosCarrito}
             </div>

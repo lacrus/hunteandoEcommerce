@@ -1,4 +1,4 @@
-c.contenedorDetalle {
+.contenedorDetalle {
   margin: 0 auto;
   margin-top: var(--altura-header);
   height: calc(100vh - var(--altura-header));
@@ -178,7 +178,7 @@ c.contenedorDetalle {
     flex-direction: column;
   }
   .contenedorIzquierdo {
-    width: 100%;
+    width: 50%;
     height: fit-content;
   }
   .nombreProducto {
@@ -186,6 +186,7 @@ c.contenedorDetalle {
   }
   .nombreProductoCel {
     display: inline;
+    margin: 3% 0;
   }
   .contenedorDerecho {
     /* flex-direction: row; */

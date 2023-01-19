@@ -106,7 +106,9 @@ export default function ProductDetail({ usuario }) {
       ) : (
         <>
           <div className={`${s.nombreProducto} ${s.nombreProductoCel}`}>
-            {producto?.name}
+            {producto.name
+              ? producto?.name[0]?.toUpperCase() + producto?.name?.slice(1)
+              : producto?.name}
           </div>
           <div className={s.contenedorIzquierdo}>
             <div className={s.contenedorImagenesMiniaturaProducto}>

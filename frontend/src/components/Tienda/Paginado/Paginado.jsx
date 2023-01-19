@@ -11,12 +11,12 @@ function Paginado({ totalProductos, handleFiltros, filtros }) {
     <div className={s.contenedorPaginado}>
       <div
         id="pag"
-        title={filtros.pag - 1}
+        title={parseInt(filtros.pag) - 1}
         onClick={handleFiltros}
         className={`${s.pagina} ${s.paginaActiva}`}
         style={{ display: filtros.pag <= 1 ? "none" : "flex" }}
       >
-        <div id="pag" title={filtros.pag - 1}>{`<`}</div>
+        <div id="pag" title={parseInt(filtros.pag) - 1}>{`<`}</div>
       </div>
       {numerosPagina.length
         ? numerosPagina.map((i) => {
@@ -46,7 +46,7 @@ function Paginado({ totalProductos, handleFiltros, filtros }) {
         }}
         className={`${s.pagina} ${s.paginaActiva}`}
       >
-        <div id="pag" title={filtros.pag + 1}>{`>`}</div>
+        <div id="pag" title={parseInt(filtros.pag) + 1}>{`>`}</div>
       </div>
     </div>
   );

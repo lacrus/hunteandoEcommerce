@@ -84,11 +84,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .carritoHeader {
   position: relative;
-  cursor: pointer;
   border-radius: 8px;
   width: calc(var(--altura-header) * 0.4);
   height: calc((var(--altura-header)) * 0.4);
