@@ -29,7 +29,7 @@ export default function ProductDetail({ usuario }) {
       setTalleSeleccionado(e.target.value);
       const color = [];
       producto?.Stocks?.forEach((i) => {
-        i.size === e.target.value && color.push(i.color);
+        i.size === e.target.value && i.quantity > 0 && color.push(i.color);
       });
       setColores(color);
       setColorSeleccionado(color[0]);
