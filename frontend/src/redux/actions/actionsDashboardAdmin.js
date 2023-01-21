@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { GET_USERS } from "./actionsLogin";
-import { GET_CATEGORIES } from "./actionsShop";
+import { GET_CATEGORIES, GET_PRODUCT_DETAIL } from "./actionsShop";
 
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_DELETED_PRODUCTS = "GET_DELETED_PRODUCTS";
@@ -40,6 +40,33 @@ export const obtenerTodosLosProductos = (token) => {
     return { success: false, mensaje: error.message };
   }
 };
+
+export function obtenerDetallesProductoDashboard(idProd, token) {
+  return async function (dispatch) {
+    if (!idProd) {
+      return dispatch({
+        type: GET_PRODUCT_DETAIL,
+        payload: {},
+      });
+    } else {
+      try {
+        const res = await axios({
+          method: "GET",
+          url: "/dashboard/admin/producto/productdetails/" + idProd,
+          headers: {
+            authorization: `${token}`,
+          },
+        });
+        return dispatch({
+          type: GET_PRODUCT_DETAIL,
+          payload: res.data.product,
+        });
+      } catch (error) {
+        return new Error(error);
+      }
+    }
+  };
+}
 
 export function obtenerProductosEliminados(token) {
   return async (dispatch) => {

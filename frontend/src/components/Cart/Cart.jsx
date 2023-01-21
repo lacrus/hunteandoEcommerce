@@ -99,7 +99,7 @@ export default function Cart({ usuario }) {
       <div className={s.carroVacio}>
         <div className={s.tituloCarro}>Carro vacio</div>
         <img src={imgCarroVacio} alt="carroVacio" className={s.imgCarroVacio} />
-        <Link to="/" className={s.contenedorBoton}>
+        <Link to="/tienda" className={s.contenedorBoton}>
           <div className={s.boton}>Volver a comprar</div>
         </Link>
       </div>
@@ -110,6 +110,7 @@ export default function Cart({ usuario }) {
       <div className={s.contenedorPanel}>
         <div className={s.contenedorProductos}>
           {productos?.map((item) => {
+            console.log(item);
             return (
               <div key={item.id} className={s.tarjetaProductos}>
                 {cargandoProducto ? (
@@ -120,6 +121,9 @@ export default function Cart({ usuario }) {
                   <>
                     <div className={s.contenedorImagenTarjeta}>
                       <img
+                        onClick={() =>
+                          navigate(`/tienda/detalles/${item.Product.id}`)
+                        }
                         src={
                           item.Product.image?.length
                             ? item.Product.image[0]
@@ -134,24 +138,36 @@ export default function Cart({ usuario }) {
                       />
                     </div>
                     <div className={s.contenedorInformacionTarjeta}>
-                      <h3>Precio: ${item.Product.price}</h3>
-                      <p
-                        sx={{ fontFamily: "comspotExI", marginBottom: "2rem" }}
-                      >
-                        {item.info}
-                      </p>
-                      <Counter
-                        token={token}
-                        userId={usuario.id}
-                        cantidadInicial={item.quantity}
-                        cantidadDisponible={item.Product.stock}
-                        idProducto={item.Product.id}
-                        itemCartId={item.id}
-                        handleEliminarProducto={() =>
-                          handleEliminarProducto(item.id)
-                        }
-                        setCargandoProducto={setCargandoProducto}
-                      />
+                      <div>
+                        <h3>Precio: ${item.Product.price}</h3>
+                        <Counter
+                          token={token}
+                          userId={usuario.id}
+                          cantidadInicial={item.quantity}
+                          cantidadDisponible={item.Stock?.quantity}
+                          idStock={item.Stock?.id}
+                          idProducto={item.Product.id}
+                          itemCartId={item.id}
+                          handleEliminarProducto={() =>
+                            handleEliminarProducto(item.id)
+                          }
+                          setCargandoProducto={setCargandoProducto}
+                        />
+                      </div>
+
+                      <div className={s.informacionTarjetaDerecha}>
+                        <h3>
+                          {`${item.Product.name[0].toUpperCase()}${item.Product.name.slice(
+                            1,
+                            10
+                          )}${item.Product.name.length > 10 ? "..." : ""}
+                           `}
+                        </h3>
+                        <div>
+                          <p>Talle: {item.Stock.size}</p>
+                          <p>Color: {item.Stock.color}</p>
+                        </div>
+                      </div>
                     </div>
                     <MdDelete
                       className={s.botonEliminarTarjeta}
@@ -177,7 +193,7 @@ export default function Cart({ usuario }) {
         </div>
       </div>
       <div className={s.links}>
-        <Link to="/" className={s.contenedorBoton}>
+        <Link to="/tienda" className={s.contenedorBoton}>
           <div className={s.boton}>Volver a comprar</div>
         </Link>
 

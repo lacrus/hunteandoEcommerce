@@ -98,7 +98,11 @@ export function obtenerDetallesProducto(id) {
           });
         }
       } catch (error) {
-        throw new Error(error);
+        if (error.response.status) {
+          return error.response.status;
+        } else {
+          throw new Error(error);
+        }
       }
     }
   };

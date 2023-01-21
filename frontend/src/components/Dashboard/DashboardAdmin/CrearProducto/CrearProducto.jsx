@@ -17,6 +17,8 @@ import { crearProducto } from "../../../../redux/actions/actionsDashboardAdmin";
 import Swal from "sweetalert2";
 import { useEffect } from "react";
 import { obtenerCategorias } from "../../../../redux/actions/actionsShop";
+import Stock from "./Stock/Stock";
+import validacionStock from "../../../../utils/validacionStockCrear";
 
 let verificarDosNumerosDespuesDeLaComa = /^\d+(\.\d{0,2})?$/;
 
@@ -26,6 +28,9 @@ function CrearProducto({ handleMostrarMenuAdmin }) {
   const nombresCategorias = categorias?.map((i) => {
     return i.name;
   });
+
+  const [talles, setTalles] = useState([{ size: "", color: "", quantity: 0 }]);
+  const [errores, setErrores] = useState({});
 
   const [imagen1, setImagen1] = useState("");
   const [imagen2, setImagen2] = useState("");
@@ -40,7 +45,7 @@ function CrearProducto({ handleMostrarMenuAdmin }) {
     nombre: "",
     precio: "",
     descripcion: "",
-    cantidad: "",
+    // cantidad: "",
     categories: [],
     offSale: "",
     marked: "",
@@ -63,125 +68,131 @@ function CrearProducto({ handleMostrarMenuAdmin }) {
     descripcion: Yup.string()
       .max(150, "*La descripción debe tener máximo 150 carácteres")
       .required("*Campo requerido"),
-    cantidad: Yup.number()
-      .positive("*Minimo debes vender 1 unidad")
-      .min(1, "*Minimo debes vender 1 unidad")
-      .required("*Campo requerido"),
+    // cantidad: Yup.number()
+    //   .positive("*Minimo debes vender 1 unidad")
+    //   .min(1, "*Minimo debes vender 1 unidad")
+    //   .required("*Campo requerido"),
   });
 
   async function onSubmit(e) {
-    setLoading(true);
-    const formData = new FormData();
-
-    if (nombreImagenes[0].length) {
-      if (
-        imagen1.name.split(".").reverse()[0] !== "png" &&
-        imagen1.name.split(".").reverse()[0] !== "jpg" &&
-        imagen1.name.split(".").reverse()[0] !== "jpeg"
-      ) {
-        Swal.fire({
-          icon: "error",
-          title: "Imagen 1 no soportada",
-          text: "Debes subir imagenes .png - .jpg - .jpeg!",
-        });
-        setLoading(false);
-        return;
-      }
-    }
-    if (nombreImagenes[1].length) {
-      if (
-        imagen2.name.split(".").reverse()[0] !== "png" &&
-        imagen2.name.split(".").reverse()[0] !== "jpg" &&
-        imagen2.name.split(".").reverse()[0] !== "jpeg"
-      ) {
-        Swal.fire({
-          icon: "error",
-          title: "Imagen 2 no soportada",
-          text: "Debes subir imagenes .png - .jpg - .jpeg!",
-        });
-        setLoading(false);
-        return;
-      }
-    }
-    if (nombreImagenes[2].length) {
-      if (
-        imagen3.name.split(".").reverse()[0] !== "png" &&
-        imagen3.name.split(".").reverse()[0] !== "jpg" &&
-        imagen3.name.split(".").reverse()[0] !== "jpeg"
-      ) {
-        Swal.fire({
-          icon: "error",
-          title: "Imagen 3 no soportada",
-          text: "Debes subir imagenes .png - .jpg - .jpeg!",
-        });
-        setLoading(false);
-        return;
-      }
-    }
-    if (nombreImagenes[3].length) {
-      if (
-        imagen4.name.split(".").reverse()[0] !== "png" &&
-        imagen4.name.split(".").reverse()[0] !== "jpg" &&
-        imagen4.name.split(".").reverse()[0] !== "jpeg"
-      ) {
-        Swal.fire({
-          icon: "error",
-          title: "Imagen 4 no soportada",
-          text: "Debes subir imagenes .png - .jpg - .jpeg!",
-        });
-        setLoading(false);
-        return;
-      }
-    }
-    if (nombreImagenes[4].length) {
-      if (
-        imagen5.name.split(".").reverse()[0] !== "png" &&
-        imagen5.name.split(".").reverse()[0] !== "jpg" &&
-        imagen5.name.split(".").reverse()[0] !== "jpeg"
-      ) {
-        Swal.fire({
-          icon: "error",
-          title: "Imagen 5 no soportada",
-          text: "Debes subir imagenes .png - .jpg - .jpeg!",
-        });
-        setLoading(false);
-        return;
-      }
-    }
-
-    nombreImagenes[0].length && formData.append("image", imagen1);
-    nombreImagenes[1].length && formData.append("image", imagen2);
-    nombreImagenes[2].length && formData.append("image", imagen3);
-    nombreImagenes[3].length && formData.append("image", imagen4);
-    nombreImagenes[4].length && formData.append("image", imagen5);
-
-    formData.append("name", e.nombre);
-    formData.append("price", e.precio);
-    formData.append("description", e.descripcion);
-    formData.append("stock", e.cantidad);
-    formData.append("categoria", e.categories);
-    formData.append("offSale", e.offSale);
-    formData.append("marked", e.marked);
-
-    try {
-      const token = localStorage.getItem("token");
-      await dispatch(crearProducto(formData, token));
+    const error = validacionStock(talles);
+    setErrores(error);
+    if (Object.keys(error).length) {
       Swal.fire({
-        icon: "success",
-        title: "Producto creado correctamente!",
-        text: "Puedes verlo y/o modificarlo!",
-      }).then(() => {
-        handleMostrarMenuAdmin("productosCreados");
-        resetForm();
-      });
-    } catch (e) {
-      Swal.fire({
+        title: "Error en talles",
+        text: "Controla talles, colores y cantidades",
         icon: "error",
-        title: "Hubo un error..",
-        text: "Puedes intentar nuevamente!",
       });
+    } else {
+      setLoading(true);
+      const formData = new FormData();
+      if (nombreImagenes[0].length) {
+        if (
+          imagen1.name.split(".").reverse()[0] !== "png" &&
+          imagen1.name.split(".").reverse()[0] !== "jpg" &&
+          imagen1.name.split(".").reverse()[0] !== "jpeg"
+        ) {
+          Swal.fire({
+            icon: "error",
+            title: "Imagen 1 no soportada",
+            text: "Debes subir imagenes .png - .jpg - .jpeg!",
+          });
+          setLoading(false);
+          return;
+        }
+      }
+      if (nombreImagenes[1].length) {
+        if (
+          imagen2.name.split(".").reverse()[0] !== "png" &&
+          imagen2.name.split(".").reverse()[0] !== "jpg" &&
+          imagen2.name.split(".").reverse()[0] !== "jpeg"
+        ) {
+          Swal.fire({
+            icon: "error",
+            title: "Imagen 2 no soportada",
+            text: "Debes subir imagenes .png - .jpg - .jpeg!",
+          });
+          setLoading(false);
+          return;
+        }
+      }
+      if (nombreImagenes[2].length) {
+        if (
+          imagen3.name.split(".").reverse()[0] !== "png" &&
+          imagen3.name.split(".").reverse()[0] !== "jpg" &&
+          imagen3.name.split(".").reverse()[0] !== "jpeg"
+        ) {
+          Swal.fire({
+            icon: "error",
+            title: "Imagen 3 no soportada",
+            text: "Debes subir imagenes .png - .jpg - .jpeg!",
+          });
+          setLoading(false);
+          return;
+        }
+      }
+      if (nombreImagenes[3].length) {
+        if (
+          imagen4.name.split(".").reverse()[0] !== "png" &&
+          imagen4.name.split(".").reverse()[0] !== "jpg" &&
+          imagen4.name.split(".").reverse()[0] !== "jpeg"
+        ) {
+          Swal.fire({
+            icon: "error",
+            title: "Imagen 4 no soportada",
+            text: "Debes subir imagenes .png - .jpg - .jpeg!",
+          });
+          setLoading(false);
+          return;
+        }
+      }
+      if (nombreImagenes[4].length) {
+        if (
+          imagen5.name.split(".").reverse()[0] !== "png" &&
+          imagen5.name.split(".").reverse()[0] !== "jpg" &&
+          imagen5.name.split(".").reverse()[0] !== "jpeg"
+        ) {
+          Swal.fire({
+            icon: "error",
+            title: "Imagen 5 no soportada",
+            text: "Debes subir imagenes .png - .jpg - .jpeg!",
+          });
+          setLoading(false);
+          return;
+        }
+      }
+      nombreImagenes[0].length && formData.append("image", imagen1);
+      nombreImagenes[1].length && formData.append("image", imagen2);
+      nombreImagenes[2].length && formData.append("image", imagen3);
+      nombreImagenes[3].length && formData.append("image", imagen4);
+      nombreImagenes[4].length && formData.append("image", imagen5);
+      formData.append("name", e.nombre);
+      formData.append("price", e.precio);
+      formData.append("description", e.descripcion);
+      formData.append("stock", JSON.stringify(talles));
+      formData.append("categoria", e.categories);
+      formData.append("offSale", e.offSale);
+      formData.append("marked", e.marked);
+      try {
+        const token = localStorage.getItem("token");
+        await dispatch(crearProducto(formData, token));
+        Swal.fire({
+          icon: "success",
+          title: "Producto creado correctamente!",
+          text: "Puedes verlo y/o modificarlo!",
+        }).then(() => {
+          handleMostrarMenuAdmin("productosCreados");
+          resetForm();
+        });
+      } catch (e) {
+        Swal.fire({
+          icon: "error",
+          title: "Hubo un error..",
+          text: "Puedes intentar nuevamente!",
+        });
+      }
+      setLoading(false);
     }
-    setLoading(false);
   }
 
   const formik = useFormik({ initialValues, validationSchema, onSubmit });
@@ -262,7 +273,7 @@ function CrearProducto({ handleMostrarMenuAdmin }) {
           <p className={`${s.msjError} ${s.error}`}>{errors.descripcion}</p>
         )}
 
-        <InputFormulario
+        {/* <InputFormulario
           placeholder="Minimo 1 unidad"
           tipo="number"
           name="cantidad"
@@ -275,7 +286,8 @@ function CrearProducto({ handleMostrarMenuAdmin }) {
           estilos={s.inputFormCrear}
           id={"cantidad"}
           label={"Cantidad"}
-        />
+        /> */}
+
         <div className={s.renglonSelects}>
           <SelectInputFormulario
             name="offSale"
@@ -309,7 +321,7 @@ function CrearProducto({ handleMostrarMenuAdmin }) {
             // touched={}
           />
         </div>
-        
+
         <SelectInputFormulario
           name="categories"
           value={values.categories}
@@ -321,7 +333,7 @@ function CrearProducto({ handleMostrarMenuAdmin }) {
           estilos={s.inputFormCrear}
           // estilosLabel=
           id="categories"
-          label="Categorias"
+          label="Categoria"
           options={nombresCategorias.length ? nombresCategorias : []}
           // touched={}
         />
@@ -340,6 +352,8 @@ function CrearProducto({ handleMostrarMenuAdmin }) {
           setImagen5={setImagen5}
           setNombreImagenes={setNombreImagenes}
         />
+
+        <Stock talles={talles} setTalles={setTalles} errores={errores} />
 
         {!loading ? (
           <button className={s.botonCrear} type="submit">

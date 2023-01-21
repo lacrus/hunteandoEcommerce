@@ -39,6 +39,7 @@ function CheckOut({ usuario }) {
   async function handleAvanzarCompra(e) {
     if (direccionSeleccionada) {
       try {
+        setLoading(true);
         Swal.fire({
           title: "Un momento por favor!",
           text: "En instantes seras dirigido a MercadoPago para continuar",
@@ -46,7 +47,6 @@ function CheckOut({ usuario }) {
           timer: 10000,
           timerProgressBar: true,
         });
-        setLoading(true);
         carrito.shippingAddress = direccionSeleccionada;
         const respuestaPago = await dispatch(
           compraConML(usuario.id, carrito, token)
@@ -132,7 +132,7 @@ function CheckOut({ usuario }) {
                     Ciudad
                   </div>
                   <div id={i.id}>
-                    {i.city.slice(0, 10) + (i.city.length > 10 ? "..." : null)}
+                    {i.city.slice(0, 10) + (i.city.length > 10 ? "..." : "")}
                   </div>
                 </div>
 

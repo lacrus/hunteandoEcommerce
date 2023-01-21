@@ -31,43 +31,44 @@ export default function ComponenteSwiper({ usuario }) {
   const navigationNextRef = React.useRef(null);
 
   async function handleAgregarAlCarro(id) {
-    const producto = {
-      id,
-      quantity: 1,
-    };
-    try {
-      if (usuario.username) {
-        setAgregandoProducto(true);
-        const token = localStorage.getItem("token");
-        await dispatch(agregarProductoCarrito(usuario.id, producto, token));
-      } else {
-        Swal.fire({
-          title: "Inicia sesión",
-          text: "O crea una cuenta para poder comprar",
-          icon: "warning",
-          confirmButtonText: "Iniciar sesión",
-          showCancelButton: true,
-          cancelButtonText: "Volver",
-          cancelButtonColor: "red",
-          showDenyButton: true,
-          denyButtonText: "Registrarse",
-          denyButtonColor: "grey",
-        }).then(({ isConfirmed, isDenied }) => {
-          if (isConfirmed) {
-            navigate("/login");
-          } else if (isDenied) {
-            navigate("/registrarse");
-          }
-        });
-      }
-    } catch (e) {
-      Swal.fire(
-        "Error al cargar el producto!",
-        "Intentalo nuevamente mas tarde",
-        "error"
-      );
-    }
-    setAgregandoProducto(false);
+    navigate(`/tienda/detalles/${id}`);
+    // const producto = {
+    //   id,
+    //   quantity: 1,
+    // };
+    // try {
+    //   if (usuario.username) {
+    //     setAgregandoProducto(true);
+    //     const token = localStorage.getItem("token");
+    //     await dispatch(agregarProductoCarrito(usuario.id, producto, token));
+    //   } else {
+    //     Swal.fire({
+    //       title: "Inicia sesión",
+    //       text: "O crea una cuenta para poder comprar",
+    //       icon: "warning",
+    //       confirmButtonText: "Iniciar sesión",
+    //       showCancelButton: true,
+    //       cancelButtonText: "Volver",
+    //       cancelButtonColor: "red",
+    //       showDenyButton: true,
+    //       denyButtonText: "Registrarse",
+    //       denyButtonColor: "grey",
+    //     }).then(({ isConfirmed, isDenied }) => {
+    //       if (isConfirmed) {
+    //         navigate("/login");
+    //       } else if (isDenied) {
+    //         navigate("/registrarse");
+    //       }
+    //     });
+    //   }
+    // } catch (e) {
+    //   Swal.fire(
+    //     "Error al cargar el producto!",
+    //     "Intentalo nuevamente mas tarde",
+    //     "error"
+    //   );
+    // }
+    // setAgregandoProducto(false);
   }
 
   useEffect(() => {
@@ -133,7 +134,7 @@ export default function ComponenteSwiper({ usuario }) {
                       className={s.agregarAlCarro}
                       onClick={() => handleAgregarAlCarro(i.id)}
                     >
-                      Agregar al carro
+                      Ir al producto
                     </div>
                   )}
                 </div>

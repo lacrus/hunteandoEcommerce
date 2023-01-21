@@ -14,7 +14,6 @@ export default function SelectInputFormulario({
   id,
   label,
   options,
-  touched,
 }) {
   return (
     <div className={`${s.contenedor} ${estilos && estilos}`}>

@@ -119,15 +119,32 @@
   width: 100%;
   height: 100%;
   align-self: center;
+  display: flex;
 }
 
 .contenedorInformacionTarjeta h3 {
-  margin-top: 2%;
+  margin: 3% 0;
   color: #f99716;
 }
 .contenedorInformacionTarjeta p {
   font-family: comspotExI;
-  margin-bottom: 5%;
+  /* margin-bottom: 5%; */
+}
+
+.informacionTarjetaDerecha {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.informacionTarjetaDerecha h3 {
+  color: black;
+  font-family: comspotM;
+}
+
+.informacionTarjetaDerecha p {
+  font-family: comspotR;
 }
 
 .botonEliminarTarjeta {
@@ -213,7 +230,8 @@
     align-items: center;
   }
   .contenedorProductos {
-    min-width: 300px;
+    min-width: fit-content;
+    width: 90%;
   }
   .contenedorTotales {
     position: static;
@@ -222,5 +240,17 @@
   }
   .links {
     flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 450px) {
+  .contenedorInformacionTarjeta {
+    flex-direction: column-reverse;
+  }
+  .informacionTarjetaDerecha {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-evenly;
+    /* align-items: center; */
   }
 }

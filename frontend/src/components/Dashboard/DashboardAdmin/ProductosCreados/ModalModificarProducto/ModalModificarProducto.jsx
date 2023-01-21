@@ -11,10 +11,13 @@ import { modificarProducto } from "../../../../../redux/actions/actionsDashboard
 import SelectInputFormulario from "../../../../../ui/SelectInputFormulario/SelectInputFormulario";
 import { useEffect } from "react";
 import { obtenerCategorias } from "../../../../../redux/actions/actionsShop";
+import validacionStock from "../../../../../utils/validacionStockModificar";
+import Stock from "./StockPrevio/StockPrevio";
 
 let verificarDosNumerosDespuesDeLaComa = /^\d+(\.\d{0,2})?$/;
 
 export default function ModalModificarProducto({
+  setProducto,
   producto,
   setEditarProducto,
 }) {
@@ -23,47 +26,51 @@ export default function ModalModificarProducto({
   const nombresCategorias = categorias?.map((i) => {
     return i.name;
   });
+  const detallesProducto = useSelector((e) => e.tienda.detallesProducto);
+
+  const [talles, setTalles] = useState(detallesProducto.Stocks);
+  const [errores, setErrores] = useState({});
 
   const [imagenes, setImagenes] = useState([
-    producto?.image[0] || {},
-    producto?.image[1] || {},
-    producto?.image[2] || {},
-    producto?.image[3] || {},
-    producto?.image[4] || {},
+    detallesProducto?.image ? detallesProducto?.image[0] : {},
+    detallesProducto?.image ? detallesProducto?.image[1] : {},
+    detallesProducto?.image ? detallesProducto?.image[2] : {},
+    detallesProducto?.image ? detallesProducto?.image[3] : {},
+    detallesProducto?.image ? detallesProducto?.image[4] : {},
   ]);
 
   const imagenesIniciales = [
-    producto.image[0] || false,
-    producto.image[1] || false,
-    producto.image[2] || false,
-    producto.image[3] || false,
-    producto.image[4] || false,
+    detallesProducto?.image ? detallesProducto?.image[0] : false,
+    detallesProducto?.image ? detallesProducto?.image[1] : false,
+    detallesProducto?.image ? detallesProducto?.image[2] : false,
+    detallesProducto?.image ? detallesProducto?.image[3] : false,
+    detallesProducto?.image ? detallesProducto?.image[4] : false,
   ];
 
   const [imagenesABorrar, setImagenesABorrar] = useState([]);
 
   const [nombreImagenes, setNombreImagenes] = useState([
-    producto.image[0] || null,
-    producto.image[1] || null,
-    producto.image[2] || null,
-    producto.image[3] || null,
-    producto.image[4] || null,
+    detallesProducto?.image ? detallesProducto?.image[0] : null,
+    detallesProducto?.image ? detallesProducto?.image[1] : null,
+    detallesProducto?.image ? detallesProducto?.image[2] : null,
+    detallesProducto?.image ? detallesProducto?.image[3] : null,
+    detallesProducto?.image ? detallesProducto?.image[4] : null,
   ]);
 
   const [cambioImagen, setCambioImagen] = useState(Array(5).fill(false));
 
   const [modificandoProducto, setModificandoProducto] = useState(false);
-  
+
   const initialValues = {
-    nombre: producto.name,
-    precio: producto.price,
-    descripcion: producto.description,
-    cantidad: producto.stock,
-    categories: producto.Categories?.length
-      ? producto?.Categories[0]?.name
+    nombre: detallesProducto?.name,
+    precio: detallesProducto?.price,
+    descripcion: detallesProducto?.description,
+    // cantidad: detallesProducto?.stock,
+    categories: detallesProducto?.Categories?.length
+      ? detallesProducto?.Categories[0]?.name
       : "",
-    marked: producto.marked ? "Verdadero" : "Falso",
-    offSale: producto.offSale ? "Verdadero" : "Falso",
+    marked: detallesProducto?.marked ? "Verdadero" : "Falso",
+    offSale: detallesProducto?.offSale ? "Verdadero" : "Falso",
   };
 
   const validationSchema = Yup.object().shape({
@@ -84,47 +91,59 @@ export default function ModalModificarProducto({
       150,
       "*La descripción debe tener máximo 150 carácteres"
     ),
-    cantidad: Yup.number().required("*Campo requerido"),
+    // cantidad: Yup.number().required("*Campo requerido"),
   });
 
   async function onSubmit(e) {
-    setModificandoProducto(true);
-    const formData = new FormData();
-
-    imagenes.forEach((i) => {
-      if (i instanceof Blob) {
-        formData.append("image", i);
-      }
-    });
-
-    formData.append("stock", e.cantidad);
-    formData.append("description", e.descripcion);
-    formData.append("name", e.nombre);
-    formData.append("price", e.precio);
-    formData.append("categoria", e.categories);
-    formData.append("marked", e.marked);
-    formData.append("offSale", e.offSale);
-
-    imagenesABorrar.length &&
-      formData.append("imagenesABorrar", imagenesABorrar);
-    try {
-      const token = localStorage.getItem("token");
-      await dispatch(modificarProducto(producto.id, formData, token));
+    const error = validacionStock(talles);
+    setErrores(error);
+    if (Object.keys(error).length) {
       Swal.fire({
-        icon: "success",
-        title: "Producto modificado correctamente!",
-      }).then((i) => {
-        resetForm();
-        setEditarProducto(false);
-      });
-    } catch (e) {
-      Swal.fire({
+        title: "Error en talles",
+        text: "Controla talles, colores y cantidades",
         icon: "error",
-        title: "Hubo un error..",
-        text: "Puedes intentar nuevamente!",
       });
+    } else {
+      setModificandoProducto(true);
+      const formData = new FormData();
+
+      imagenes.forEach((i) => {
+        if (i instanceof Blob) {
+          formData.append("image", i);
+        }
+      });
+
+      // formData.append("stock", e.cantidad);
+      formData.append("description", e.descripcion);
+      formData.append("name", e.nombre);
+      formData.append("price", e.precio);
+      formData.append("categoria", e.categories);
+      formData.append("marked", e.marked);
+      formData.append("offSale", e.offSale);
+      formData.append("stock", JSON.stringify(talles));
+
+      imagenesABorrar.length &&
+        formData.append("imagenesABorrar", imagenesABorrar);
+      try {
+        const token = localStorage.getItem("token");
+        await dispatch(modificarProducto(producto.id, formData, token));
+        Swal.fire({
+          icon: "success",
+          title: "Producto modificado correctamente!",
+        }).then((i) => {
+          resetForm();
+          setEditarProducto(false);
+          setProducto({});
+        });
+      } catch (e) {
+        Swal.fire({
+          icon: "error",
+          title: "Hubo un error..",
+          text: "Puedes intentar nuevamente!",
+        });
+      }
+      setModificandoProducto(false);
     }
-    setModificandoProducto(false);
   }
 
   const formik = useFormik({ initialValues, validationSchema, onSubmit });
@@ -151,6 +170,7 @@ export default function ModalModificarProducto({
         if (isConfirmed) {
           resetForm();
           setEditarProducto(false);
+          setProducto({});
         }
       });
     }
@@ -225,7 +245,7 @@ export default function ModalModificarProducto({
           {touched.descripcion && errors.descripcion && (
             <p className={`${s.msjError} ${s.error}`}>{errors.descripcion}</p>
           )}
-          <InputFormulario
+          {/* <InputFormulario
             placeholder="Inserta una cantidad"
             tipo="number"
             name="cantidad"
@@ -238,7 +258,7 @@ export default function ModalModificarProducto({
             estilos={s.inputFormModificar}
             id={"cantidad"}
             label={"Cantidad"}
-          />
+          /> */}
 
           <div className={s.renglonSelects}>
             <SelectInputFormulario
@@ -299,6 +319,8 @@ export default function ModalModificarProducto({
             cambioImagen={cambioImagen}
             setCambioImagen={setCambioImagen}
           />
+
+          <Stock talles={talles} setTalles={setTalles} errores={errores} />
 
           {!modificandoProducto ? (
             <button className={s.botonModificar} type="submit">

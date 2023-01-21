@@ -23,7 +23,6 @@
 }
 
 .imagenProducto {
-  
   box-shadow: 0 0 5px 1px rgb(165, 165, 165);
   border-radius: 5px;
   width: 80%;
@@ -173,6 +172,12 @@
   transform: translateY(2px);
 }
 
+.botonSinStock {
+  font-family: comspotM;
+  font-size: 2rem;
+text-align: center;
+}
+
 @media (max-width: 800px) {
   .contenedorDetalle {
     flex-direction: column;
@@ -197,12 +202,12 @@
     padding: 0;
   }
   /* .detalles { */
-    /* height: 100%; */
-    /* width: fit-content;
+  /* height: 100%; */
+  /* width: fit-content;
     justify-content: space-between; */
   /* } */
   /* .botones { */
-    /* width: fit-content; */
+  /* width: fit-content; */
   /* } */
   .boton {
     font-size: 1rem;
