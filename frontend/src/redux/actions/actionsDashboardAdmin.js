@@ -324,7 +324,7 @@ export function crearCategoria(categoria, token) {
       });
       return dispatch({ type: GET_CATEGORIES, payload: res.data.categories });
     } catch (error) {
-      return new Error(error);
+      throw new Error(error);
     }
   };
 }
@@ -342,7 +342,7 @@ export function modificarCategoria(categoria, token) {
       });
       return dispatch({ type: GET_CATEGORIES, payload: res.data.categories });
     } catch (error) {
-      return new Error(error);
+      throw new Error(error);
     }
   };
 }

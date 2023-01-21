@@ -81,6 +81,27 @@
   color: #f99716;
 }
 
+.contenedorTalleColor {
+  display: flex;
+  justify-content: center;
+}
+
+.talleColor {
+  display: flex;
+  flex-direction: column;
+}
+
+.talleColor:last-of-type {
+margin-left: 5%;
+}
+
+.selectTalleColor{
+  width: 100%;
+  min-width: 80px;
+  border-radius: 5px;
+  padding: 5% 0;
+}
+
 .contenedorCantidadStock {
   width: 100%;
   display: flex;
@@ -88,6 +109,7 @@
 
 .contenedorCantidad {
   width: 40%;
+  min-width: fit-content;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -175,7 +197,7 @@
 .botonSinStock {
   font-family: comspotM;
   font-size: 2rem;
-text-align: center;
+  text-align: center;
 }
 
 @media (max-width: 800px) {

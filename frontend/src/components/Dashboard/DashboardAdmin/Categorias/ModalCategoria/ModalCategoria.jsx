@@ -11,7 +11,11 @@ import {
 } from "../../../../../redux/actions/actionsDashboardAdmin";
 import { useDispatch } from "react-redux";
 
-function ModalCategoria({ categoria, setCategoriaSeleccionada, setMostrarModal }) {
+function ModalCategoria({
+  categoria,
+  setCategoriaSeleccionada,
+  setMostrarModal,
+}) {
   const dispatch = useDispatch();
   const [cargando, setCargando] = useState(false);
 
@@ -55,22 +59,32 @@ function ModalCategoria({ categoria, setCategoriaSeleccionada, setMostrarModal }
         showDenyButton: true,
       }).then(async ({ isConfirmed }) => {
         if (isConfirmed) {
-          await dispatch(
-            categoria
-              ? modificarCategoria({ name: e.name, id: categoria.id }, token)
-              : crearCategoria(e, token)
-          );
-          Swal.fire({
-            icon: "success",
-            title: `Categoria ${
-              categoria ? "modificada" : "creada"
-            } correctamente!`,
-          }).then((i) => {
-            setMostrarModal(false);
-            setCategoriaSeleccionada(false);
-            resetForm();
-          });
+          try {
+            await dispatch(
+              categoria
+                ? modificarCategoria({ name: e.name, id: categoria.id }, token)
+                : crearCategoria(e, token)
+            );
+            Swal.fire({
+              icon: "success",
+              title: `Categoria ${
+                categoria ? "modificada" : "creada"
+              } correctamente!`,
+            }).then((i) => {
+              setMostrarModal(false);
+              setCategoriaSeleccionada(false);
+              resetForm();
+            });
+          } catch (error) {
+            console.log("EL ERROR", error);
+            Swal.fire({
+              icon: "error",
+              title: `Hubo un problema.`,
+              text: "Revisa que la categoria no este repetida",
+            });
+          }
         }
+        setCargando(false);
       });
     } catch (e) {
       Swal.fire({
@@ -78,8 +92,9 @@ function ModalCategoria({ categoria, setCategoriaSeleccionada, setMostrarModal }
         text: "Puedes intentar nuevamente!",
         icon: "error",
       });
+      setCargando(false);
+    } finally {
     }
-    setCargando(false);
   }
 
   const formik = useFormik({ initialValues, validationSchema, onSubmit });
@@ -131,7 +146,6 @@ function ModalCategoria({ categoria, setCategoriaSeleccionada, setMostrarModal }
             <ClipLoader />
           )}
         </form>
-
         <button
           id="botonCerrar"
           className={`${s.boton} ${s.botonCancelar}`}

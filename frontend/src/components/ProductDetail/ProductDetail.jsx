@@ -218,13 +218,14 @@ export default function ProductDetail({ usuario }) {
                 ).toLocaleString("es")}
               </div>
               <div className={s.contenedorTalleColor}>
-                <div>
+                <div className={s.talleColor}>
                   <label htmlFor="size">Talle</label>
                   <select
                     name="size"
                     id="size"
                     onChange={handleSelect}
                     value={talleSeleccionado}
+                    className={s.selectTalleColor}
                   >
                     {talles.length ? (
                       talles?.map((i, idx) => {
@@ -241,13 +242,14 @@ export default function ProductDetail({ usuario }) {
                     )}
                   </select>
                 </div>
-                <div>
+                <div className={s.talleColor}>
                   <label htmlFor="color">Color</label>
                   <select
                     name="color"
                     id="color"
                     onChange={handleSelect}
                     value={colorSeleccionado}
+                    className={s.selectTalleColor}
                   >
                     {colores.length ? (
                       colores?.map((i, idx) => {
