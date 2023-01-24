@@ -1,0 +1,24 @@
+.SobreMiContenedor {
+  width: 100%;
+  min-height: calc(100vh - var(--altura-header) - 6vh);
+  margin: 0 auto;
+  margin-top: var(--altura-header);
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3vh 0;
+}
+
+.tituloSobreMi {
+  font-family: arsenale;
+  font-size: 6rem;
+}
+
+p {
+  text-align: justify;
+}
+
+p b {
+  font-weight: bold;
+}

@@ -7,14 +7,14 @@ export default function BotonWapp() {
   const [wappActivo, setWappActivo] = useState(false);
 
   function handlerWapp() {
-    window.open("http://wa.me/+549ELNUMERODELACHICA", "_blank");
+    window.open("http://wa.me/+5493624272527", "_blank");
   }
 
   const tamanoPantalla = resizeHook();
 
   return (
     <div className={s.contenedorWapp} onClick={handlerWapp}>
-      <p
+      {/* <p
         className={`${s.textoWapp} ${
           wappActivo && tamanoPantalla.width > 800
             ? s.textoWappActivo
@@ -22,7 +22,7 @@ export default function BotonWapp() {
         }`}
       >
         Escribinos!
-      </p>
+      </p> */}
       <AiOutlineWhatsApp
         onMouseEnter={() => setWappActivo(true)}
         onMouseLeave={() => setWappActivo(false)}

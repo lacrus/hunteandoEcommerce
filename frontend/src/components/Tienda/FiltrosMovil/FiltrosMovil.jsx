@@ -84,24 +84,43 @@ function FiltrosMovil({
           <div className={s.tituloTodosFiltros}>Filtrar por</div>
         </div>
 
-        {/* FILTRO STOCK */}
-        <div className={`${s.enStockMobil}`}>
-          <div style={{ marginRight: "20%", whiteSpace: "nowrap  " }}>
-            En Stock
+        <div className={`${s.renglonStockOferta}`}>
+          {/* FILTRO STOCK */}
+          <div className={`${s.enStockMobil}`}>
+            <div style={{ marginRight: "20%", whiteSpace: "nowrap  " }}>
+              En Stock
+            </div>
+            <div
+              onClick={() => {
+                setFiltros({ ...filtros, stock: !filtros.stock });
+              }}
+              className={`${s.contenedorBotonMobil} ${
+                filtros.stock ? s.contenedorBotonOnMobil : false
+              }`}
+            >
+              <div className={s.bolitaBotonMobil} />
+            </div>
           </div>
-          <div
-            onClick={() => {
-              setFiltros({ ...filtros, stock: !filtros.stock });
-            }}
-            className={`${s.contenedorBotonMobil} ${
-              filtros.stock ? s.contenedorBotonOnMobil : false
-            }`}
-          >
-            <div className={s.bolitaBotonMobil} />
-          </div>
-        </div>
-        {/* FIN FILTRO STOCK */}
+          {/* FIN FILTRO STOCK */}
 
+          {/* FILTRO OFERTA */}
+          <div className={`${s.enStockMobil}`}>
+            <div style={{ marginRight: "20%", whiteSpace: "nowrap  " }}>
+              En Oferta
+            </div>
+            <div
+              onClick={() => {
+                setFiltros({ ...filtros, offSale: !filtros.offSale });
+              }}
+              className={`${s.contenedorBotonMobil} ${
+                filtros.offSale ? s.contenedorBotonOnMobil : false
+              }`}
+            >
+              <div className={s.bolitaBotonMobil} />
+            </div>
+          </div>
+          {/* FIN FILTRO OFERTA */}
+        </div>
         {/* FILTRO ORDEN */}
         <div className={`${s.contenedorSelectMobil}`}>
           <div

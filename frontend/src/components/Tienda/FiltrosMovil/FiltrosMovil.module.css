@@ -64,6 +64,12 @@
   align-self: center;
 }
 
+.renglonStockOferta {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
 /* EN STOCK  */
 .enStockMobil {
   /* margin-top: 45%; */
@@ -143,7 +149,7 @@
 }
 
 .listadoFiltroMobil {
-  z-index: 1;
+  z-index: 10;
   display: none;
   /* position: absolute; */
   /* top: 110%; */
@@ -177,28 +183,30 @@
 
 .contenedorItemCategorias {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
-  height: 50px;
+  /* height: 50px; */
   cursor: pointer;
+  width: 70%;
+  min-width: fit-content;
 }
 
 .itemCategorias {
   margin-left: 2%;
   font-family: comspotM;
-  font-size: 1rem;
+  /* font-size: 1rem; */
 }
 
 .checkboxItemCategorias {
   border-radius: 50%;
   border: 2px solid black;
-  height: 15px;
-  width: 15px;
+  height: 10px;
+  width: 10px;
   margin-right: 2%;
 }
 
 .checkboxItemCategoriasActivo {
-  background-color: green;
+  background-color: #f99716;
 }
 
 @media (max-width: 500px) {
@@ -207,5 +215,15 @@
   }
   .totalProductos {
     margin: 4% 0 12%;
+  }
+}
+
+@media (max-width: 250px) {
+  .renglonStockOferta {
+    display: flex;
+    flex-direction: column;
+  }
+  .enStockMobil{
+    margin-bottom: 5%;
   }
 }

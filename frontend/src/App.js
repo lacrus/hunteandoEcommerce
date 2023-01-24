@@ -1,24 +1,26 @@
 import React, { useEffect } from "react";
+import "./App.css";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import "./App.css";
+
+//HOOKS
+import NavigateToTop from "./hooks/NavigateToTop/NavigateToTop";
+
+// REDUX
+import { logearToken, cerrarSesion } from "./redux/actions/actionsLogin";
+import { obtenerCarrito } from "./redux/actions/actionsCart";
 
 // COMPONENTES
 import AppBar from "./components/AppBar/AppBar";
 import HomePage from "./components/Home/Home";
-
-import NavigateToTop from "./hooks/NavigateToTop/NavigateToTop";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Cart from "./components/Cart/Cart.jsx";
-// import { Products } from "./containers/Products";
 import ProductDetail from "./components/ProductDetail/ProductDetail";
 import Footer from "./components/Footer/Footer";
 import BotonWapp from "./components/BotonWapp/BotonWapp";
 import DashboardUsuario from "./components/Dashboard/DashboardUsuario/DashboardUsuario";
 import DashboardAdmin from "./components/Dashboard/DashboardAdmin/DashboardAdmin";
-import { logearToken, cerrarSesion } from "./redux/actions/actionsLogin";
-import { obtenerCarrito } from "./redux/actions/actionsCart";
 import CheckOut from "./components/CheckOut/CheckOut";
 import CheckoutConfirmation from "./components/CheckOut/CheckoutConfirmation/CheckoutConfirmation";
 import CheckoutCancel from "./components/CheckOut/CheckoutCancel/CheckoutCancel";
@@ -26,6 +28,7 @@ import CheckoutPending from "./components/CheckOut/CheckoutPending/CheckoutPendi
 import Tienda from "./components/Tienda/Tienda";
 import CambioContrasena from "./components/CambioContrasena/CambioContrasena";
 import Contactame from "./components/Contactame/Contactame";
+import SobreMi from "./components/SobreMi/SobreMi";
 
 function App() {
   const usuario = useSelector((e) => e.general.usuario);
@@ -54,6 +57,9 @@ function App() {
       <AppBar usuario={usuario} />
       <Routes>
         <Route path="/" element={<HomePage usuario={usuario} />} />
+
+        <Route path="/Sobremi" element={<SobreMi />} />
+
         <Route
           path="/login"
           element={usuario.username ? <Navigate to="/" /> : <Login />}
@@ -92,7 +98,6 @@ function App() {
             )
           }
         />
-        {/* <Route path="/productos" element={<Products />} /> */}
         <Route
           path="/dashboard/admin"
           element={

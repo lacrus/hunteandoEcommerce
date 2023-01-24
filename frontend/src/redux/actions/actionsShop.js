@@ -4,6 +4,7 @@ export const GET_RANDOM_PRODUCTS_TIENDA = "GET_RANDOM_PRODUCTS_TIENDA";
 export const GET_PRODUCTS_TIENDA = "GET_PRODUCTS_TIENDA";
 export const GET_PRODUCT_DETAIL = "GET_PRODUCT_DETAIL";
 export const GET_CATEGORIES = "GET_CATEGORIES";
+export const GET_RELATIONATED = "GET_RELATIONATED";
 
 export function compraConML(idUsuario, carritoCompra, token) {
   return async function (dispatch) {
@@ -47,6 +48,30 @@ export function obtenerProductosRandomTienda(reset) {
   };
 }
 
+export function obtenerProductosRelacionados(idCategoria, idProducto) {
+  return async function (dispatch) {
+    if (!idCategoria) {
+      return dispatch({
+        type: GET_RELATIONATED,
+        payload: [],
+      });
+    } else {
+      try {
+        let res = await axios({
+          method: "GET",
+          url: `/shop/relationatedcategories/${idCategoria}/${idProducto}`,
+        });
+        return dispatch({
+          type: GET_RELATIONATED,
+          payload: res.data.products,
+        });
+      } catch (error) {
+        return new Error(error);
+      }
+    }
+  };
+}
+
 export function obtenerProductosTienda(porpag, filtros) {
   try {
     return async function (dispatch) {
@@ -65,7 +90,7 @@ export function obtenerProductosTienda(porpag, filtros) {
             filtros?.ordenado || "name"
           }&orden=${filtros?.orden || "ASC"}&categorias=${
             filtros?.categorias?.length ? filtros.categorias : "all"
-          }`,
+          }&offSale=${filtros?.offSale || false}`,
         });
         return dispatch({
           type: GET_PRODUCTS_TIENDA,

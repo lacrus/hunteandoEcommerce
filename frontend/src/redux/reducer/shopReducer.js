@@ -3,6 +3,7 @@ import {
   GET_PRODUCTS_TIENDA,
   GET_PRODUCT_DETAIL,
   GET_CATEGORIES,
+  GET_RELATIONATED,
 } from "../actions/actionsShop";
 
 const initialState = {
@@ -11,6 +12,7 @@ const initialState = {
   totalProductos: 0,
   detallesProducto: {},
   categorias: [],
+  productosRelacionados: [],
 };
 
 const shopReducer = (state = initialState, action) => {
@@ -35,6 +37,11 @@ const shopReducer = (state = initialState, action) => {
       return {
         ...state,
         categorias: action.payload,
+      };
+    case GET_RELATIONATED:
+      return {
+        ...state,
+        productosRelacionados: action.payload,
       };
     default:
       return { ...state };

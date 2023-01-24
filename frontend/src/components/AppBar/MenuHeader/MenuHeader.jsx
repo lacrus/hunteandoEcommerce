@@ -47,49 +47,49 @@ export default function MenuHeader({
         <Link
           to="/"
           onClick={() => setMostrarMenu(false)}
-          className={s.itemsMenu}
+          className={`${s.itemsMenu} ${s.itemsMenuGral}`}
         >
           Inicio
         </Link>
         <Link
           to="/tienda"
           onClick={() => setMostrarMenu(false)}
-          className={s.itemsMenu}
+          className={`${s.itemsMenu} ${s.itemsMenuGral}`}
         >
           Tienda
         </Link>
         <Link
           to="/carrito"
           onClick={() => setMostrarMenu(false)}
-          className={s.itemsMenu}
+          className={`${s.itemsMenu} ${s.itemsMenuGral}`}
         >
           Terminar Compra
         </Link>
         <Link
           to="/sobreMi"
           onClick={() => setMostrarMenu(false)}
-          className={s.itemsMenu}
+          className={`${s.itemsMenu} ${s.itemsMenuGral}`}
         >
           Sobre mi obra
         </Link>
-        <Link
+        {/* <Link
           to="/FAQ"
           onClick={() => setMostrarMenu(false)}
-          className={s.itemsMenu}
+          className={`${s.itemsMenu} ${s.itemsMenuGral}`}
         >
           FAQ
-        </Link>
+        </Link> */}
         <Link
           to="/politicas"
           onClick={() => setMostrarMenu(false)}
-          className={s.itemsMenu}
+          className={`${s.itemsMenu} ${s.itemsMenuGral}`}
         >
           Política de Privacidad
         </Link>
         <Link
-          to="/contacto"
+          to="/contactame"
           onClick={() => setMostrarMenu(false)}
-          className={s.itemsMenu}
+          className={`${s.itemsMenu} ${s.itemsMenuGral}`}
         >
           Contáctame
         </Link>

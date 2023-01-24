@@ -1,10 +1,14 @@
 import React from "react";
 import s from "./Slider.module.css";
 
-import img1 from "../../../assets/images/banner1.png";
-import img2 from "../../../assets/images/banner2.png";
-import img3 from "../../../assets/images/banner3.png";
-import img4 from "../../../assets/images/banner4.png";
+// import img1 from "../../../assets/images/banner1.png";
+// import img2 from "../../../assets/images/banner2.png";
+// import img3 from "../../../assets/images/banner3.png";
+// import img4 from "../../../assets/images/banner4.png";
+import img1 from "../../../assets/images/banner1.jpg";
+import img2 from "../../../assets/images/banner2.jpg";
+import img3 from "../../../assets/images/banner3.jpg";
+import img4 from "../../../assets/images/banner4.jpg";
 import imgNotFound from "../../../assets/images/imgNotFound.jpg";
 
 export default function Slider() {

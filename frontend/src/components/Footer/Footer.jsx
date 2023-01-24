@@ -55,7 +55,7 @@ export default function Footer() {
 
         <div className={s.columnaContenedorDos}>
           <div className={s.tituloContenedorDos}>FAQ</div>
-          <Link className={s.textoContenedorDos}>Preguntas frecuentes</Link>
+          {/* <Link className={s.textoContenedorDos}>Preguntas frecuentes</Link> */}
           <Link className={s.textoContenedorDos}>Políticas de Privacidad</Link>
           <Link to="/contactame" className={s.textoContenedorDos}>
             Contáctame

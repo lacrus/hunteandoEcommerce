@@ -83,10 +83,14 @@
   color: #4a4b4d;
 }
 
+.itemsMenuGral {
+  margin: 7% 0;
+}
+
 .itemsUsuarioMenu {
   border-top: 1px solid #d8d8d8;
   position: absolute;
-  bottom: 10%;
+  bottom: 5%;
   width: 70%;
 }
 

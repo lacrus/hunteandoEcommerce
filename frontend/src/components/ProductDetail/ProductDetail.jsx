@@ -4,10 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import imgNotFound from "../../assets/images/imgNotFound.jpg";
 import { useEffect } from "react";
-import { obtenerDetallesProducto } from "../../redux/actions/actionsShop";
+import {
+  obtenerDetallesProducto,
+  obtenerProductosRelacionados,
+} from "../../redux/actions/actionsShop";
 import Swal from "sweetalert2";
 import { agregarProductoCarrito } from "../../redux/actions/actionsCart";
 import Loading from "../Loading/Loading";
+import Swiper from "../Swiper/Swiper";
 
 export default function ProductDetail({ usuario }) {
   const navigate = useNavigate();
@@ -19,10 +23,13 @@ export default function ProductDetail({ usuario }) {
   const [colores, setColores] = useState([]);
   const [talleSeleccionado, setTalleSeleccionado] = useState("");
   const [colorSeleccionado, setColorSeleccionado] = useState("");
-  const [pedido, setPedido] = useState({ cantidad: 1 });
   const [loading, setLoading] = useState(false);
   const [imagenSeleccionada, setImagenSeleccionada] = useState(null);
   const [cantidadSeleccionada, setCantidadSeleccionada] = useState(1);
+
+  const productosRelacionados = useSelector(
+    (e) => e.tienda.productosRelacionados
+  );
 
   function handleSelect(e) {
     if (e.target.id === "size") {
@@ -116,6 +123,12 @@ export default function ProductDetail({ usuario }) {
         setLoading(true);
         try {
           const respuesta = await dispatch(obtenerDetallesProducto(id));
+          dispatch(
+            obtenerProductosRelacionados(
+              respuesta.payload?.Categories[0]?.id,
+              respuesta.payload?.id
+            )
+          );
           setImagenSeleccionada(respuesta.payload?.image[0]);
           if (respuesta === 500) {
             Swal.fire({
@@ -161,15 +174,22 @@ export default function ProductDetail({ usuario }) {
   useEffect(() => {
     return () => {
       dispatch(obtenerDetallesProducto());
+      dispatch(obtenerProductosRelacionados());
     };
   }, []);
 
   return (
     <div className={s.contenedorDetalle}>
+      <div className={s.renglonSuperior}>
+        <div
+          className={s.volverTienda}
+          onClick={() => navigate("/tienda")}
+        >{`<- Volver a Tienda`}</div>
+      </div>
       {loading ? (
         <Loading />
       ) : (
-        <>
+        <div className={s.contenedorIntermedioDetalle}>
           <div className={`${s.nombreProducto} ${s.nombreProductoCel}`}>
             {producto.name
               ? producto?.name[0]?.toUpperCase() + producto?.name?.slice(1)
@@ -321,8 +341,13 @@ export default function ProductDetail({ usuario }) {
               )}
             </div>
           </div>
-        </>
+        </div>
       )}
+
+      <Swiper
+        productos={productosRelacionados}
+        titulo={"Productos Relacionados"}
+      />
     </div>
   );
 }

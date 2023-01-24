@@ -10,7 +10,7 @@ function FiltrosLateral({ filtros, setFiltros, categorias }) {
     stock: false,
   });
 
-  function handleSelectCategorias(e) {  
+  function handleSelectCategorias(e) {
     if (filtros.categorias.includes(e.target.id)) {
       let categoriasFiltradas = filtros.categorias.filter(
         (i) => i !== e.target.id
@@ -102,6 +102,19 @@ function FiltrosLateral({ filtros, setFiltros, categorias }) {
           }}
           className={`${s.contenedorBoton} ${
             filtros.stock ? s.contenedorBotonOn : false
+          }`}
+        >
+          <div className={s.bolitaBoton} />
+        </div>
+      </div>
+      <div className={`${s.enStock}`}>
+        <div>En Oferta</div>
+        <div
+          onClick={() => {
+            setFiltros({ ...filtros, offSale: !filtros.offSale });
+          }}
+          className={`${s.contenedorBoton} ${
+            filtros.offSale ? s.contenedorBotonOn : false
           }`}
         >
           <div className={s.bolitaBoton} />

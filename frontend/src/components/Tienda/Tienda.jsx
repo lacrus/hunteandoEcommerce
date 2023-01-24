@@ -16,6 +16,7 @@ import FiltrosLateral from "./FiltrosLateral/FiltrosLateral";
 import FiltrosSuperiores from "./FiltrosSuperiores/FiltrosSuperiores";
 import Paginado from "./Paginado/Paginado";
 import FiltrosMovil from "./FiltrosMovil/FiltrosMovil";
+import imgHero from "../../assets/images/heroTienda.jpeg";
 
 function Tienda({ usuario }) {
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ function Tienda({ usuario }) {
     ordenado: "name",
     orden: "ASC",
     categorias: [],
+    offSale: false,
   });
 
   function handleFiltros(e) {
@@ -80,7 +82,19 @@ function Tienda({ usuario }) {
       ) : (
         <>
           <div className={s.contenedorHeroTienda}>
-            <div>Swiper o solo imagen de ofertas?</div>
+            <img
+              src={imgHero}
+              alt="Un pajaro en bicicleta"
+              className={s.imgHeroTienda}
+            />
+            <div className={s.contenedorTextoHero}>
+              <div className={s.textoHero}>
+                Productos seleccionados con hasta 45% de descuento
+              </div>
+              <div className={s.contenedorBotonHero}>
+                <div className={s.botonHero}>VER PRODUCTOS</div>
+              </div>
+            </div>
           </div>
           <div className={s.contenedorSegundoTienda}>
             <div className={s.tituloTienda}>Todos los productos</div>
