@@ -109,7 +109,7 @@ export default function AppBar({ usuario }) {
   return (
     <div className={s.contenedorHeader}>
       <div className={s.overflowContenedorHeader}>
-        {anchoPantalla <= 800 ? (
+        {/* {anchoPantalla <= 800 ? ( */}
           <>
             <AiOutlineMenu
               className={s.botonMenuHeader}
@@ -123,7 +123,7 @@ export default function AppBar({ usuario }) {
               usuario={usuario}
             />
           </>
-        ) : null}
+        {/* ) : null} */}
 
         {/* <Link to="/" className={s.tituloHeader}> */}
         {/* Melinda Muriel */}
@@ -136,7 +136,7 @@ export default function AppBar({ usuario }) {
         {/* </Link> */}
 
         <div className={s.contenedorDerecha}>
-          <div className={s.contenedorBuscar}>
+          {/* <div className={s.contenedorBuscar}>
             <BiSearchAlt className={s.imagenBuscador} />
             <input
               // value={buscador}
@@ -150,7 +150,7 @@ export default function AppBar({ usuario }) {
               placeholder="Buscar"
               className={s.inputBuscarHeader}
             />
-          </div>
+          </div> */}
 
           <BiSearchAlt
             className={s.imagenBuscadorTablet}

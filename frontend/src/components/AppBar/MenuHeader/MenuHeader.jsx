@@ -35,14 +35,14 @@ export default function MenuHeader({
             onClick={() => setMostrarMenu(false)}
           />
         </div>
-        <div className={s.contenedorBuscar}>
+        {/* <div className={s.contenedorBuscar}>
           <BiSearchAlt className={s.imagenBuscador} />
           <input
             type="text"
             placeholder="Buscar"
             className={s.inputBuscarMenu}
           />
-        </div>
+        </div> */}
 
         <Link
           to="/"

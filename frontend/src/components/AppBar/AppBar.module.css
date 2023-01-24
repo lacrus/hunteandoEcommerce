@@ -8,16 +8,16 @@
   height: var(--altura-header);
   /* height: calc(var(--altura-header) - 30px); */
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
   /* padding-top: 30px; */
 }
 
 .overflowContenedorHeader {
-  width: 100%;
+  width: 90%;
   height: 100%;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
   overflow: hidden;
 }

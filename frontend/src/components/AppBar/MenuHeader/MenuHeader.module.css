@@ -4,6 +4,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
+  min-height: fit-content;
   overflow-y: visible;
   overflow-x: hidden;
   display: flex;
@@ -84,7 +85,7 @@
 }
 
 .itemsMenuGral {
-  margin: 7% 0;
+  margin: 5vh 0;
 }
 
 .itemsUsuarioMenu {
