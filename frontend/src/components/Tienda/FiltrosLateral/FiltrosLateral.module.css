@@ -96,6 +96,11 @@
   align-items: center;
 }
 
+.enStock:last-of-type {
+  margin-top: 5%;
+}
+
+
 .contenedorBoton {
   height: 20px;
   width: 33.33px;

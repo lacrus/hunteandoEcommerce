@@ -39,11 +39,20 @@
   cursor: pointer;
 }
 
+.contenedorIzquierda {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 20%;
+  min-width: fit-content;
+  height: 100%;
+}
+
 .contenedorDerecha {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
-  width: 60%;
+  width: 30%;
   height: 100%;
 }
 
@@ -151,7 +160,7 @@
 
 @media (max-width: 800px) {
   .contenedorHeader {
-    justify-content: space-between;
+    justify-content: center;
   }
 
   .botonMenuHeader {

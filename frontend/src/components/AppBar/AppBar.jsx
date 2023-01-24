@@ -109,31 +109,24 @@ export default function AppBar({ usuario }) {
   return (
     <div className={s.contenedorHeader}>
       <div className={s.overflowContenedorHeader}>
-        {/* {anchoPantalla <= 800 ? ( */}
-          <>
-            <AiOutlineMenu
-              className={s.botonMenuHeader}
-              onClick={() => setMostrarMenuHeader(!mostrarMenuHeader)}
-            />
+        <div className={s.contenedorIzquierda}>
+          {/* {anchoPantalla <= 800 ? ( */}
+          <AiOutlineMenu
+            className={s.botonMenuHeader}
+            onClick={() => setMostrarMenuHeader(!mostrarMenuHeader)}
+          />
+          {/* ) : null} */}
 
-            <MenuHeader
-              mostrarMenu={mostrarMenuHeader}
-              setMostrarMenu={setMostrarMenuHeader}
-              cerrarSesion={handleCerrarSesion}
-              usuario={usuario}
-            />
-          </>
-        {/* ) : null} */}
-
-        {/* <Link to="/" className={s.tituloHeader}> */}
-        {/* Melinda Muriel */}
-        <img
-          className={s.imagenLogo}
-          src={logo}
-          alt="Melinda Muriel"
-          onClick={() => navigate("/")}
-        />
-        {/* </Link> */}
+          {/* <Link to="/" className={s.tituloHeader}> */}
+          {/* Melinda Muriel */}
+          <img
+            className={s.imagenLogo}
+            src={logo}
+            alt="Melinda Muriel"
+            onClick={() => navigate("/")}
+          />
+          {/* </Link> */}
+        </div>
 
         <div className={s.contenedorDerecha}>
           {/* <div className={s.contenedorBuscar}>
@@ -152,10 +145,10 @@ export default function AppBar({ usuario }) {
             />
           </div> */}
 
-          <BiSearchAlt
+          {/* <BiSearchAlt
             className={s.imagenBuscadorTablet}
             onClick={() => setMostrarMenuHeader(true)}
-          />
+          /> */}
 
           {/* <select className={s.selectHeader}>
             <option>Español (Latinoaméricano)</option>
@@ -184,7 +177,12 @@ export default function AppBar({ usuario }) {
             <AiOutlineUser className={s.iconoUsuarioTablet} />
           </div>
         </div>
-
+        <MenuHeader
+          mostrarMenu={mostrarMenuHeader}
+          setMostrarMenu={setMostrarMenuHeader}
+          cerrarSesion={handleCerrarSesion}
+          usuario={usuario}
+        />
         {mostrarMiCuenta && (
           <MenuUser
             setMostrarMiCuenta={setMostrarMiCuenta}

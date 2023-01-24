@@ -39,6 +39,19 @@ function Tienda({ usuario }) {
     offSale: false,
   });
 
+  function handleBotonOfertas() {
+    setFiltros({
+      porpag: 6,
+      pag: 1,
+      price: "all",
+      stock: true,
+      ordenado: "name",
+      orden: "ASC",
+      categorias: [],
+      offSale: true,
+    });
+  }
+
   function handleFiltros(e) {
     setFiltros({ ...filtros, [e.target.id]: e.target.title });
   }
@@ -91,7 +104,10 @@ function Tienda({ usuario }) {
               <div className={s.textoHero}>
                 Productos seleccionados con hasta 45% de descuento
               </div>
-              <div className={s.contenedorBotonHero}>
+              <div
+                className={s.contenedorBotonHero}
+                onClick={handleBotonOfertas}
+              >
                 <div className={s.botonHero}>VER PRODUCTOS</div>
               </div>
             </div>
