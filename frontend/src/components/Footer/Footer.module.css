@@ -1,5 +1,9 @@
 .contenedorFooter {
   width: 100%;
+}
+
+.contenedorMenusFooter {
+  width: 100%;
   height: fit-content;
   display: flex;
   justify-content: space-evenly;
@@ -108,7 +112,7 @@
   background-color: #f99716;
   padding: 6px 24px;
   border-radius: 12px;
-  width: 130px;
+  width: fit-content;
   height: 40px;
   color: #ffffff;
   transition: all 0.3s ease;
@@ -127,6 +131,22 @@
 
 .contenedorBotonFooter:active {
   opacity: 0.7;
+}
+
+.contenedorTerminos {
+  width: 100%;
+  background-color: #fff;
+  text-align: center;
+  padding: 1% 0;
+}
+
+.textoTerminos {
+  font-family: comspotR;
+  color: #b1bcc0;
+}
+
+.textoTerminos b {
+  font-weight: bold;
 }
 
 @media (max-width: 800px) {
@@ -149,7 +169,7 @@
 }
 
 @media (max-width: 600px) {
-  .contenedorFooter {
+  .contenedorMenusFooter {
     flex-direction: column;
   }
   .contenedorUno {
