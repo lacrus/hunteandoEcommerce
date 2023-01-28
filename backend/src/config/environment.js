@@ -23,7 +23,7 @@ module.exports = {
     dialect: process.env.DB_DIALECT,
   },
   mercadoPago: {
-    mercadoPagoToken: process.env.MERCADO_PAGO_TOKEN,
+    mercadoPagoToken: process.env.ACCESS_TOKEN_MP,
   },
   google: {
     clientId: process.env.GOOGLE_CLIENT_ID,
