@@ -26,12 +26,13 @@ class ExpressServer {
   async dbConnect() {
     try {
       await sequelize.sync({ force: false });
-      console.log("config", config);
       console.log("Connection has been established successfully.");
+      console.log("config", config);
       // SEMILLADO DB
       await creacionUsuarioSuperAdmin();
       // await creacionProductos();
     } catch (error) {
+      console.log("config en error", config);
       console.error("Unable to connect to the database:", error);
     }
   }
