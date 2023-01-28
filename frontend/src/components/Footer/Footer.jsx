@@ -43,13 +43,13 @@ export default function Footer() {
         <div className={s.contenedorDos}>
           <div className={s.columnaContenedorDos}>
             <div className={s.tituloContenedorDos}>La artista</div>
-            <Link to="/" className={s.textoContenedorDos}>
+            <Link to="" className={s.textoContenedorDos}>
               Home
             </Link>
             <Link to="/carrito" className={s.textoContenedorDos}>
               Carrito
             </Link>
-            <Link to="/" className={s.textoContenedorDos}>
+            <Link to="" className={s.textoContenedorDos}>
               Sobre mi obra
             </Link>
           </div>

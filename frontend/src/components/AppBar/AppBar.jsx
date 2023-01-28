@@ -117,7 +117,7 @@ export default function AppBar({ usuario }) {
           />
           {/* ) : null} */}
 
-          {/* <Link to="/" className={s.tituloHeader}> */}
+          {/* <Link to="" className={s.tituloHeader}> */}
           {/* Melinda Muriel */}
           <img
             className={s.imagenLogo}
