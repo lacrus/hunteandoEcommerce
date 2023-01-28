@@ -10,9 +10,6 @@ const cartRouter = require("../../routes/cart");
 const shopRouter = require("../../routes/shop");
 const contactRouter = require("../../routes/contact");
 
-// PASSPORT LOGUEO GOOGLE
-const passportSetup = require("../../config/passport");
-
 // SEMILLADO DB
 const { creacionUsuarioSuperAdmin, creacionProductos } = require("./semillado");
 const categoryRouter = require("../../routes/dashboard/category");
@@ -29,6 +26,7 @@ class ExpressServer {
   async dbConnect() {
     try {
       await sequelize.sync({ force: false });
+      console.log("config", config);
       console.log("Connection has been established successfully.");
       // SEMILLADO DB
       await creacionUsuarioSuperAdmin();
