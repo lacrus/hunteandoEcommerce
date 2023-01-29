@@ -2,14 +2,9 @@ const { Sequelize } = require("sequelize");
 const config = require("../../config/environment");
 
 const sequelize =
-  // config.nodeEnv === "production"
+  // config.nodeEnv === "development"
   //   ?
   new Sequelize(
-    // `${process.env.DB_POSTGRES_DEPLOY}`,DB_DIR_COMPLETA
-    // {
-    //   logging: false, // set to console.log to see the raw SQL queries
-    //   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
-    // }
     config.dataBase.name,
     config.dataBase.username,
     config.dataBase.password,
@@ -22,8 +17,8 @@ const sequelize =
 // : new Sequelize(
 //     `postgresql://${config.dataBase.username}:${config.dataBase.password}@${config.dataBase.host}:${config.dataBase.port}/${config.dataBase.name}`,
 //     {
-//       logging: false, // set to console.log to see the raw SQL queries
-//       native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+//       logging: false,
+//       native: false,
 //     }
 //   );
 module.exports = sequelize;

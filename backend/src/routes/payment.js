@@ -12,7 +12,6 @@ const { respuestaPago } = require("../Services/email");
 const PaymentController = require("../controllers/payment.js");
 const PaymentService = require("../Services/payment.js");
 const Order = require("../models/Order");
-const { emptyQuery } = require("pg-protocol/dist/messages");
 const OrderItem = require("../models/OrderItem");
 const Products = require("../models/products");
 const Stock = require("../models/stock");

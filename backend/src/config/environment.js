@@ -6,10 +6,8 @@ if (!envFound) {
   throw new Error("Couldn't find .env file");
 }
 
-process.env.NODE_ENV = process.env.NODE_ENV || "development";
-
 module.exports = {
-  nodeEnv: process.env.NODE_ENV,
+  nodeEnv: process.env.NODE_ENV || "development",
   port: process.env.PORT,
   pathFront: process.env.PATH_FRONT,
   pathBack: process.env.PATH_BACK,

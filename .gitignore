@@ -138,3 +138,7 @@ privado.js
 .vscode
 settings.json
 build/
+Dockerfile.dev
+Dockerfile
+docker-compose.yml
+nginx/
