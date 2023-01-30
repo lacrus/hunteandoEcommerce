@@ -72,11 +72,7 @@ export default function Login() {
       if (params.id !== undefined) {
         navigate(`/tienda/detalles/${params.id}`);
       } else {
-        if (registro.success === true) {
-          navigate("/");
-        } else {
-          Swal.fire(registro.mensaje, "", "error");
-        }
+        navigate("/");
       }
     } catch (error) {
       Swal.fire(

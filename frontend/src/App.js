@@ -62,25 +62,25 @@ function App() {
 
         <Route
           path="/login"
-          element={usuario.username ? <Navigate to="" /> : <Login />}
+          element={usuario.username ? <Navigate to="/" /> : <Login />}
         />
         <Route
           path="/login/:id"
-          element={usuario.username ? <Navigate to="" /> : <Login />}
+          element={usuario.username ? <Navigate to="/" /> : <Login />}
         />
         <Route
           path="/login/google/:token"
-          element={usuario.username ? <Navigate to="" /> : <Login />}
+          element={usuario.username ? <Navigate to="/" /> : <Login />}
         />
 
         <Route
           path="/registrarse"
-          element={usuario.username ? <Navigate to="" /> : <Register />}
+          element={usuario.username ? <Navigate to="/" /> : <Register />}
         />
 
         <Route
           path="/registrarse/:id"
-          element={usuario.username ? <Navigate to="" /> : <Register />}
+          element={usuario.username ? <Navigate to="/" /> : <Register />}
         />
 
         <Route path="/tienda" element={<Tienda />} />
@@ -104,7 +104,7 @@ function App() {
             usuario.role === "admin" || usuario.role === "superAdmin" ? (
               <DashboardAdmin usuario={usuario} />
             ) : (
-              <Navigate to="" replace={true} />
+              <Navigate to="/" replace={true} />
             )
           }
         />
@@ -114,7 +114,7 @@ function App() {
             usuario.username ? (
               <DashboardUsuario usuario={usuario} />
             ) : (
-              <Navigate to="" replace={true} />
+              <Navigate to="/" replace={true} />
             )
           }
         />
@@ -124,7 +124,7 @@ function App() {
             usuario.username && productosCarrito?.length ? (
               <CheckOut usuario={usuario} />
             ) : (
-              <Navigate to="" replace={true} />
+              <Navigate to="/" replace={true} />
             )
           }
         />
@@ -148,7 +148,7 @@ function App() {
 
         <Route path="/contactame" element={<Contactame />} />
 
-        <Route path="*" element={<Navigate to="" replace={true} />} />
+        <Route path="*" element={<Navigate to="/" replace={true} />} />
       </Routes>
       <Footer />
       <BotonWapp />
