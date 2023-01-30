@@ -46,14 +46,14 @@ class ExpressServer {
       })
     );
 
-    this.app.use("/auth", authRouter);
-    this.app.use("/cart", cartRouter);
-    this.app.use("/shop", shopRouter);
-    this.app.use("/contacto", contactRouter);
-    this.app.use("/finalizarcompra", paymentRouter);
-    this.app.use("/dashboard/admin/producto", productRouter);
-    this.app.use("/dashboard/admin/users", userRouter);
-    this.app.use("/dashboard/admin/categories", categoryRouter);
+    this.app.use("/api/auth", authRouter);
+    this.app.use("/api/cart", cartRouter);
+    this.app.use("/api/shop", shopRouter);
+    this.app.use("/api/contacto", contactRouter);
+    this.app.use("/api/finalizarcompra", paymentRouter);
+    this.app.use("/api/dashboard/admin/producto", productRouter);
+    this.app.use("/api/dashboard/admin/users", userRouter);
+    this.app.use("/api/dashboard/admin/categories", categoryRouter);
   }
   async start() {
     this.app.listen(this.port, (error) => {

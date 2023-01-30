@@ -7,7 +7,6 @@ const startServer = async () => {
 
   await server.routes();
   await server.start();
-  console.log("config", config);
   console.log(`Server listening on port ${config.port}`);
 };
 
