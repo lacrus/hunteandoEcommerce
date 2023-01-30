@@ -7,7 +7,7 @@ import axios from "axios";
 import App from "./App";
 
 axios.defaults.baseURL =
-  process.env.NODE_ENV === "production" ? "" : "http://localhost:3001";
+  process.env.NODE_ENV === "production" ? "/api" : "http://localhost:3001/api";
 // axios.defaults.baseURL = "http://localhost:3001";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
