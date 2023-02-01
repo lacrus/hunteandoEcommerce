@@ -24,7 +24,7 @@ export default function MenuHeader({
       <div className={s.menuHeader}>
         <div className={s.encabezadoMenu}>
           <Link
-            to=""
+            to="/"
             className={s.tituloHeader}
             onClick={() => setMostrarMenu(false)}
           >
@@ -45,7 +45,7 @@ export default function MenuHeader({
         </div> */}
 
         <Link
-          to=""
+          to="/"
           onClick={() => setMostrarMenu(false)}
           className={`${s.itemsMenu} ${s.itemsMenuGral}`}
         >

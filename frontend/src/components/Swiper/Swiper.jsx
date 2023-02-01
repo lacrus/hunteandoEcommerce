@@ -44,7 +44,6 @@ export default function ComponenteSwiper({ usuario, productos, titulo }) {
         >{`Ver más ->`}</div>
       </div>
       <Swiper
-        loop={true}
         navigation={{
           prevEl: navigationPrevRef.current,
           nextEl: navigationNextRef.current,
@@ -65,7 +64,7 @@ export default function ComponenteSwiper({ usuario, productos, titulo }) {
                   alt="img producto"
                   className={s.imagenTarjetaSwiper}
                   onError={({ currentTarget }) => {
-                    currentTarget.onerror = null; // prevents looping
+                    currentTarget.onerror = null;
                     currentTarget.src = imgNotFound;
                   }}
                 />
