@@ -13,7 +13,7 @@ passport.use(
       //configuraciones para la estrategia de google
       clientID: google.clientId,
       clientSecret: google.clientSecret,
-      callbackURL: `${pathBack}/auth/login/google/redireccion`,
+      callbackURL: `${pathBack}/api/auth/login/google/redireccion`,
     },
     async function (accessToken, refreshToken, profile, cb) {
       try {

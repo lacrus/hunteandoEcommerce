@@ -26,7 +26,7 @@ authRouter.post(
 
 // LOGUEO GOOGLE
 authRouter.get(
-  "/login/google/",
+  "/login/google",
   passport.authenticate("google", {
     session: false,
     scope: ["profile", "email", "openid"],
