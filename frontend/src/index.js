@@ -6,9 +6,9 @@ import store from "./redux/store/index";
 import axios from "axios";
 import App from "./App";
 
-axios.defaults.baseURL = "https://melindamurielback.onrender.com/api"; //`${process.env.PATH_BACK}/api`;
+axios.defaults.baseURL = "https://juancruzmusso.com/api"; //`${process.env.PATH_BACK}/api`;
 
-// axios.defaults.baseURL = "http://localhost:3001";
+// axios.defaults.baseURL = "http://localhost:3001/api";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 

@@ -81,21 +81,11 @@ paymentRouter.post("/mercadopago/respuesta", async (req, res) => {
   if (req.body.action === "payment.created") {
     try {
       await cambiarEstadoPagoOrden(req.body);
-
       res.status(200).send("ok");
     } catch (error) {
       console.log("Error en payment.created", error);
       res.status(500).send("hubo un problema");
     }
-    // } else if (req.body.action === "desdeFront") {
-    //   try {
-    //     cambiarEstadoPagoOrden(req.body);
-
-    //     res.status(200).send("ok");
-    //   } catch (error) {
-    //     console.log("Error en payment.created", error);
-    //     res.status(500).send("hubo un problema");
-    //   }
   } else {
     res.status(200).send("ok");
   }

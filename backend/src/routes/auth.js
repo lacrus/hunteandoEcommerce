@@ -10,6 +10,7 @@ const passport = require("passport");
 const { validateCreate, validateLogin } = require("../middlewares/validators");
 const { verificarPermisoAdmin } = require("../middlewares/authMiddleware");
 const { pathFront } = require("../config/environment");
+require("../config/passport"); 
 
 const authRouter = require("express").Router();
 

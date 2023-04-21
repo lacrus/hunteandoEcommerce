@@ -3,22 +3,62 @@
   min-height: calc(100vh - var(--altura-header) - 6vh);
   margin: 0 auto;
   margin-top: var(--altura-header);
-  max-width: 800px;
+  max-width: 1000px;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 3vh 0;
+  text-align: center;
 }
 
 .tituloSobreMi {
   font-family: arsenale;
   font-size: 6rem;
 }
-
-p {
-  text-align: justify;
+.imgLogo {
+  max-width: 300px;
+  max-height: 300px;
 }
 
-p b {
-  font-weight: bold;
+.uno {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.img1 {
+  max-width: 48%;
+  object-fit: cover;
+}
+
+.texto1 {
+  max-width: 48%;
+  font-family: ComspotR;
+  text-align: justify;
+  font-size: 1.2rem;
+}
+
+@media (max-width: 1000px) {
+  .uno {
+    width: 95%;
+  }
+}
+
+@media (max-width: 600px) {
+  .tituloSobreMi {
+    font-size: 5rem;
+  }
+  .uno {
+    flex-direction: column;
+  }
+  .img1 {
+    max-width: 100%;
+    object-fit: cover;
+  }
+  .texto1 {
+    max-width: 100%;
+    font-family: ComspotR;
+    text-align: justify;
+    font-size: 1.2rem;
+  }
 }
